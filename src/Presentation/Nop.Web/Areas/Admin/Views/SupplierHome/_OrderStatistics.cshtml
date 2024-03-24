@@ -1,0 +1,180 @@
+﻿@inject Nop.Services.Common.IGenericAttributeService genericAttributeService
+@inject IWorkContext workContext
+@{
+    const string prefix = "order-statistics";
+    const string hideCardAttributeName = "Reports.HideOrderStatisticsCard";
+    var hideCard = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideCardAttributeName);
+}
+
+<div id="@(prefix)-card" class="card widget-flex mb-0">
+    <div class="card-body d-flex justify-content-between align-items-center ">
+        <div class="card-title tiny  ">
+            <small>
+                Total Sales
+            </small>
+            <h4 class="card-text text-primary text-bold h4 ">
+                <span id="totalSales"></span> SAR
+            </h4>
+        </div>
+        <div class="filteration ml-auto">
+            
+            
+            <button class="btn btn-sm btn-info ml-2" @if (hideCard)
+                    { <text> disabled="disabled" </text> }
+                    data-chart-role="toggle-chart" data-chart-period="week" >
+                @T("Admin.SalesReport.OrderStatistics.Week")
+            </button>
+
+            <button class="btn btn-sm btn-secondary ml-2"
+                    @if (hideCard)
+                    {<text> disabled="disabled" </text>}
+                    data-chart-role="toggle-chart" data-chart-period="month">
+                @T("Admin.SalesReport.OrderStatistics.Month")
+            </button>
+
+            <button class="btn btn-sm btn-secondary ml-2"
+                    @if (hideCard)
+                    {<text> disabled="disabled" </text>}
+                    data-chart-role="toggle-chart" data-chart-period="year">
+                @T("Admin.SalesReport.OrderStatistics.Year")
+            </button>
+            
+
+
+        </div>
+    </div>
+    <div class="chart-area">
+        <canvas id="@(prefix)-chart" style="width:100%; "></canvas>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var osCurrentPeriod;
+
+        $('#@(prefix)-card').on('click', 'button[data-card-widget="collapse"]', function () {
+            var collapsed = !$('#@(prefix)-card').hasClass('collapsed-card');
+            saveUserPreferences('@(Url.Action("SavePreference", "Preferences"))', '@hideCardAttributeName', collapsed);
+            
+            if (!collapsed) {
+                $('#@(prefix)-card button[data-chart-role="toggle-chart"]').removeAttr('disabled');
+                if (!osCurrentPeriod) {
+                    $('#@(prefix)-card button[data-chart-role="toggle-chart"][data-chart-period="week"]').trigger('click');
+                }
+            } else {
+                $('#@(prefix)-card button[data-chart-role="toggle-chart"]').attr('disabled', 'disabled');
+            }
+        });
+//todo: chart js config
+        var osConfig = {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    backgroundColor: "rgba(61, 0, 94, 1)",
+                    data: [],
+                    barPercentage: 0.2,
+                    borderWidth: 2,
+                    borderRadius: 50,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        ticks: {
+                            userCallback: function (dataLabel, index) {
+                                if (window.orderStatistics && window.orderStatistics.config.data.labels.length > 12) {
+                                    return index % 5 === 0 ? dataLabel : '';
+                                }
+                                return dataLabel;
+                            }
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            userCallback: function (dataLabel, index) {
+                                return (dataLabel ^ 0) === dataLabel ? dataLabel : '';
+                            },
+                            min: 0
+                        }
+                    }]
+                },
+                showScale: true,
+                scaleShowGridLines: false,
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleGridLineWidth: 1,
+                scaleShowHorizontalLines: true,
+                scaleShowVerticalLines: true,
+                bezierCurve: true,
+                pointDot: false,
+                pointDotRadius: 4,
+                pointDotStrokeWidth: 1,
+                pointHitDetectionRadius: 20,
+                datasetStroke: true,
+                datasetFill: true,
+                maintainAspectRatio: false,
+                responsive: true
+            }
+        };
+
+        function changeOsPeriod(period) {
+            var osLabels = [];
+            var osData = [];
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@Url.Action("LoadSupplierOrderStatistics", "Order")",
+                data: {
+                    period: period
+                },
+                success: function (data, textStatus, jqXHR) {
+                    for (var i = 0; i < data.graphData.length; i++) {
+                        osLabels.push(data.graphData[i].date);
+                        osData.push(data.graphData[i].value);
+                    }
+
+                    $("#totalSales").html(data.totalSales);
+
+                    if (!window.orderStatistics) {
+                        osConfig.data.labels = osLabels;
+                        osConfig.data.datasets[0].data = osData;
+                        osConfig.data.scales =
+                        window.orderStatistics = new Chart(document.getElementById("@prefix-chart").getContext("2d"), osConfig);
+                    } else {
+                        window.orderStatistics.config.data.labels = osLabels;
+                        window.orderStatistics.config.data.datasets[0].data = osData;
+                        window.orderStatistics.update();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#loadOrderStatisticsAlert").click();
+                }
+            });
+        }
+
+        $('#@(prefix)-card button[data-chart-role="toggle-chart"]').on('click', function () {
+            var period = $(this).attr('data-chart-period');
+            osCurrentPeriod = period;
+            changeOsPeriod(period);
+            $('#@(prefix)-card button[data-chart-role="toggle-chart"]').removeClass('btn-info');
+            $('#@(prefix)-card button[data-chart-role="toggle-chart"]').addClass('btn-secondary');
+            $(this).removeClass('btn-secondary');
+            $(this).addClass('btn-info');
+        });
+
+        @if (!hideCard)
+        {
+            
+            <text>
+                $('#@(prefix)-card button[data-chart-role="toggle-chart"][data-chart-period="week"]').trigger('click');
+            </text>
+        }
+    });
+</script>

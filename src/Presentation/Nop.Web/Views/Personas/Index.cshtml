@@ -1,0 +1,108 @@
+﻿
+
+@{
+    Layout = "_RgistrationLayout";
+}
+<style>
+    .footer-container {
+        display: none !important;
+    }
+    a.bg-primary:hover, a.bg-primary:focus, button.bg-primary:hover, button.bg-primary:focus {
+    background-color: #c29ef4 !important;
+}
+.i.mw-70{
+  width: 85%;
+}
+</style>
+
+<div class="container-fluid h-100">
+
+    <!-- Navigation -->
+
+    <nav class="navbar fixed-top d-flex bg-white">
+        <div class="container">
+            <div class="row w-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image ml-2 d-inline"" href="/home">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/logo_dark.png")" alt="suptomer" />
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+
+                    <div class="">
+                        <!-- <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="languageToggle">
+                            <label class="custom-control-label" for="languageToggle">AR - EN</label>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+
+    </nav>
+    <div class="container h-100 ">
+
+      <div class="row h-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="row w-100 theme_form select_persona">
+
+              <h3 class="h3 text-center">
+                What are You Planning to use Suptomer ?
+                <p class="text-small">
+               <small>
+                To begin this journey , tell us what type of account you would be opening ,and we will fit the experience to your needs 
+               </small>  
+                </p>
+              </h3>
+              <div class="col-md-6 mb-4">
+                            <div class="card regi_card" onclick="highlightBlock(this)" data-type="SuptomerMerchant">
+                 <img  class="card-img-top"  src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/ico_customer.png")" alt="suptomer" />
+
+                  <div class="card-body">
+                    <p class="card-text">Merchant</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                            <div class="card regi_card" onclick="highlightBlock(this)" data-type="SuptomerSupplier">
+                 <img  class="card-img-top"  src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/ico_supplier.png")" alt="suptomer" />
+                  <div class="card-body">
+                    <p class="card-text">Supplier</p>
+                  </div>
+                </div>
+              </div>
+              <button type="button"
+                  onclick="onclickNextBtn()"
+                  class="btn bg-primary text-white text-center w-100 regi_btn">
+                  Next
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/reg_right_img.png")" alt="login suptoer Image" class="i mw-70">
+        </div>
+      </div>
+
+    </div>
+</div>
+  <script>
+      var selectedUserType;
+    function highlightBlock(element) {
+        var blocks = document.getElementsByClassName('card');
+        for(var i =0; i < blocks.length; i++){
+            blocks[i].classList.remove("highlight");
+        }
+      element.classList.add('highlight');
+        selectedUserType = element.getAttribute('data-type');
+        console.log(selectedUserType);
+    }
+
+    function onclickNextBtn() {
+        if (selectedUserType){
+            location.href = `/register?userType=${selectedUserType}`;
+        }       
+    }
+    </script>

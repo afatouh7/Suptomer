@@ -1,0 +1,47 @@
+﻿@using Nop.Web.Framework.Models.DataTables
+@using Nop.Web.Models.Supplier
+@model SupplierSearchModel
+
+@{
+    ViewData["Title"] = "Suppliers";
+    Layout = "_MerchantAdminLayout";
+    NopHtml.SetActiveMenuItemSystemName("Suppliers");
+}
+<style>
+    .bg-light-th th {
+        background-color: #f6f6f6 !important;
+        font-weight: bold;
+    }
+</style>
+<div class="page shipment-details-page">
+    <div class="page-title"><h1>Suppliers</h1></div>
+    <div class="page-body">
+        <div class="section products">
+            <div class="table-wrapper">
+               @await Html.PartialAsync("Table", new DataTablesModel
+               {
+                   Name = "suppliers-grid",
+                   UrlRead = new DataUrl("GetAllSuppliersForMerchants", "MerchantSuppliers", null),
+                   Length = Model.PageSize,
+                   LengthMenu = Model.AvailablePageSizes,
+               ColumnCollection = new List<ColumnProperty>
+                {
+                new ColumnProperty(nameof(SupplierListVM.Name))
+                {
+                    Title = T("Admin.Configuration.Shipping.Warehouses.Fields.Name").Text
+                },
+                new ColumnProperty(nameof(SupplierListVM.Email))
+                {
+                    Title = "Email"
+                },
+                new ColumnProperty(nameof(SupplierListVM.Company))
+                {
+                Title = "Company"
+                }
+                }
+               })
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,201 @@
+.bg-dark{
+    background-color:  theme-color(primary) !important;
+}
+.text-dark{
+    color: theme-color(dark) !important;
+}
+.text-primary{
+    color: theme-color(primary) !important;
+}
+
+.bg-light-purpel {
+    background-color: theme-color(light-purple) !important;
+}
+.text-light-purpel,.bg-light {
+    color: theme-color(light-purple) !important;
+}
+
+.bg-primary{  background-color: theme-color(primary) !important;}
+
+//new
+.bg-light{
+    background-color: $color-primary-5 !important;
+}
+.border-dotted{
+    border:5px dotted  $color-primary-5 !important;
+}
+.border-dashed{
+    border:5px dashed $color-primary-5 !important;
+}
+
+// bootstrap override
+.text-primary {
+    color: $color-primary !important;
+}
+
+.text-light2 {
+    color: #666 !important;
+    font-size: 10px !important;
+}
+
+.text-dark2 {
+    color: #000 !important;
+    font-size: 14px !important;
+}
+
+.btn-outline-sm {
+    border-radius: 50px;
+    color: $color-primary !important;
+
+    border-color: $color-primary !important;
+    border: 1px solid;
+}
+
+.btn-primary {
+    background-color: $color-primary !important;
+    border-color: $color-primary !important;
+    color: white !important;
+    &:hover {
+        background-color: $color-primary-50 !important;
+        color: $color-primary !important;
+    }
+} 
+
+.btn-light-theme {
+    background-color: $color-primary-20;
+    color: $color-primary;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+i.true-icon {
+    color: $color-primary !important;
+}
+
+.card-outline {
+    border-top: 3px solid $color-primary !important;
+}
+
+.btn-info {
+    background-color: $color-primary !important;
+    border-color: $color-primary !important;
+}
+
+//tabs
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: $color-primary !important;
+    background-color: transparent !important;
+    border-color: transparent transparent #f3f3f3 !important;
+    border-bottom: 3px solid !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+}
+.project-tab .nav-link {
+    border: 1px solid transparent !important;
+    border-top-left-radius: .25rem !important;
+    border-top-right-radius: .25rem !important;
+    color: $color-primary !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+.project-tab .nav-link:hover {
+    border: none !important;
+}
+.project-tab thead{
+    background: #f3f3f3 !important;
+    color: #333 !important;
+}
+.project-tab a{
+    text-decoration: none !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+}
+//insider tabs
+.insider-tabs{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 32px !important;
+    .nav-item{
+        flex-basis: 233px !important;
+        flex-grow: initial;
+        text-align: left;
+    }
+}
+.pt-120 {
+    padding-top: 120px;
+}
+
+.mb-60 {
+    margin-bottom: 60px;
+}
+
+
+.main-btn.border-btn {
+    border: 2px solid theme-color(primary);
+    background: 0 0;
+    color: theme-color(primary);
+}
+.main-btn:hover {
+        background-color: theme-color(primary) !important;
+        color: white !important;
+        text-decoration: none;
+        outline: 6px double rgb(55, 44, 61) !important;
+        transition: all .35s ease-in-out;
+}
+
+a, a:focus, a:hover {
+    text-decoration: none;
+}
+a:hover {
+    color: theme-color(primary);
+}
+a:hover {
+    color: #0a58ca;
+}
+.btn-hover {
+    position: relative;
+    overflow: hidden;
+}
+.main-btn {
+    display: inline-block;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 18px 38px;
+    font-size: 18px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+    z-index: 5;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    border: none;
+    background: theme-color(primary);
+    overflow: hidden;
+}
+
+//collaps panel
+div[data-toggle="collapse"]{
+    width:100%;
+    cursor:pointer;
+ }
+ .collapse.uploadarea{
+    margin-top: 23px;
+     background:white;
+     padding: 16px;
+    width: 100% !important;
+    height: 123px !important;
+    border-radius: 6px !important;
+    border:2px dashed  rgba(61, 0, 94, 0.4) !important;
+ }
+
+ 
+ a,.no_underline{text-decoration: none;
+ }

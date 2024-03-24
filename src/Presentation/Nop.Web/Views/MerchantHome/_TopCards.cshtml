@@ -1,0 +1,96 @@
+﻿<div class="row parent-card align-items-stretch ">
+
+    <div class="col-sm-4 col-md-3 col-lg-2 merchant-card">
+        <div class="card widget">
+            <div class="card-body">
+                <h5 class="card-title w-100 d-flex ">
+                    <img src="@Url.Content("~/images/theme/order-1_svgrepo.com.svg")" alt="" />
+                </h5>
+                <p>
+                    <span class="tiny_light">Total Orders</span>
+                    <br />
+                    <span class="tiny" id="totalOrders"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------- -->
+    <div class="col-sm-4 col-md-3 col-lg-2 merchant-card">
+        <div class="card widget">
+            <div class="card-body">
+                <h5 class="card-title w-100 d-flex ">
+                    <img src="@Url.Content("~/images/theme/shipping-car_svgrepo.com.svg")" alt="" />
+                </h5>
+                <p>
+                    <span class="tiny_light">In Transit</span>
+                    <br />
+                    <span class="tiny" id="totalTransit"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------- -->
+    <div class="col-sm-4 col-md-3 col-lg-2 merchant-card">
+        <div class="card widget">
+            <div class="card-body">
+                <h5 class="card-title w-100 d-flex ">
+                    <img src="@Url.Content("~/images/theme/time.svg")" alt="" />
+                </h5>
+                <p>
+                    <span class="tiny_light">Pending</span>
+                    <br />
+                    <span class="tiny"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------- -->
+    <div class="col-sm-4 col-md-3 col-lg-2 merchant-card">
+        <div class="card widget">
+            <div class="card-body">
+                <h5 class="card-title w-100 d-flex ">
+                    <img src="@Url.Content("~/images/theme/opened-packaged_svgrepo.com.svg")" alt="" />
+                </h5>
+                <p>
+                    <span class="tiny_light">Delivered</span>
+                    <br />
+                    <span class="tiny" id="totalDelivered"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------- -->
+    <div class="col-sm-4 col-md-3 col-lg-2 merchant-card">
+        <div class="card widget">
+            <div class="card-body">
+                <h5 class="card-title w-100 d-flex ">
+                    <img src="@Url.Content("~/images/theme/warehouse_svgrepo.com.svg")" alt="" />
+                </h5>
+                <p>
+                    <span class="tiny_light">Low in Stock</span>
+                    <br />
+                    <span class="tiny"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------- -->
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@Url.Action("GetTopCardsDetais", "MerchantHome")",
+            success: function (data, textStatus, jqXHR) {
+                $("#totalOrders").html(data.TotalOrders);
+                $("#totalTransit").html(data.TotalTransit);
+                $("#totalDelivered").html(data.TotalDelivered);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#loadShipmentStatisticsAlert").click();
+            }
+        });
+    });
+</script>

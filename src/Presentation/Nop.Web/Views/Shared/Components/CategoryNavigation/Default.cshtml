@@ -1,0 +1,153 @@
+﻿@model CategoryNavigationModel
+
+@using Nop.Core.Domain.Catalog
+<style>
+    .new_cat_view{
+
+    }
+    .cat_img{
+        width: 73px;height: auto; max-width: 73px;
+    }
+    .catSelector{
+        width: 124px;
+        height: 145px;
+    }
+    .catSelector.active{
+                border-radius: 4px;box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+background-color: white;
+    }
+    .catSelector span{font-weight: 700;
+        font-family: Inter;
+font-size: 14px;
+font-weight: 600;
+line-height: 17px;
+
+
+    }
+    .block .list li {
+         padding: 0;
+    padding-right: 8px !important;
+   
+}
+
+.cat_nav .list {
+    border-radius: 8px;
+    background: #fafafa;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,.25);
+    display: flex!important;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: auto;
+    padding: 8px 12px !important;}
+</style>
+@{
+    var allCategoriesClass = Model.CurrentCategoryId == 0 ? "active" : "inactive";
+}
+
+@functions {
+    bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        foreach (var subCategory in category.SubCategories)
+        {
+            if (BreadCrumbContainsCurrentCategoryId(subCategory))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    @*suptomer sub categries*@
+    async Task CategoryLine(CategoryNavigationModel.CategoryLineModel lineModel)
+    {
+        var active = lineModel.Category.Id == lineModel.CurrentCategoryId || lineModel.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+        var last = lineModel.Category.Id == lineModel.CurrentCategoryId;
+        var liClass = active ? "active" : "inactive";
+        if (last)
+        {
+            liClass += " last";
+        }
+
+        <li class="@liClass dropbtn">
+            <a href="@(Url.RouteUrl<Category>(new { SeName = lineModel.Category.SeName }))">@lineModel.Category.Name
+                @if (lineModel.Category.NumberOfProducts.HasValue)
+                {
+                    <text> </text>@T("Categories.TotalProducts", lineModel.Category.NumberOfProducts.Value)
+                }
+            </a>
+            @{
+                if (lineModel.Category.Id == lineModel.CurrentCategoryId ||
+                    lineModel.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0)
+                {
+                    if (lineModel.Category.SubCategories.Count > 0)
+                    {
+                        <ul class="sublist dropdown-content">
+                            @foreach (var subCategory in lineModel.Category.SubCategories)
+                            {
+                                var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                                {
+                                    CurrentCategoryId = lineModel.CurrentCategoryId,
+                                    Category = subCategory,
+                                   
+                                };
+                                await CategoryLine(categoryLineModel);
+                            }
+                        </ul>
+                    }
+                }
+            }
+        </li>
+    }
+}
+
+@if (Model.Categories.Count > 0)
+{
+    <div class="block w-100 block-category-navigation">
+        <div class="listbox cat_nav new_cat_view">
+            <div class="list flex-column align-items-start">
+                <p class="bold text-primary my-2 mb-3">
+                    <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/allcats.png")" class="px-2">
+                    Categories
+                </p>
+
+                <ul class="d-flex">
+                    <!-- Existing code for "All" category -->
+                    <li class="dropbtn">
+                        <div class="@allCategoriesClass active catSelector d-flex  flex-column justify-content-center align-items-center">
+                            <a href="/Catalog/AllProducts">
+                                <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/c1.png")" class="rounded-circle rounded cat_img">
+                            </a>
+                            <a href="/Catalog/AllProducts">
+                                <span>All</span>
+                            </a>
+                        </div>
+                    </li>
+
+                    <!-- Loop through categories -->
+                    @foreach (var category in Model.Categories)
+                    {
+                        var categoryUrl = Url.RouteUrl<Category>(new { SeName = category.SeName });
+
+                        <li class="@allCategoriesClass dropbtn">
+                            <div class="catSelector  d-flex  flex-column justify-content-center align-items-center">
+                                <a href="@categoryUrl">
+                                    <img src="~/images/thumbs/@category.PIcutureUrl" class="rounded-circle rounded cat_img" alt="@category.Name">
+
+                                </a>
+                                <a href="@categoryUrl">
+                                    <span>@category.Name</span>
+                                </a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

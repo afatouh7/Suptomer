@@ -1,0 +1,129 @@
+﻿@model CatalogProductsModel
+<style>
+.product-grid, .product-list {
+    margin: 0 0 4px !important;
+}
+.item-box.col-sm-12.col-md-4.col-lg-3.d-flex.justify-content-start.mb-2 {
+    margin: 0 !important;
+}
+.item-box.col.mb-2 {
+    max-width: 250px !important;
+}
+.card.bg-white {
+    max-width: 245px !important;
+}
+a{color:#1c1c1c;}
+.item-box .details {
+    padding: 0  !important;
+}
+.card-body {
+    padding: 16px!important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+.item-box.list-full-width .card .card-body{display: block !important;}
+.item-box .picture {
+    flex-grow: 1 !important;
+}
+.item-box .picture a img {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    min-width: 180px !important;
+    height: auto !important;
+}
+	
+	.item-box .picture a:before {
+   
+    display: none !important;
+}
+.item-box.col-auto.d-flex.justify-content-start.mb-2 {
+    width: auto !important;
+}
+.page-title{
+    padding: 0 !important;
+    margin: 0 !important;
+    max-height: 45px !important;
+}
+.product-selectors {
+    margin: 0 0 15px;
+    padding: 0 !important;
+    padding-bottom: 16px !important;
+    }
+    .item-box.col.mb-2 {
+    display: flex;
+    align-items: stretch;
+}
+</style>
+@if (!string.IsNullOrEmpty(Model.WarningMessage))
+{
+    <div class="warning">
+        @Model.WarningMessage
+    </div>
+}
+<div class="container-fluid mb-5">
+    <div class="row">
+        <div class="col-12">
+            @if (Model.Products.Count > 0)
+            {
+                <div class="@(Model.ViewMode == "list" ? "product-list" : "product-grid ")">
+                    <div class="@(Model.ViewMode == "list" ? "item-grid" : "item-grid row")">
+                       @if(!(Model.ViewMode == "list")){
+                            @foreach (var product in Model.Products)
+                            {
+                                <div class="item-box col mb-2">
+                                    @await Html.PartialAsync("_ProductBox", product)
+                                </div>
+                            }
+                       }
+                       else{
+            
+                                @foreach (var product in Model.Products)
+                                {
+                                    <div class="item-box list-full-width">
+                                        @await Html.PartialAsync("_ProductBox", product)
+                                    </div>
+                                }
+                       }
+                       
+                    </div>
+                </div>
+            
+                var pager = Html.Pager(Model)
+                    .QueryParam("pagenumber")
+                    // for search page
+                    .BooleanParameterName("advs")
+                    .BooleanParameterName("isc")
+                    .BooleanParameterName("sid")
+                    .RenderEmptyParameters(true);
+            
+                @if (!await pager.IsEmpty())
+                {
+                    <div class="container-fluid mb-5 product-pager">
+                        <div class="row">
+                            <div class="col-12">
+                              <div class="pager text-center">
+                                @pager
+                             </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                }
+            }
+            else if (!string.IsNullOrEmpty(Model.NoResultMessage))
+            {
+                <div class="no-result">
+                    @Model.NoResultMessage
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="row clearfix">&nbsp;</div>

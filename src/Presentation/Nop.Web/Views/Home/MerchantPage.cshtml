@@ -1,0 +1,674 @@
+﻿@using Nop.Services.Localization
+@using Nop.Core
+@inject ILocalizationService localizationService
+@inject IStoreContext storeContext
+
+@{
+    Layout = "_ColumnsOneHome";
+
+    var homepageTitle = await localizationService.GetLocalizedAsync(await storeContext.GetCurrentStoreAsync(), s => s.HomepageTitle);
+
+    //title
+    if (!string.IsNullOrEmpty(homepageTitle))
+    {
+        NopHtml.AddTitleParts(homepageTitle);
+    }
+
+    var homepageDescription = await localizationService.GetLocalizedAsync(await storeContext.GetCurrentStoreAsync(), s => s.HomepageDescription);
+
+    //meta
+    if (!string.IsNullOrEmpty(homepageDescription))
+    {
+        NopHtml.AddMetaDescriptionParts(homepageDescription);
+    }
+
+   
+}
+<!-- <style>
+    .navbar-nav {
+        visibility: hidden !important;
+    }</style> -->
+@* <div class="page home-page">
+    <div class="page-body"> *@
+<!-- Header -->
+<header id="header" class="header">
+    <div class="header-content">
+        <div class="container-fluid ">
+            <div class="row mt-n5 px-3">
+                <div class="col-lg-6 d-flex">
+                    <div class="text-container pl-3">
+                        <h1 class="text-white hero-h1">
+                            Merchant Module
+                        </h1>
+                        <h2 class="text-white hero-2" >
+                            Streamline Your Supply Chain & Inventory Management With SupTomer!
+                        </h2>
+                        <p class="p-large text-white hero-p">
+                            SupTomer is an AI-powered comprehensive supply chain management tool that empowers merchants by streamlining orders, monitoring inventory, and enhancing supplier collaboration for peak operational efficiency.
+                        </p>
+                        <a class="btn-solid-lg page-scroll" href="@Url.RouteUrl("Login")" class="ico-login">Get Started</a>
+                    </div>
+                    <!-- end of text-container -->
+                </div>
+                <!-- end of col -->
+                <div class="col-lg-6">
+                    <div class="image-container">
+                        <img class="img-fluid rounded-lg" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/merchant-hero.png")" />
+                    </div>
+                    <!-- end of image-container -->
+                </div>
+                <!-- end of col -->
+            </div>
+            <!-- end of row -->
+        </div>
+        <!-- end of container -->
+    </div>
+    <!-- end of header-content -->
+</header>
+<!-- end of header -->
+<section id="Features" class=" mt-5">
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <h2>How SupTomer Works ?</h2>
+                <!-- <p>Risus commodo id odio turpis pharetra elementum.
+                  Pulvinar porta porta feugiat scelerisque in elit. Morbi
+                  rhoncus, tellus, eros consequat magna semper orci a
+                  tincidunt.</p> -->
+                        <a class="btn btn-primary" href="@Url.RouteUrl("Login")" class="ico-login">Get Started</a>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row align-items-stretch">
+                    <div class="col-md-6 ">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/dashboard_svgrepo.com.png")" alt="" />
+                                <h5 class="card-title">Centralized Dashboard</h5>
+                                <p class="card-text">
+                                    Access orders, inventory, and deliveries in one customizable hub for streamlined management.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/lamp-charge_svgrepo.com.png")" alt="" />
+                                <h5 class="card-title">Effortless Ordering</h5>
+                                <p class="card-text">Place supply orders directly within SupTomer, customize, and add special instructions seamlessly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/sup.png")" alt="" />
+                                <h5 class="card-title">Historical Insight</h5>
+                                <p class="card-text">
+                                    Tap into order history for reference, ensuring accurate and efficient supplier interactions.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /END THE FEATURETTES -->
+</section>
+
+<!-- Section 1 -->
+<section class="my-5 pb-3 section-about" id="about">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="image-container">
+                    <div class="left-section">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/m-about-right.png")" alt="" />
+                    </div>
+                </div>
+                <!-- end of image-container -->
+            </div>
+            <!-- end of col -->
+            <div class="col-lg-6 about-details">
+                <div class="text-container">
+                    <img class="mb-3" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/help-centre-wHIccsbh9k.png")" alt="" />
+
+                    <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        How SupTomer Helps Merchants ?
+                    </h2>
+                    <p class="wow fadeInUp about-p" data-wow-delay=".4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+
+                        Simplify and Amplify Your Supply chain Journey!
+                        SupTomer empowers merchants with a user-friendly hub, real-time data, and expert features to optimize their every Supply chain move. With tracking, reporting, and inventory management features SupTomer makes the lives of merchants easier than ever.
+                    </p>
+                </div>
+                <!-- end of text-container -->
+            </div>
+            <!-- end of col -->
+        </div>
+        <!-- end of row -->
+    </div>
+    <!-- end of container -->
+</section>
+<!--end Section 1 -->
+<!-- Section 2 -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="text-container">
+                <div class="about-content pt-5">
+                    <div class="section-title mb-4">
+                        <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                            The SupTomer Advantage - Transforming Supply Chains!
+                        </h2>
+                        <p class="wow fadeInUp about-p" data-wow-delay=".4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+
+                            SupTomer's cutting-edge solution streamlines merchant operations by optimizing ordering, inventory tracking, and communication. Our AI-powered system empowers your business with real-time insights, proactive suggestions, and efficient workflows.
+                        </p>
+                    </div>
+                    <ul>
+                        <li class="mb-3">Permissions and role-based access controls..</li>
+                        <li class="mb-3">Accessible from any web browser on both desktop and mobile devices.</li>
+                        <li class="mb-3">
+                            Detailed reporting and analytics to help merchants track and monitor.
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <!-- end of text-container -->
+        </div>
+        <!-- end of col -->
+        <div class="col-lg-6">
+            <div class="image-container">
+                <div class="right-section">
+                    <img src="@Url.Content("/Themes/SuptomerTheme/Content/assets/img/m-about-rightt.png")" alt="" />
+                </div>
+            </div>
+            <!-- end of image-container -->
+        </div>
+        <!-- end of col -->
+    </div>
+    <!-- end of row -->
+</div>
+<!-- end of container -->
+<!--end Section 2 -->
+<!-- Pricing -->
+<section id="pricing" class="pricing-section pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-9 mb-5">
+                <div class="section-title text-center mb-35">
+                    <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        Why Choose SupTomer as a Merchant ?
+                    </h2>
+                    <!-- <p class="wow fadeInUp" data-wow-delay=".4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                        Step into a realm of unparalleled supplier empowerment with SupTomer. Our comprehensive  suite of features delivers success backed by advanced analytics, streamlined communication,  and exceptional Integration.
+                    </p> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/icons8-monitor.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">  Inventory Mastery</h5>
+                            <p class="card-text">
+                                 Inventory Mastery
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/icons8-feature.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">Supplier Synergy</h5>
+                            <p class="card-text">
+                                Seamlessly manage vendor relationships, ratings, and order histories for harmonious collaborations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/system-outline-67-clock.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">Budgetary Brilliance</h5>
+                            <p class="card-text">
+                                Set and track budgets for various inventory expenses, ensuring financial control and optimal spending.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/system-outline-47-chat.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">Real-time Analytics</h5>
+                            <p class="card-text">
+                               Gain insights into Inventory cost breakdowns, supplier performance, and budget vs. actual spending.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/icons8-phone-message.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">Streamlined Communication</h5>
+                            <p class="card-text">
+                              Communicate seamlessly with suppliers, keeping orders on track and avoiding misunderstandings.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card">
+                    <div class="card-body d-flex align-items-center">
+                        <img class="mb-2" style="max-width:50px;" src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/system-outline-46-notification-bell.png")" alt="" />
+                        <div class="mx-4">
+                            <h5 class="card-title">Intuitive Interface</h5>
+                            <p class="card-text">
+                               SupTomer's user-friendly platform requires no downloads, ensuring convenience and accessibility.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Pricing -->
+<section id="pricing" class="pricing-section pt-120 pb-120">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12">
+                <div class="section-title text-center mb-35">
+                    <h2 class="mb-5 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        Discover the Power of Suptomer !
+                    </h2>
+                  <div class="video">
+                    <video  controls>
+                        <source src="@Url.Content("../Themes/SuptomerTheme/Content/video/intro.mp4")"  type="video/mp4">
+                        Your browser does not support HTML video.
+                      </video>
+                  </div>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+</section>
+
+<!-- Pricing -->
+<section id="pricing" class="pricing-section pt-120 pb-120 d-none">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xxl-5 col-xl-6 col-lg-8 col-md-9">
+                <div class="section-title text-center mb-35">
+                    <h2 class="mb-25 wow fadeInUp" data-wow-delay=".2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                        Choose a Plan
+                    </h2>
+                    <p class="wow fadeInUp" data-wow-delay=".4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                        Lorem ipsum dolor sit amet consetetur sadipscing elitr sswed
+                        diam nonumy eirmod tempor nvidunt.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="pricing-nav-wrapper mb-60">
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                <li role="presentation">
+                    <a class="active" id="pills-month-tab" data-bs-toggle="pill" href="#pills-month" role="tab" aria-controls="pills-month" aria-selected="true">Monthly</a>
+                </li>
+                <li role="presentation">
+                    <a id="pills-year-tab" data-bs-toggle="pill" href="#pills-year" role="tab" aria-controls="pills-year" aria-selected="false">Yearly</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-month" role="tabpanel" aria-labelledby="pills-month-tab">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$36</h1>
+                                <h3 class="package-name">Basic Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active"></i>Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i>Single User
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i>Unlimited
+                                        Storage
+                                    </li>
+                                    <li> <i class="fas fa-times"></i> 24/7 Support</li>
+                                    <li> <i class="fas fa-times"></i> Free Future Updates</li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover border-btn">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$56</h1>
+                                <h3 class="package-name">Standard Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 20+ Users
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited
+                                        Storage
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 24/7 Support
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Free Future
+                                        Updates
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$89</h1>
+                                <h3 class="package-name">Premium Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Users
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited
+                                        Storage
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 24/7 Support
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Free Future
+                                        Updates
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover border-btn">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-year" role="tabpanel" aria-labelledby="pills-year-tab">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$136</h1>
+                                <h3 class="package-name">Basic Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active" aria-hidden="true"></i> Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Single User
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited
+                                        Storage
+                                    </li>
+                                    <li> <i class="fas fa-times"></i> 24/7 Support</li>
+                                    <li> <i class="fas fa-times"></i> Free Future Updates</li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover border-btn">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$156</h1>
+                                <h3 class="package-name">Standard Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 20+ Users
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited
+                                        Storage
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 24/7 Support
+                                    </li>
+                                    <li> <i class="fas fa-times"></i> Free Future Updates</li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover">Subscribe</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-8 col-sm-10">
+                        <div class="single-pricing">
+                            <div class="pricing-header">
+                                <h1 class="price">$189</h1>
+                                <h3 class="package-name">Premium Account</h3>
+                            </div>
+                            <div class="content">
+                                <ul>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Acces
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited Users
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Unlimited
+                                        Storage
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> 24/7 Support
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-check active"></i> Free Future
+                                        Updates
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pricing-btn">
+                                <a href="javascript:void(0)" class="main-btn btn-hover border-btn">Get Start</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Testimonials -->
+<section class="slider-2 " id="Clients">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="image-container testmonial">
+                    <img class="img-fluid"
+                         src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/testimonial-img.png")"
+                         alt="alternative" />
+                </div>
+                <!-- end of image-container -->
+            </div>
+            <!-- end of col -->
+            <div class="col-lg-6">
+                <h2>What our customers says</h2>
+
+                <!-- Card Slider -->
+                <div class="slider-container">
+                    <div class="swiper-container card-slider">
+                        <div class="swiper-wrapper">
+                            <!-- Slide -->
+                            <div class="swiper-slide">
+                                <div class="card">
+
+                                    <div class="card-body text-left">
+                                        <p class="testimonial-text">
+                                            SupTomer's magic transformed our supply chain chaos into a symphony of efficiency
+                                        </p>
+                                        <p class="testimonial-author"><strong>Culinary Maverick</strong></p>
+                                        <p class="testimonial-author mt-2">CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of swiper-slide -->
+                            <!-- end of slide -->
+                            <!-- Slide -->
+                            <div class="swiper-slide">
+                                <div class="card">
+
+                                    <div class="card-body text-left">
+                                        <p class="testimonial-text">
+                                            SupTomer's magic transformed our supply chain chaos into a symphony of efficiency
+                                        </p>
+                                        <p class="testimonial-author"><strong>Culinary Maverick</strong></p>
+                                        <p class="testimonial-author mt-2">CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of swiper-slide -->
+                            <!-- end of slide -->
+                            <!-- Slide -->
+                            <div class="swiper-slide">
+                                <div class="card">
+
+                                    <div class="card-body text-left">
+                                        <p class="testimonial-text">
+                                            SupTomer's magic transformed our supply chain chaos into a symphony of efficiency
+                                        </p>
+                                        <p class="testimonial-author"><strong>Culinary Maverick</strong></p>
+                                        <p class="testimonial-author mt-2">CEO</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end of swiper-slide -->
+                            <!-- end of slide -->
+                        </div>
+                        <!-- end of swiper-wrapper -->
+                        <!-- Add Arrows -->
+                        <div class="testmonial-btns">
+                            <div class="swiper-button swiper-button-next"></div>
+                            <div class="swiper-button swiper-button-prev"></div>
+                        </div>
+
+                        <!-- end of add arrows -->
+                    </div>
+                    <!-- end of swiper-container -->
+                </div>
+                <!-- end of slider-container -->
+                <!-- end of card slider -->
+            </div>
+            <!-- end of col -->
+        </div>
+        <!-- end of row -->
+    </div>
+    <!-- end of container -->
+</section>
+<!-- end of slider-2 -->
+<!-- end of testimonials -->
+<!-- ======== subscribe-section start ======== -->
+<section id="contact" class="subscribe-section pt-120">
+    <div class="container">
+        <div class="subscribe-wrapper img-bg">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-7">
+                    <div class="section-title mb-15">
+                        <h2 class="text-white mb-25">Subscribe Our Newsletter</h2>
+                        <p class="text-white pr-5">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-5">
+                    <form action="#" class="subscribe-form">
+                        <input type="email"
+                               name="subs-email"
+                               id="subs-email"
+                               placeholder="Your Email" />
+                        <button type="submit" class="main-btn btn-hover">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ======== subscribe-section end ======== -->
+@* nopcommerce widget *@
+@* @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageTop })
+@await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "HomepageText" })
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBeforeCategories })
+@await Component.InvokeAsync(typeof(HomepageCategoriesViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBeforeProducts })
+@await Component.InvokeAsync(typeof(HomepageProductsViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBeforeBestSellers })
+@await Component.InvokeAsync(typeof(HomepageBestSellersViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBeforeNews })
+@await Component.InvokeAsync(typeof(HomepageNewsViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBeforePoll })
+@await Component.InvokeAsync(typeof(HomepagePollsViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HomepageBottom })*@
+@*     </div>
+</div>
+*@

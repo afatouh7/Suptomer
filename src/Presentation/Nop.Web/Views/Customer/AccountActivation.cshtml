@@ -1,0 +1,50 @@
+﻿@model AccountActivationModel
+@{
+    Layout = "_RgistrationLayout";
+    NopHtml.AddTitleParts(T("PageTitle.AccountActivation").Text);
+    NopHtml.AppendPageCssClassParts("html-account-activation-page");
+}
+
+<div class="container-fluid h-100">
+    <nav class="navbar fixed-top d-flex bg-white">
+        <div class="container">
+            <div class="row w-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image ml-2  websiteBrand" href="/Home">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/logo_dark.png")" alt="suptomer" />
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+
+                    <div class="">
+                        <!-- <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="languageToggle">
+                            <label class="custom-control-label" for="languageToggle">AR - EN</label>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container h-100 ">
+        <div class="row h-100 d-flex justify-content-center align-items-center">
+            <div class="col-md-12" style="text-align: center">
+                <div class="page-title">
+                    <h1>@T("Account.AccountActivation")</h1>
+                </div>
+                <div class="page-body">
+                    <div class="result">
+                        @Model.Result
+                    </div>
+                    <div class="buttons">
+                        <a href="@Model.ReturnUrl"
+                           style="text-decoration:none; display: block; margin: 0 auto"
+                           class="theme_btn  text-white mt-3 w-100 text-center">@T("Common.Continue")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

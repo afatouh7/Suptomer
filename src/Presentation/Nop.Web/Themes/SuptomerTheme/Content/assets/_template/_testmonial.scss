@@ -1,0 +1,154 @@
+
+.testimonial-section .testimonial-active-wrapper {
+    position: relative
+}
+
+.testimonial-section .testimonial-active-wrapper .shapes .shape {
+    position: absolute;
+    z-index: -1
+}
+
+@media only screen and (min-width: 768px) and (max-width:991px),(max-width:767px) {
+    .testimonial-section .testimonial-active-wrapper .shapes .shape {
+        display:none
+    }
+}
+
+.testimonial-section .testimonial-active-wrapper .shapes .shape.shape-1 {
+    left: -100px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+@media only screen and (min-width: 992px) and (max-width:1199px) {
+    .testimonial-section .testimonial-active-wrapper .shapes .shape.shape-1 {
+        width:44%
+    }
+}
+
+.testimonial-section .testimonial-active-wrapper .shapes .shape.shape-2 {
+    left: 150px;
+    bottom: -110px
+}
+
+@media only screen and (min-width: 992px) and (max-width:1199px) {
+    .testimonial-section .testimonial-active-wrapper .shapes .shape.shape-2 {
+        width:25%;
+        bottom: -50px
+    }
+}
+
+.testimonial-section .testimonial-active-wrapper .tns-controls {
+    position: absolute;
+    right: 175px;
+    bottom: 0;
+    z-index: 9;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+@media only screen and (min-width: 992px) and (max-width:1199px) {
+    .testimonial-section .testimonial-active-wrapper .tns-controls {
+        right:0
+    }
+}
+
+@media(max-width: 767px) {
+    .testimonial-section .testimonial-active-wrapper .tns-controls {
+        right:0;
+        left: 0;
+        bottom: -75px;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width:767px) {
+    .testimonial-section .testimonial-active-wrapper .tns-controls {
+        right:0;
+        left: auto;
+        bottom: 0
+    }
+}
+
+.testimonial-section .testimonial-active-wrapper .tns-controls button {
+    border: 2px solid #c7cad3;
+    color: #c7cad3;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin: 0 8px;
+    -webkit-transition: all .3s ease-out 0s;
+    transition: all .3s ease-out 0s;
+    background: 0 0
+}
+
+.testimonial-section .testimonial-active-wrapper .tns-controls button i {
+    font-weight: 700
+}
+
+.testimonial-section .testimonial-active-wrapper .tns-controls button:hover {
+    color: theme-color(primary);
+    border-color: theme-color(primary);
+    -webkit-box-shadow: 0 6px 16px rgba(88,100,255,.25);
+    box-shadow: 0 6px 16px rgba(88,100,255,.25)
+}
+
+.testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .testimonial-img {
+    text-align: right;
+    position: relative
+}
+
+@media only screen and (min-width: 768px) and (max-width:991px) {
+    .testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .testimonial-img {
+        text-align:left;
+        display: inline-block;
+        margin-bottom: 50px
+    }
+}
+
+@media(max-width: 767px) {
+    .testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .testimonial-img {
+        text-align:left;
+        display: inline-block;
+        margin-bottom: 30px
+    }
+}
+
+.testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .testimonial-img img {
+    max-width: 100%
+}
+
+.testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .testimonial-img .quote {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 10px solid #fff;
+    background: theme-color(primary);
+    font-size: 40px;
+    line-height: 1;
+    color: #fff;
+    -webkit-box-shadow: 0 0 26px rgba(155,155,155,.16);
+    box-shadow: 0 0 26px rgba(155,155,155,.16);
+    position: absolute;
+    top: 50%;
+    right: -50px;
+    -webkit-transform: translateY(-50%) rotate(180deg);
+    transform: translateY(-50%) rotate(180deg)
+}
+
+.testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .content-wrapper .content p {
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 30px
+}
+
+.testimonial-section .testimonial-active-wrapper .testimonial-active .single-testimonial .content-wrapper .info h4 {
+    margin-bottom: 10px
+}

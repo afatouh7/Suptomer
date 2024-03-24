@@ -1,0 +1,35 @@
+.footer-container {
+  background-image: url(../assets/img/footer-bg.svg.png);
+  background-position: bottom;
+  background-size: 100vw auto;
+  background-repeat: no-repeat;
+  height: 470px;
+  padding-top: 227px;
+  /* border: 1px solid red; */
+}
+
+
+/**********************************/
+/*     18. Back To Top Button     */
+/**********************************/
+a.back-to-top {
+	position: fixed;
+	z-index: 999;
+	right: 0.75rem;
+	bottom: 0.75rem;
+	display: none;
+	width: 2.625rem;
+	height: 2.625rem;
+	border-radius: 1.875rem;
+    background-color: theme-color(primary) !important;
+	background-image: url("../assets/img/up-arrow.png");
+    background-repeat: no-repeat;
+    background-position:center center;
+	background-size: 1.125rem 1.125rem;
+	text-indent: -9999px;
+    outline: 2px solid white;
+}
+
+a:hover.back-to-top {
+	background-color: theme-color(primary) !important; 
+}

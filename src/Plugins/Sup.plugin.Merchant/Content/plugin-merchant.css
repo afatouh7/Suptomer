@@ -1,0 +1,9 @@
+.page-title h1 {
+    color: #3D005E !important;
+    font-family: Inter !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    flex-grow: 1;
+    line-height: normal !important;
+}

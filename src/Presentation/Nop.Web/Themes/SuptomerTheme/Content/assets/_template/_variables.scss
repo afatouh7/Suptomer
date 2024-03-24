@@ -1,0 +1,55 @@
+/*****************************************
+Colors:
+- main color - purple  #3D005E  
+- Backgrounds - blue #0079f9
+- Backgrounds - light gray #f7fcfd
+- Buttons, bullets, icons, links - turquoise #00bfd8
+- Cards border, inputs border - light gray #c4d8dc
+- Text headers, navbar links - black #162447
+- Text body - black #5B657E
+******************************************/
+// fonts
+$headers-font: "Arimo";
+$text-font: "Inter", sans-serif;
+$body-font: "Inter";
+
+//colors
+$color-primary: rgba(61, 0, 94, 1);
+$color-primary-50: rgba(61, 0, 94, 0.5);
+$color-primary-5: rgba(61, 0, 94, 0.05);
+$color-primary-20: rgba(61, 0, 94, 0.2);
+$color-light-purple: #f4f4f4;
+$color-secondary: #fdd446;
+// $color-secondary2: #fdd446;
+$color-support: #b27aff;
+$danger: #f53d3d;
+$sucess: #27a427;
+$light: #3d005e1a;
+$dark: #222;
+// #A1A1A1
+$color-body: #5b657e; 
+$color-heading: #162447;
+$color-form-border: #8D8D8D;
+$theme-colors: (
+    primary: $color-primary,
+    secondary: $color-secondary,
+    support: $color-support,
+    sucess: $sucess,
+    danger: $danger,
+    light-purple: $color-light-purple,
+    light: $light,
+    dark: $dark,
+    color-body: $color-body,
+    color-heading: $color-heading,
+    color-form-border:$color-form-border
+);
+
+//one pallete
+@function theme-color($key) {
+    @return map-get($theme-colors, $key);
+}
+
+//dynamic pallets
+@function shadow-color($key, $color-pallet) {
+    @return map-get($color-pallet, $key);
+}

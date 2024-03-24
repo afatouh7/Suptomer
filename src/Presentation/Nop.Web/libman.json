@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "chartjs-chart-geo@2.1.0",
+      "destination": "wwwroot/lib_npm/chartjs-chart-geo/",
+      "files": [
+        "build/Chart.Geo.min.js",
+        "build/Chart.Geo.js",
+        "build/Chart.Geo.esm.js"
+      ]
+    }
+  ,
+{
+  "provider": "cdnjs",
+  "library": "PapaParse@5.4.1",
+  "destination": "wwwroot/lib_npm/PapaParse/",
+  "files": [
+    "papaparse.min.js",
+    "papaparse.js"
+  ]
+}
+]
+}

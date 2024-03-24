@@ -1,0 +1,45 @@
+﻿@model NewProductsModel
+@{
+    Layout = "_MerchantAdminLayout";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.NewProducts").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-recently-added-products-page");
+
+    NopHtml.SetActiveMenuItemSystemName("Products");
+}
+
+@{
+    var currentCategoryId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.ActionContext.RouteData.Values["categoryId"].ToString());
+    }
+
+    var currentProductId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.ActionContext.RouteData.Values["productId"].ToString());
+    }
+}
+
+@section left{
+    @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent), new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+}
+
+<div class="page recently-added-products-page">
+    <div class="page-title">
+        <h1>All Products</h1>
+    </div>
+    <div class="page-body">
+        @await Html.PartialAsync("_CatalogSelectors", Model.CatalogProductsModel)
+        @{ 
+            var newProductsViewData = new ViewDataDictionary(ViewData);
+            newProductsViewData["fetchUrl"] = Html.Raw(Url.Action("GetAllProducts", "Catalog"));
+        }
+        @await Html.PartialAsync("_CatalogProducts", Model.CatalogProductsModel, newProductsViewData)
+    </div>
+</div>

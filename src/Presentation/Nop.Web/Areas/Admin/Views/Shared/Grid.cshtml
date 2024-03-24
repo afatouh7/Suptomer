@@ -1,0 +1,155 @@
+﻿@model DataTablesModel
+
+@using System.Net;
+<link rel="stylesheet" href="~/Plugins/Widgets.NivoSlider/Content/nivoslider/nivo-slider.css" />
+<link rel="stylesheet" href="~/Plugins/Widgets.NivoSlider/Content/nivoslider/themes/custom/custom.css" />
+<style>
+  .col.mb-4 {
+    max-width: 240px;
+}
+.card.p-3.bg-white {
+    max-width: 205px;
+}
+img.nivo-main-image{margin: 0 auto !important;}
+</style>
+<!-- partial table to draw datatable -->
+<section class="section-products">
+
+    <div class="row">
+
+        <!-- Product 1 -->
+        <div class="col mb-4">
+
+            <div class="card p-3 bg-white">
+                <div class="card-header border-0 d-flex justify-content-end p-0">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="">
+                      <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="nivoSlider">
+                    <img src="@Url.Content("~/images/product/pro_01(9).png")" alt="" />
+                    <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                    <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+                </div>
+
+                <div class="stats mt-1">
+                    <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+                </div>
+                <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+                <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+            </div>
+
+        </div>
+    <!-- Product 1 -->
+    <div class="col mb-4">
+
+      <div class="card p-3 bg-white">
+          <div class="card-header border-0 d-flex justify-content-end p-0">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="">
+                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="nivoSlider">
+              <img src="@Url.Content("~/images/product/pro_01(10).png")" alt="" />
+              <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+              <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+          </div>
+
+          <div class="stats mt-1">
+              <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+          </div>
+          <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+          <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+      </div>
+
+  </div>
+
+      <!-- Product 1 -->
+      <div class="col mb-4">
+
+        <div class="card p-3 bg-white">
+            <div class="card-header border-0 d-flex justify-content-end p-0">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" value="">
+                  <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="nivoSlider">
+                <img src="@Url.Content("~/images/product/pro_01(12).png")" alt="" />
+                <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+            </div>
+
+            <div class="stats mt-1">
+                <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+            </div>
+            <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+            <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+        </div>
+
+    </div>
+
+        <!-- Product 1 -->
+        <div class="col mb-4">
+
+          <div class="card p-3 bg-white">
+              <div class="card-header border-0 d-flex justify-content-end p-0">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" value="">
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="nivoSlider">
+                  <img src="@Url.Content("~/images/product/pro_01(11).png")" alt="" />
+                  <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                  <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+              </div>
+
+              <div class="stats mt-1">
+                  <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+              </div>
+              <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+              <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+          </div>
+
+      </div>
+
+        <!-- Add more product cards here -->
+
+
+    </div>
+
+
+</section>
+<!-- D:\2023\Squadio\Suptomer2\merged branch\Suptomer\src\Plugins\Nop.Plugin.Widgets.NivoSlider\Scripts\jquery.nivo.slider.js -->
+<script src="~/Plugins/Widgets.NivoSlider/Scripts/jquery.nivo.slider.js" asp-location="Footer"></script>
+<script asp-location="Footer">
+  $(window).on('load', function () {
+    $('.nivoSlider').nivoSlider({
+      effect: 'sliceUpDown',
+      manualAdvance:true,
+      directionNav: true,
+      prevText:'<i class="fas fa-chevron-left"></i>',
+      nextText:'<i class="fas fa-chevron-right"></i>',
+      controlNav: true
+    });
+  });
+</script>

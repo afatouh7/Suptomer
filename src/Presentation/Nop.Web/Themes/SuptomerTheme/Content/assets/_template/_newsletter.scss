@@ -1,0 +1,107 @@
+// .Subscribe-section {
+//   background-image: url("../assets/img/subscribe-bg.svg.png");
+//   background-position: center center;
+//   background-size: cover;
+//   border-radius: 20px;
+// }
+// .box {
+//   padding: 30px;
+//   h2 {
+//     margin: 10px 0 0;
+//   }
+//   p {
+//     color: #312940;
+//     margin: 10px;
+//   }
+// }
+
+/* ======= subscribe css ======= */
+@media (max-width: 767px) {
+  .subscribe-section .section-title h2 {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .subscribe-section .section-title h2 {
+    font-size: 32px;
+  }
+}
+
+.subscribe-section .subscribe-wrapper {
+  background-image: url("../assets/img/subscribe-bg.svg.png");
+  background-repeat: no-repeat;
+  padding: 65px 50px 50px;
+  border-radius: 30px;
+}
+
+@media (max-width: 767px) {
+  .subscribe-section .subscribe-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .subscribe-section .subscribe-wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.subscribe-section .subscribe-wrapper .subscribe-form {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.subscribe-section .subscribe-wrapper .subscribe-form input {
+  width: 100%;
+  height: auto !important;
+  padding: 20px 30px;
+  padding-right: 142px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid transparent;
+  -webkit-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+}
+
+.subscribe-section .subscribe-wrapper .subscribe-form input:focus {
+  -webkit-box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.35);
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.35);
+}
+
+
+.subscribe-section .subscribe-wrapper .subscribe-form button {
+  
+  border-radius: 18px !important;
+  position: absolute;
+    top: 5px;
+    right: 5px !important;
+    padding: 16px 25px; 
+    font-weight: 700;
+}
+.subscribe-section .subscribe-wrapper .subscribe-form button {
+
+  color: #fff;
+  background-color: theme-color(primary) !important;
+}
+@media (max-width: 767px) {
+  .subscribe-section .subscribe-wrapper .subscribe-form button {
+    position: static;
+    margin-top: 20px;
+    color: #fff;
+    background-color: theme-color(primary) !important;
+    padding: 17.5px 35px;
+  }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .subscribe-section .subscribe-wrapper .subscribe-form button {
+    position: absolute;
+    margin-top: 0px;
+    color: #fff;
+    background: theme-color(primary) !important;
+    padding: 17.5px 25px;
+  }
+}

@@ -1,0 +1,51 @@
+﻿@model ManufacturerNavigationModel
+
+@using Nop.Core.Domain.Catalog
+
+@if (Model.Manufacturers.Count > 0)
+{
+    @*suptomer ::  manufacturer navigation *@
+    <select class="simple__ddl">
+        <option value="0">Manufacturer</option>
+        @foreach (var manufacturer in Model.Manufacturers)
+        {
+            <option class="@(manufacturer.IsActive ? "active" : "inactive")" 
+             onchange="doIt(@(Url.RouteUrl<Manufacturer>(new { SeName = manufacturer.SeName })))">
+                @manufacturer.Name
+            </option>
+        }
+    </select>
+
+    @*original manufacturer filter*@
+    <div class="block block-manufacturer-navigation d-none">
+        <div class="title">
+            <strong>@T("Manufacturers")</strong>
+        </div>
+        <div class="listbox">
+            <ul class="list">
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    <li class="@(manufacturer.IsActive ? "active" : "inactive")">
+                        <a href="@(Url.RouteUrl<Manufacturer>(new { SeName = manufacturer.SeName }))">@manufacturer.Name</a>
+                    </li>
+                }
+            </ul>
+            @if (Model.TotalManufacturers > Model.Manufacturers.Count)
+            {
+                <div class="view-all">
+                    <a href="@Url.RouteUrl("ManufacturerList")">@T("Manufacturers.ViewAll")</a>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<script>
+
+    function doIt(baseUrl) {
+        debugger;
+        console.log(baseUrl);
+        window.location.href = baseUrl;
+    }
+
+</script>

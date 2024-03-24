@@ -1,0 +1,302 @@
+﻿@model DashboardModel
+@inject IPermissionService permissionService
+@using Nop.Services.Security
+@using Nop.Web.Areas.Admin.Models.Home;
+@{
+    //page title
+    ViewBag.PageTitle = T("Admin.Dashboard").Text;
+    Layout = "_MerchantAdminLayout";
+
+    var canManageOrders = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageOrders);
+    var canManageCustomers = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers);
+    var canManageProducts = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts);
+    var canManageReturnRequests = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests);
+
+    //close configuration steps value
+    const string closeCardAttributeName = "CloseConfigurationSteps";
+    var closeConfigurationStepsCard = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), closeCardAttributeName);
+
+    //active menu item (system name)
+    NopHtml.SetActiveMenuItemSystemName("Dashboard");
+}
+
+<link rel="stylesheet" href="~/lib_npm/ionicons/css/ionicons.min.css" />
+<script src="~/lib_npm/chart.js/Chart.min.js" asp-location="Head"></script>
+<!-- progress bar -->
+<link rel="stylesheet" href="~/lib/progress/cssprogress.css" />
+<script src="~/lib/progress/functions.js" asp-location="Head"></script>
+<div class="content-header">
+    <h1>
+        @T("Admin.Dashboard")
+    </h1>
+</div>
+<link rel="stylesheet" href="~/lib_npm/ionicons/css/ionicons.min.css" />
+<script src="~/lib_npm/chart.js/Chart.min.js" asp-location="Head"></script>
+<!-- progress bar -->
+<link rel="stylesheet" href="~/lib/progress/cssprogress.css" />
+
+<!-- <div class="content-header">
+    <h1>
+        @T("Admin.Dashboard")
+    </h1>
+</div> -->
+<section class="content  ">
+    <div class="container-fluid">
+       <div class="row align-items-stretch ">
+        <!-- right col -->
+        <div class="col-sm-12 col-md-8 col-lg-8 align-items-stretch ">
+                @await Html.PartialAsync("_TopCards")
+              <!-- ------------shipment overtime---------------------------- -->
+              <div class="col-12 mt-4">
+                <div class="card widget-flex">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <p class="card-text">  Shipments over time</p>
+                        <div class="filteration ml-auto">
+                            <select name="" id="" class="chart_ddl ml-2"><option> category</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> branch</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> Month</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> year</option></select>
+                        </div>
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="shippment_chart" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="p-3">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0 mr-2">
+                                    <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/order-1_svgrepo.com.png")" alt="" />
+                                </div>
+                               
+                              </div>
+                              <div class="d-block">Total invoice</div>
+                              <h4 class="card-title mb-1">4520</h4>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="p-3">
+                              <div class="card-title d-flex align-items-start justify-content-between">
+                                <div class="avatar flex-shrink-0 mr-2">
+                                    <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/order-1_svgrepo.com.png")" alt="" />
+                                </div>
+                               
+                              </div>
+                              <div class="d-block">Total invoice</div>
+                              <h4 class="card-title mb-1">4520</h4>
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="row">
+                    <div class="col-12 d-flex align-items-center justify-content-between" >
+                        <div>
+                            <div class="text-primary">saving summery</div>
+                            <p>
+                                <span class="tiny">
+                                    Tracking number
+                                </span>
+                                <br/>
+                                <span class="tiny_light">
+                                    93883838383
+                                </span>
+                            </p>
+                            <p>
+                                <span class="tiny">
+                                    Tracking number
+                                </span>
+                                <br/>
+                                <span class="tiny_light">
+                                    93883838383
+                                </span>
+                            </p>
+                        </div>
+                        <canvas id="saving_chart" style="width:180px !important;height:180px !important;"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- ---------------------------------------- -->
+        </div>
+        <!-- left col -->
+             <!-- ------------expierd product---------------------------- -->
+        <div class="col-sm-12 col-md-4 col-lg-4">
+                <!-- ------------Product Progress report---------------------------- -->
+                <div class="card widget-flex mb-3">
+                    <div class="card-body p-2">
+                        <p class="card-text left-card-title">Product’s about to be expired</p>
+                    </div>
+                    <div class="chart-area progress-area">
+
+                        <div class="cssProgress">
+                            <h5 class="progress-titles">Frozen chicken</h5>
+                            <div class="progress4">
+                              <div class="cssProgress-bar" data-percent="75" style="width: 75%;">
+                                  <span class="progressvalue">75/100</span>
+                            </div>
+                            </div>
+                          </div>
+                          <div class="cssProgress">
+                            <h5 class="progress-titles">Meat</h5>
+                            <div class="progress4">
+                              <div class="cssProgress-bar" data-percent="20" style="width: 20%;">
+                                <span class="progressvalue">20/100</span>
+                            </div>
+
+                            </div>
+                          </div>
+                          <div class="cssProgress">
+                            <h5 class="progress-titles">vegetables</h5>
+                            <div class="progress4">
+                              <div class="cssProgress-bar" data-percent="50" style="width: 50%;">
+                                <span class="progressvalue">50/100</span>
+
+                            </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-light-theme">Order Now</button>
+                    </div>
+                </div>
+                <div class="card widget-flex mb-3 merchant-card-light">
+                    <div class="card-body p-2">
+                        <p class="card-text left-card-title">Tracking</p>
+                     <div class="chart-area mt-2 mb-4 d-flex justify-content-center align-items-center">
+                        <div class="circle_progress">
+                            <div class="cssProgress-bar" data-percent="20" style="width: 50%;">
+                              <span class="progressvalue"> 70%</span>
+                          </div>
+                          </div>
+                      </div>
+                         </div>
+                       <div class="mt-2">
+                          <div class="d-flex">
+                            <p>
+                                <span class="tiny">
+                                    Tracking number
+                                </span>
+                                <br/>
+                                <span class="tiny_light">
+                                    93883838383
+                                </span>
+                            </p>
+                        </div>
+                        <div class="d-flex">
+                            <p>
+                                <span class="tiny">
+                                    Supplier
+                                </span>
+                                <br/>
+                                <span class="tiny_light">
+                                    Sahdy
+                                </span>
+                            </p>
+                        </div>
+                        <div class="d-flex">
+                            <p>
+                                <span class="tiny">
+                                    Status                                </span>
+                                <br/>
+                                <span class="tiny_light">
+                                    Approved
+                                </span>
+                            </p>
+                        </div>
+                  
+                       </div>
+                       
+                    <!-- <div>
+                        <button class="btn btn-light-theme">Add Sale</button>
+                    </div> -->
+                </div>
+
+                <div class="row align-items-center p-3">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <p class="text-dark2 mb-2">Get more Discounts<br/>and vouchers</p>
+                            <!-- <p class="text-light2">Lorem ipsum dolor sitamet consectetur.Viverra bibendum </p> -->
+                        </div>
+                        <!-- <a class="btn btn-outline-sm rounded" href="/Admin/Affiliate/List">Refer for other</a> -->
+                        <a class="btn btn-outline-sm px-3 py-2 rounded" href="/">Refer for other</a>
+                    </div>
+                    <div class="col-6">
+                        <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/dash-card.svg")" alt="" style="width: 100%; height: auto;" />
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+       </div>
+    
+    </div>
+</section>
+
+
+<!-- todo: search why i coan not seperate code in diff js file -->
+<!-- progress bar -->
+<script src="~/lib/progress/functions.js" asp-location="Footer"></script>
+<script>
+    //  -===saving chart=========================
+   // Data values
+   const dataValues = [30, 70]; // Change these values as per your requirement
+        // Chart configuration
+        const config = {
+        type: 'pie',
+        data: {
+            datasets: [
+            {
+                data: dataValues,
+                backgroundColor: ['#ECE6EF', '#3D005E'], // Colors for each data value
+            },
+            ],
+        },
+        };
+
+        // Create the chart
+        const ctx = document.getElementById('saving_chart').getContext('2d');
+        new Chart(ctx, config);
+
+    // ==================shipment  chart==================
+
+    var ctx4 = $('#shippment_chart');
+
+
+    // Data for the line charts
+    var shipment_data = {
+        labels: ["01", "02", "03", "04", "05", "06"],
+        datasets: [
+            {
+                label: "Total Spent",
+                data: [5, 10, 20, 10, 5, 15],
+                borderColor: "#3D005E",
+                fill: false
+            }
+        ]
+    };
+
+    // Chart options
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Create the chart
+    new Chart(ctx4, {
+        type: "line",
+        data: shipment_data,
+        options: options
+    });
+
+</script>
+@* <nop-alert asp-alert-id="loadOrderStatisticsAlert" asp-alert-message="@T("Admin.SalesReport.OrderStatistics.Alert.FailedLoad")" />
+<nop-alert asp-alert-id="loadCustomerStatisticsAlert" asp-alert-message="@T("Admin.Reports.Customers.CustomerStatistics.Alert.FailedLoad")" />
+ *@

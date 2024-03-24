@@ -1,0 +1,30 @@
+﻿@model ClickPayResponseModel
+
+<h2>Payment Response</h2>
+<div>
+    <p>Transaction Reference: @Model.TranRef</p>
+    <p>Cart ID: @Model.CartId</p>
+    <p>Cart Description: @Model.CartDescription</p>
+    <p>Cart Currency: @Model.CartCurrency</p>
+    <p>Cart Amount: @Model.CartAmount</p>
+    <h3>Customer Details</h3>
+    <p>Name: @Model.CustomerDetails.Name</p>
+    <p>Email: @Model.CustomerDetails.Email</p>
+    <p>Phone: @Model.CustomerDetails.Phone</p>
+    <p>Street: @Model.CustomerDetails.Street1</p>
+    <p>City: @Model.CustomerDetails.City</p>
+    <p>State: @Model.CustomerDetails.State</p>
+    <p>Country: @Model.CustomerDetails.Country</p>
+    <p>IP: @Model.CustomerDetails.IP</p>
+    <h3>Payment Result</h3>
+    <p>Status: @Model.PaymentResult.ResponseStatus</p>
+    <p>Code: @Model.PaymentResult.ResponseCode</p>
+    <p>Message: @Model.PaymentResult.ResponseMessage</p>
+    <p>Acquirer Message: @Model.PaymentResult.AcquirerMessage</p>
+    <p>Acquirer RRN: @Model.PaymentResult.AcquirerRRN</p>
+    <p>Transaction Time: @Model.PaymentResult.TransactionTime</p>
+    <h3>Payment Info</h3>
+    <p>Card Type: @Model.PaymentInfo.CardType</p>
+    <p>Card Scheme: @Model.PaymentInfo.CardScheme</p>
+    <p>Payment Description: @Model.PaymentInfo.PaymentDescription</p>
+</div>

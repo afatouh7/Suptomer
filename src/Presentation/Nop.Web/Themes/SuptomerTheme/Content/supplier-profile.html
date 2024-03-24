@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-assets/js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-assets/js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-assets/js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-assets/js"> <!--<![endif]-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link
+      rel="stylesheet"
+      href="https://cdn.usebootstrap.com/bootstrap/4.6.0/assets/css/bootstrap.min.css"
+    /> -->
+  <!-- Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+
+  <link href="./dist/bootstrap.css" rel="stylesheet" />
+  <link href="./dist/fontawesome-all.css" rel="stylesheet" />
+  <link href="./dist/swiper.css" rel="stylesheet" />
+  <link href="./dist/magnific-popup.css" rel="stylesheet" />
+  <link href="./dist/styles.css" rel="stylesheet" />
+  <!-- theme style -->
+  <link href="./dist/style.css" rel="stylesheet" />
+  <!-- Favicon  -->
+  <link rel="icon" href="images/favicon.png" />
+
+</head>
+
+<body data-spy="scroll" data-target=".fixed-top">
+  <!-- Preloader -->
+  <div class="spinner-wrapper">
+    <div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+  </div>
+  <!-- end of preloader -->
+  <div class="container-fluid ">
+
+    <!-- Navigation -->
+
+    <nav class="navbar fixed-top d-flex bg-white">
+      <div class="container">
+        <div class="row w-100 justify-content-center align-items-center">
+          <div class="col-6">
+            <!-- Image Logo -->
+            <a class="navbar-brand logo-image ml-2" href="index.html"><img src="/assets/img/logo_dark.png"
+                alt="suptomer" /></a>
+          </div>
+          <div class="col-6 text-right">
+
+            <div class="">
+              <div class="custom-control custom-switch">
+                X
+              </div>
+
+            </div>
+          </div>
+        </div>
+</div>
+    </nav>
+    <div class="container mt-2 ">
+
+      <div class="row">
+        <div class="col-md-12 mt-5">
+
+          <div class="container py-4">
+            <div class="card border-0">
+              <div class="card-header bg-tranperatnt border-0 profile-tabs-header">
+                <ul class="nav nav-tabs card-header-tabs d-flex justify-content-center">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info">Personal info
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-image-tab" data-toggle="tab" href="#shipment-info"> Shipment
+                      info</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="location-tab" data-toggle="tab" href="#location">Documents</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="confirm-tab" data-toggle="tab" href="#confirm">Signature</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body profile-tabs-body">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="basic-info">
+                    <h4>Supplier Profile</h4>
+
+                    <p class="mb-4">for the purpose of industry regulation , your details are required</p>
+                    <div class="step-header d-flex  align-items-center justify-content-between">
+                      <h5 class="step-title">Personal Info</h5>
+                      <button type="button" class="btn btn-outline-primary btn-sm">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                      </button>
+                    </div>
+
+                    <hr class="my-2 " />
+                    <form>
+                      <div class="form-group upload-img"> <label for="profile-image">Profile Image:</label>
+
+                        <div class="d-flex align-items-center w-100">
+                          <img src="./assets/img/profile.png" alt="User Profile" class="profile-image rounded-circle">
+                          <button type="button" class="btn btn-outline-primary btn-sm"
+                            onclick="document.getElementById('imageInput').click()">upload image</button>
+                          <input type="file" id="imageInput" style="display: none">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                          </div>
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <!-- do not delete for design pupose -->
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+
+
+                        </div>
+                        <div class="col-sm-12 d-flex justify-content-end">
+                          <!-- Add more fields as needed -->
+                          <button class="btn btn-primary" data-toggle="tab" href="#shipment-info">Next</button>
+                        </div>
+                      </div>
+
+                    </form>
+                  </div>
+                  <div class="tab-pane fade" id="shipment-info">
+
+                    <h4>Supplier Profile</h4>
+
+                    <p class="mb-4">for the purpose of industry regulation , your details are required</p>
+                    <div class="step-header d-flex  align-items-center justify-content-between">
+                      <h5 class="step-title">Shipment info</h5>
+                    </div>
+
+                    <hr class="my-2 " />
+                    <form>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+                        </div>
+                        <div class="col-sm-6 ">
+                          <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <div class="row mt-3 ">
+                              <div class="col-12">
+                                <lable>Working Days</lable>
+                              </div>
+                              <div class="col-6">
+                                <select class="form-control p-0">
+                                  <option>From</option>
+                                  <option>1</option>
+                                </select>
+                              </div>
+                              <div class="col-6">
+                                <select class="form-control p-0">
+                                  <option>To</option>
+                                  <option>1</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <select class="form-control" id="day_off">
+                              <option> Day off</option>
+                              <option>1</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-group">
+                            <label for="name">Time frame (from):</label>
+                            <div class="my-2 d-flex">
+                              <input type="time" class="form-control time mr-3" id="name" placeholder="Enter your name">
+                              <select class="form-control timezone ml-2" id="">
+                                <option> Cairo (+3)</option>
+                                <option>UTC</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                          <div class="form-group">
+                            <label for="name">Time frame (to):</label>
+                            <div class="my-2 d-flex">
+                              <input type="time" class="form-control time mr-3" id="name" placeholder="Enter your name">
+                              <select class="form-control timezone ml-2" id="">
+                                <option> Cairo (+3)</option>
+                                <option>UTC</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="step-header d-flex  align-items-center justify-content-between">
+                            <h5 class="step-title">Coverage Zones</h5>
+                          </div>
+                          <hr class="my-2 " />
+                        </div>
+                        <div class="col-12">
+                          <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d27292.551301976942!2d29.945516299999998!3d31.232670600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1692956720801!5m2!1sen!2seg"
+                            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="col-sm-12 d-flex justify-content-end">
+                          <!-- Add more fields as needed -->
+                          <button class="btn btn-primary" data-toggle="tab" href="#location">Next</button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                  </div>
+                  <div class="tab-pane fade" id="location">
+
+                    <h4>Documents</h4>
+
+                    <p class="mb-4">for the purpose of industry regulation , your details are required</p>
+                    <div class="step-header d-flex  align-items-center justify-content-between">
+                      <h5 class="step-title">Documents</h5>
+                    </div>
+
+                    <hr class="my-2 " />
+                    <form>
+                   
+                      <!-- Add more fields as needed -->
+                      <div class="row">
+                        <div class="col-12">
+
+                          <div class="card upload-doc  my-4">
+                            <div class="card-body d-flex align-items-center">
+                              <img src="./assets/img/doc.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                alt="Icon">
+                              <div class="ml-3">
+                                <h5 class="card-title">Supplier’s papers</h5>
+                                <p class="card-text">Upload photo of the photo page of passport.</p>
+                              </div>
+                              <div class="ml-auto">
+                                <i class="fas fa-arrow-right"></i>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card upload-doc  my-4">
+                            <div class="card-body d-flex align-items-center">
+                              <img src="./assets/img/n-id.png" class="rounded-circle" style="width: 50px; height: 50px;"
+                                alt="Icon">
+                              <div class="ml-3">
+                                <h5 class="card-title">National ID</h5>
+                                <p class="card-text">Take a photo of both sides of your national ID</p>
+                              </div>
+                              <div class="ml-auto">
+                                <i class="fas fa-arrow-right"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 d-flex justify-content-end">
+                      <button class="btn btn-primary" data-toggle="tab" href="#confirm">Next</button></div>
+                    </form>
+                  </div>
+                  <div class="tab-pane fade" id="confirm">
+                   
+                    <h4>Signature</h4>
+
+                    <p class="mb-4">for the purpose of industry regulation , your details are required</p>
+                    <div class="step-header d-flex  align-items-center justify-content-between">
+                      <h5 class="step-title">Signature</h5>
+                    </div>
+
+                    <hr class="my-2 " />
+                    <form>
+                   
+                      <!-- Add more fields as needed -->
+                      <div class="row">
+                        <div class="col-12">
+
+                          <div class="card upload-doc border-dashed d-flex  my-4">
+                            <div class="card-body d-flex flex-column align-items-center justify-content-center">
+              
+                           
+                                <p class="card-text">Upload/Browse</p>
+                                <p>
+                                  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                </p>
+                                 
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-12 d-flex justify-content-end">
+                    <button class="btn btn-primary">Submit</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Tabs content -->
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // $(document).ready(function () {
+    //   // Update confirm section with entered data before submitting
+    //   $('#name').keyup(function () {
+    //     $('#confirm-name').text($(this).val());
+    //   });
+
+    //   $('#email').keyup(function () {
+    //     $('#confirm-email').text($(this).val());
+    //   });
+
+    //   $('#location').keyup(function () {
+    //     $('#confirm-location').text($(this).val());
+    //   });
+    // });
+  </script>
+  <!-- Scripts -->
+  <script src="./assets/js/jquery.min.js"></script>
+  <!-- jQuery for Bootstrap's JavaScript plugins -->
+  <script src="./assets/js/popper.min.js"></script>
+  <!-- Popper tooltip library for Bootstrap -->
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <!-- Bootstrap framework -->
+  <script src="./assets/js/jquery.easing.min.js"></script>
+  <!-- jQuery Easing for smooth scrolling between anchors -->
+  <script src="./assets/js/swiper.min.js"></script>
+  <!-- Swiper for image and text sliders -->
+  <script src="./assets/js/jquery.magnific-popup.js"></script>
+  <!-- Magnific Popup for lightboxes -->
+  <script src="./assets/js/validator.min.js"></script>
+  <!-- Validator../assets/js - Bootstrap plugin that validates forms -->
+  <script src="./assets/js/scripts.js"></script>
+  <!-- Custom scripts -->
+</body>
+
+</html>

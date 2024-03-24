@@ -1,0 +1,53 @@
+﻿@using Nop.Web.Framework.Models.DataTables
+@using Nop.Web.Models.Supplier
+@model PaymentSearchModel
+
+@{
+    ViewData["Title"] = "Suppliers";
+    Layout = "_MerchantAdminLayout";
+    NopHtml.SetActiveMenuItemSystemName("Suppliers");
+}
+<style>
+    .bg-light-th th {
+        background-color: #f6f6f6 !important;
+        font-weight: bold;
+    }
+</style>
+<div class="page shipment-details-page">
+    <div class="page-title">
+        Payments
+    </div>
+    <div class="page-body">
+        <div class="section products">
+            <div class="table-wrapper">
+                @await Html.PartialAsync("Table", new DataTablesModel
+           {
+               Name = "payments-grid",
+               UrlRead = new DataUrl("GetAllPayments", "MerchantPayments", null),
+               Length = Model.PageSize,
+               LengthMenu = Model.AvailablePageSizes,
+               ColumnCollection = new List<ColumnProperty>
+                {
+                new ColumnProperty(nameof(PaymentListVM.Date))
+                {
+                Title = "Date"
+                },
+                new ColumnProperty(nameof(PaymentListVM.OrderNumber))
+                {
+                Title = "Order no#"
+                },
+                new ColumnProperty(nameof(PaymentListVM.Amount))
+                {
+                Title = "Amount"
+                },
+                new ColumnProperty(nameof(PaymentListVM.Products))
+                {
+                Title = "Products"
+                }
+                }
+           })
+            </div>
+        </div>
+
+    </div>
+</div>

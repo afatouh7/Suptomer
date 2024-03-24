@@ -1,0 +1,69 @@
+// ********
+$color_1: #fff;
+$color_2: theme-color(primary);
+$background-color_1: theme-color(primary);
+$background-color_2: transparent;
+$background-color_3: white;
+.btn-solid-reg {
+  &:hover {
+    background-color: $background-color_2;
+    color: $color_2 !important;
+    text-decoration: none;
+  }
+}
+.btn-solid-lg {
+  display: inline-block;
+  padding: 1.375rem 2.625rem 1.375rem 2.625rem;
+  border: 0.125rem solid white !important;
+  border-radius: 2rem;
+  background-color: $background-color_2;
+  color: $color_1 !important;
+  font: 700 0.75rem/0 "Raleway", sans-serif;
+  text-decoration: none;
+  transition: all 0.2s;
+  &:hover {
+    background-color: white !important ;
+    color: theme-color(primary) !important ;
+    text-decoration: none !important ;
+      outline: 6px double rgb(103 88 111) !important;
+      transition: all .35s ease-in-out !important;
+  }
+}
+.btn-outline-reg {
+  &:hover {
+    background-color: $background-color_1;
+    color: $color_1;
+    text-decoration: none;
+  }
+}
+.btn-outline-lg {
+  display: inline-block;
+  padding: 1.375rem 2.625rem 1.375rem 2.625rem;
+  border: 0.125rem solid theme-color(primary);
+  border-radius: 2rem;
+  background-color: $background-color_2;
+  color: $color_2;
+  text-decoration: none;
+  transition: all 0.2s;
+  &:hover {
+    background-color: $background-color_1;
+    color: $color_1;
+    text-decoration: none;
+  }
+}
+.btn-outline-sm {
+  display: inline-block;
+  padding: 1rem 1.625rem 0.875rem 1.625rem;
+  border: 0.125rem solid theme-color(primary);
+  border-radius: 2rem;
+  background-color: $background-color_2;
+  color: $color_2;
+  font: 700 0.625rem/0 $body-font, sans-serif;
+  text-decoration: none;
+  transition: all 0.2s;
+  &:hover {
+    background-color: $background-color_1;
+    color: $color_1;
+    text-decoration: none;
+  }
+}

@@ -1,0 +1,137 @@
+﻿@*
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+ViewData["Title"] = "SupplierContractsList";
+Layout = "_SupplierAdminLayout";
+}
+<style>
+  .cart-img {
+    border-radius: 4.139px;
+    background: #fff;
+    box-shadow: 0 0 5.47097px 0 rgba(0,0,0,.25);
+    width: 63px;
+    height: 63px;
+    flex-shrink: 0;
+    display: flex;
+    padding: 8px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;}
+    .cart-img img{
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+
+    }
+
+    .comments{
+        width: 584px !important;
+    height: 105px !important;
+    top: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(233, 233, 233, 1) !important;
+padding:8px 16px;
+background-color: rgba(241, 241, 241, 1);
+    }
+</style>
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12" id="search-rslt">
+                <span> <a href="/Admin/SupplierAnalytics/SupplierContractsList"><i class="fas fa-arrow-left"></i> Back</a></span>
+</div>
+            <div class="col-sm-12" id="search-rslt">
+                <div class="content-header ">
+                    <h1 class="float-left">
+                        @T("Admin.Catalog.Products")
+                    </h1>
+                    <div class="float-right">
+                        <a asp-action="" class="btn">
+                            Ignore
+                        </a>
+                        <a  class="btn btn-primary" href="/Admin/SupplierAnalytics/OfferInformation">
+                            <!-- @T("Admin.Common.AddNew") -->
+                           Accept & send offer
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-12 shopping-card-small p-0 mt-0">
+                <!-- 2 - Contract products and details  -->
+            <table class="table  table-hover table-striped dataTable no-footer m-0" style="width: 100%;">
+                <thead class="bg-light">
+                
+                        <tr>
+                            <th>Product</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1"
+                            >Quenteity</th>
+                            <th class="sorting_disabled" rowspan="1" colspan="1"
+                            >
+                                Alternative
+                            </th>
+                       
+                                <th>
+                                    Interval
+                                </th>
+                        </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr class="odd">
+                        <td>
+                            <div class="d-flex">
+                                <div class="cart-img">
+                                    <img src="../../Themes/SuptomerTheme/Content/assets/img/product/product.png" alt="">
+                                </div>
+                                <div class="pro-name">
+                                    <span>cucumber</span>
+                                    <br />
+                                    <span>1 Kilo</span>
+                                </div>
+                            </div>
+                            
+                        </td>
+                        <td>10 KG</td>
+                        <td>Product 1- product 2-product 3</td>
+                        <td>Monthly</td>
+                     
+                    </tr>
+                    <tr class="even">
+                        <td>
+                            <div class="d-flex">
+                                <div class="cart-img">
+                                    <img src="../../Themes/SuptomerTheme/Content/assets/img/product/product.png" alt="">
+                                </div>
+                                <div class="pro-name">
+                                    <span>cucumber</span>
+                                    <br />
+                                    <span>10 Kilo</span>
+                                </div>
+                            </div>
+                            
+                        </td>
+                        <td>10 KG</td>
+                        <td>Product 1- product 2-product 3</td>
+                        <td>Monthly</td>
+                       
+                    </tr>
+                
+                </tbody>
+            </table>
+               <hr class="mb-5"/>
+<div class="row mx-3 mb-4">
+    <div class="col-12">
+        <p>Comments</p>
+        <div  class="comments" >
+         some merchants comments
+        </div>
+
+    </div>
+</div>
+              
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,89 @@
+@{
+
+    Layout = "_MerchantAdminLayout";
+}
+
+
+<style>
+    /* Basic styling for the table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .accordion-link {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #0074D9;
+    }
+    /* New CSS to style child table */
+    .child-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+    }
+
+        .child-table th, .child-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .child-table th {
+            background-color: #f2f2f2;
+        }
+
+    .accordion-content {
+        display: none;
+    }
+
+    table > thead > tr {
+        background-color: #f4f4f4;
+    }
+</style>
+<!-- Contarcts Table 1 -->
+
+
+<div class="page shipment-details-page">
+    <div class="page-title d-flex justify-content-between">
+        <h1>Contracts</h1>
+        <div class="actions-btns">
+            <a href="#" class="btn btn-light icon_but">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="btn btn-light icon_but border border-rounded icon_but filter_icon" id="showFilter">
+                <i class="fas fa-filter"></i>
+            </a>
+            <a href="#" class=" btn btn-light icon_but border border-rounded  icon_but">
+                <i class="fas fa-ellipsis-v" id="switchView"></i>
+            </a>
+
+            <button type="button" class="primary-btn">
+                <i class="fas fa-plus-square"></i>
+                Contract
+            </button>
+
+        </div>
+    </div>
+    <div class="page-body">
+        <div class="section products">
+            <div class="table-wrapper">
+                <div class="row">
+                  hhhh
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

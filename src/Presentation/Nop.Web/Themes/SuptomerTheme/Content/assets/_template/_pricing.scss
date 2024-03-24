@@ -1,0 +1,119 @@
+/***********************/
+/*     10. Pricing     */
+/***********************/
+
+.pricing-section {
+    position: relative;
+    z-index: 1
+}
+
+@media(max-width: 767px) {
+    .pricing-section.pt-120 {
+        padding-top:80px
+    }
+}
+
+@media(max-width: 767px) {
+    .pricing-section.pb-120 {
+        padding-bottom:80px
+    }
+}
+
+.pricing-section .pricing-nav-wrapper ul {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.pricing-section .pricing-nav-wrapper ul li a {
+    font-size: 18px;
+    font-weight: 700;
+    color: #5b657e;
+    padding: 10px 30px;
+    background: rgba(88,100,255,.1);
+    margin: 5px;
+    border-radius: 30px
+}
+
+.pricing-section .pricing-nav-wrapper ul li a.active {
+    color: #fff;
+    background: theme-color(primary);
+}
+
+.pricing-section .single-pricing {
+    border-radius: 40px;
+    background: #fff;
+    -webkit-box-shadow: 0 0 59px rgba(191,191,191,.16);
+    box-shadow: 0 0 59px rgba(191,191,191,.16);
+    padding: 45px 30px;
+    margin-bottom: 30px
+}
+
+.pricing-section .single-pricing .pricing-header {
+    padding-bottom: 35px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 45px;
+    text-align: center
+}
+
+.pricing-section .single-pricing .pricing-header .price {
+    font-size: 45px;
+    margin-bottom: 30px;
+    color: theme-color(primary);
+}
+
+.pricing-section .single-pricing .content {
+    margin-bottom: 30px
+}
+
+@media only screen and (min-width: 1400px) {
+    .pricing-section .single-pricing .content {
+        padding-left:50px
+    }
+}
+
+.pricing-section .single-pricing .content ul li {
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.pricing-section .single-pricing .content ul li i {
+    margin-right: 15px;
+    color: rgba(22,36,71,.3);
+    font-weight: 700
+}
+
+.pricing-section .single-pricing .content ul li i.active {
+    color: theme-color(primary);
+}
+
+.pricing-section .single-pricing .pricing-btn {
+    text-align: center
+}
+
+.pricing-section .single-pricing .pricing-btn .main-btn {
+    padding: 12px 45px;
+    font-weight: 400
+}
+
+.pricing-section .single-pricing .pricing-btn .main-btn.border-btn {
+    color: #5b657e
+}
+
+.pricing-section .single-pricing .pricing-btn .main-btn.border-btn::after {
+    background: rgba(88,100,255,.1)
+}
+
+.pricing-section .single-pricing .pricing-btn .main-btn {
+    padding: 12px 45px;
+    font-weight: 400;
+}

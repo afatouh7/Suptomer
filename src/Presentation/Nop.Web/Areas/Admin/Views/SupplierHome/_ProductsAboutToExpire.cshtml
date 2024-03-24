@@ -1,0 +1,60 @@
+﻿<div class="card widget-flex mb-3">
+    <div class="card-body p-2">
+        <p class="card-text left-card-title">Product’s about to be expired</p>
+    </div>
+    <div class="chart-area progress-area">
+
+        <div class="cssProgress" id="productExpire_1">
+            <h5 class="progress-titles">-</h5>
+            <div class="progress4">
+                <div class="cssProgress-bar" data-percent="0">
+                    <span class="progressvalue"></span>
+                </div>
+            </div>
+        </div>
+        <div class="cssProgress" id="productExpire_2">
+            <h5 class="progress-titles">-</h5>
+            <div class="progress4">
+                <div class="cssProgress-bar" data-percent="0">
+                    <span class="progressvalue"></span>
+                </div>
+
+            </div>
+        </div>
+        <div class="cssProgress" id="productExpire_3">
+            <h5 class="progress-titles">-</h5>
+            <div class="progress4">
+                <div class="cssProgress-bar" data-percent="0">
+                    <span class="progressvalue"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-light-theme">Add Sale</button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loadProducts();
+    });
+
+    function loadProducts() {
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@Url.Action("GetProductsAboutToExpire", "SupplierHome")",
+            success: function (data, textStatus, jqXHR) {
+                for (var i = 0; i < data.length; i++) {
+                    $(`#productExpire_${i + 1} h5`).html(data[i].Name);
+                    $(`#productExpire_${i + 1} .cssProgress-bar`).css("width", `${data[i].QuantityPercentage}%`);
+                    $(`#productExpire_${i + 1} .cssProgress-bar .progressvalue`).html(`${data[i].QuantityPercentage}/100`);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $("#loadProductsExpireStatisticsAlert").click();
+            }
+        });
+    }
+</script>

@@ -1,0 +1,210 @@
+﻿@using Nop.Web.Models.Supplier;
+@model SuptomerRegisterModel
+
+@{
+    Layout = "_RgistrationLayout";
+    NopHtml.AddTitleParts(T("PageTitle.Register").Text);
+    NopHtml.AppendPageCssClassParts("html-registration-page");
+}
+<style>
+    .footer-container {
+        display: none !important;
+    }
+
+    .required {
+        z-index: 7;
+    position: relative;
+    display: flex;
+    /* border: 2px solid; */
+    top: -32px;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 0;
+    flex-basis: 20px;
+    width: 12px;
+    left: 93%;
+
+}
+
+.bg-primary:hover{
+    background-color: #c29ef4 !important;
+}
+.i.mw-70{
+  width: 95%;
+}
+
+input{position: relative ; z-index: 2;}
+    .reg_form{
+        overflow-y: unset;
+    }
+</style>
+
+<div class="container-fluid h-100">
+    <nav class="navbar fixed-top d-flex bg-white">
+        <div class="container">
+            <div class="row w-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image ml-2 d-inline"" href="/home">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/logo_dark.png")" alt="suptomer" />
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+
+                    <div class="">
+                        <!-- <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="languageToggle">
+                            <label class="custom-control-label" for="languageToggle">AR - EN</label>
+                        </div> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container h-100 ">
+        <div class="row h-100 d-flex justify-content-center align-items-center">
+            <div class="col-md-6">   
+
+                <div class="d-flex justify-content-center align-items-center h-100">
+                
+                <form asp-route="Register" class="w-100 theme_form reg_form pr-4" id="recaptcha-form"
+                asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="message-error"></div>
+                <h1 class="register">
+                    @if (Model.UserType == Nop.Core.Domain.Customers.UserType.SuptomerSupplier)
+                    {
+                        @T("Suptomer.PageTitle.Supplier.Register")
+                    }
+                            else
+                            {
+                                @T("Suptomer.PageTitle.Merchant.Register")
+                            }
+                            <p>
+                                @T("Suptomer.PageSubTitle.Register")
+                            </p>
+                            
+                        </h1>
+                        <div id="errorDiv" class="alert alert-danger mt-2 d-none" role="alert"></div>
+
+                        <div class="fieldset mb-2">
+                            <div class="title"></div>
+                            <div class="form-group">
+                                <div class="">
+                                    <label asp-for="FullName" asp-postfix=":"></label>
+                                    <input class="form-control" asp-for="FullName"  maxlength="25" />
+                                    <nop-required />
+                                    <span asp-validation-for="FullName"></span>
+
+                                    <input asp-for="UserType" type="hidden" />
+                                </div>
+
+                                <div class="">
+                                    <label asp-for="Email" asp-postfix=":"></label>
+                                    <input class="form-control" asp-for="Email" maxlength="30"/>
+                                    <nop-required />
+                                    <span asp-validation-for="Email"></span>
+                                </div>
+
+                                <div class="">
+                                    <label asp-for="Phone" asp-postfix=":"></label>
+                                    <input class="form-control" asp-for="Phone" maxlength="30"/>
+                                    <nop-required />
+                                    <span asp-validation-for="Phone"></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div class="fieldset mb-0">
+                            <div class="title" style="padding: 0">
+                                <strong>@T("Account.YourPassword")</strong>
+                            </div>
+                      
+                            <div class="form-group profilepassword mb-0">
+                             
+                                    <label asp-for="Password" asp-postfix=":"></label>
+                                    <input type="password" class="form-control password"  asp-for="Password" maxlength="25" />
+                                    <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span>
+
+                                    <nop-required />
+                                    <span asp-validation-for="Password"></span>
+                              
+                                <div class="form-group profilepassword mb-0">
+                                    <label asp-for="ConfirmPassword" asp-postfix=":"></label>
+                                    <input type="password" class="form-control password"   asp-for="ConfirmPassword" maxlength="25" />
+                                    <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span>
+                                    <nop-required />
+                                    <span asp-validation-for="ConfirmPassword"></span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="buttons mt-0">
+                            <button type="submit" name="register-button" id="register-button" class="theme_btn  text-white mt-3 w-100 text-center">@T("Account.Register.Button")</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/reg_right_img.png")" alt="login suptoer Image" class="i mw-70">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LfcNGcpAAAAAFkTLT9qzI_UYmOyywkd0J8Ihg29" async defer></script>
+
+<script>
+    //    $('input').on('input', function() {
+    //     var maxLength = 50; // Maximum length allowed
+    //     var inputText = $(this).val();
+        
+    //     if (inputText.length > maxLength) {
+    //         $(this).val(inputText.slice(0, maxLength)); // Truncate the input
+    //         alert("Maximum character limit reached!");
+    //     }
+    // });
+
+    // $(document).ready(function(){ 
+    //         // Attach an event listener to all input fields
+    //         $('input').on('input', function(){
+    //             var maxLength = parseInt($(this).attr('maxlength'));
+    //             var inputLength = $(this).val().length;
+    //             var errorDiv = $('#errorDiv');
+
+    //             // Check if input length exceeds the maximum length
+    //             if (inputLength >= maxLength) {
+    //             debugger;
+
+    //                 errorDiv.removeClass('d-none').text('Maximum number of characters is ' + maxLength); // Show error message
+    //             } else {
+            
+    //                 errorDiv.addClass('d-none'); // Hide error message
+    //             }
+    //         });
+
+      $('#recaptcha-form').submit(function(event){
+        event.preventDefault(); // Prevent form submission
+        
+        grecaptcha.ready(function() {
+
+          grecaptcha.execute('6LfcNGcpAAAAAFkTLT9qzI_UYmOyywkd0J8Ihg29', {action: 'submit'}).then(function(token) {
+
+            // Add reCAPTCHA token to form data
+            $('#recaptcha-form').append('<input type="hidden" name="g-recaptcha-response" value="' + token + '"  id="captcha"/>');
+             //console.log(token);
+            // Proceed with form submission
+            $('#recaptcha-form').unbind('submit').submit();
+          });
+        });
+      });
+    });
+</script>

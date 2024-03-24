@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Themes/SuptomerTheme/Content/dist/style.css",
+    "inputFile": "Themes/SuptomerTheme/Content/assets/style.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/admin/admin_styles.css",
+    "inputFile": "wwwroot/css/admin/admin_styles.scss"
+  }
+]

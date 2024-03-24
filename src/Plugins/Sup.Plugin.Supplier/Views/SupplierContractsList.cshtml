@@ -1,0 +1,108 @@
+﻿@{
+ViewData["Title"] = "SupplierContractsList";
+Layout = "_SupplierAdminLayout";
+}
+
+
+<!-- Contarcts Table 1 -->
+
+<style>
+    .bg-light-th th {
+        background-color: #f4f4f4 !important;
+        font-weight: bold;
+    }
+     div.dataTables_scrollHead>div>table>thead>tr {
+    background-color: #f4f4f4;
+}
+</style>
+<section class="content">
+
+<div class="container-fluid">
+    <div class="row">
+    <div class="col-sm-12" id="search-col">
+        <div class="content-header px-0"><h1 class="float-left">Contracts</h1></div>
+        <div class="card">
+                <div class="table-wrapper">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="dataTables_scroll">
+                                
+                                <div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;">
+                                    <table class="table table-bordered table-hover table-striped dataTable no-footer"
+                                    
+                                        style="width: 100%;">
+                                        <thead class="bg-light">
+                                        
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 381.922px;">Contract</th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 321.391px;">
+                                                        Date
+                                                    </th>
+                                                    <th class="sorting_disabled" rowspan="1" colspan="1"
+                                                        style="width: 170.688px;">Status</th>
+                                                        <th>
+                                                            show details
+                                                        </th>
+                                                </tr>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            <tr class="odd">
+                                                <td>23665 </td>
+                                                <td>contract</td>
+                                                <td>3-3-2024 9:00 Am</td>
+                                                <td>completed</td>
+                                                <td>
+                                                    <a href="/Admin/SupplierAnalytics/ContractDetails" class="text-primary bold">details</a>
+                                                </td>
+                                        </tr>
+                                        
+                                            <tr class="even">
+                                                <td>23665 </td>
+                                                <td>contract</td>
+                                                <td>3-3-2024 9:00 Am</td>
+                                                <td>completed</td>
+                                                <td>
+                                                    <a href="/Admin/SupplierAnalytics/ContractDetails" class="text-primary bold">details</a>
+                                                </td>
+                                            </tr>
+                                        
+    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* @await Html.PartialAsync("Table", new DataTablesModel
+                    {
+                    Name = "suppliers-grid",
+                    UrlRead = new DataUrl("GetAllSuppliersForMerchants", "MerchantSuppliers", null),
+                    Length = Model.PageSize,
+                    LengthMenu = Model.AvailablePageSizes,
+                    ColumnCollection = new List<ColumnProperty>
+                        {
+                        new ColumnProperty(nameof(SupplierListVM.Name))
+                        {
+                        Title = T("Admin.Configuration.Shipping.Warehouses.Fields.Name").Text
+                        },
+                        new ColumnProperty(nameof(SupplierListVM.Email))
+                        {
+                        Title = "Email"
+                        },
+                        new ColumnProperty(nameof(SupplierListVM.Company))
+                        {
+                        Title = "Company"
+                        }
+                        }
+                        }) *@
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+

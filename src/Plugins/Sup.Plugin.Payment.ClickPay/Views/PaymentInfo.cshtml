@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Payment.ClickPay.Models.PaymentInfo
+<table width="100%" cellspacing="2" cellpadding="1" border="0">
+    <tr>
+        <td>
+            <label asp-for="CreditCardTypes">@T("Payment.SelectCreditCard"):</label>
+        </td>
+        <td>
+            <select asp-for="CreditCardType" asp-items="Model.CreditCardTypes" class="dropdownlists"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="card_scheme">@T("Payment.CardholderName"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="card_scheme" style="width:165px;" autocomplete="off" />
+            <span asp-validation-for="card_scheme"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="payment_description">@T("Payment.Description"):</label>
+        </td>
+        <td>
+            <input type="text" asp-for="payment_description" style="width:165px;" autocomplete="off" maxlength="22" />
+            <span asp-validation-for="payment_description"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
+        </td>
+        <td>
+            <select asp-for="ExpireMonth" asp-items="Model.ExpireMonths"></select>
+            /
+            <select asp-for="ExpireYear" asp-items="Model.ExpireYears"></select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label asp-for="CardCode">@T("Payment.CardCode"):</label>
+        </td>
+       
+    </tr>
+</table>

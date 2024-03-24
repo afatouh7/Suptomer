@@ -1,0 +1,548 @@
+﻿@* @{
+    Layout = "_Root";
+}
+
+@await RenderSectionAsync("Breadcrumb", false)
+
+<div class="home_layout"> 
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnBefore })
+    @*// info : layout for landingpage*@
+    @* @RenderBody() *@
+    @* @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnAfter }) *@
+ @* </div> *@
+
+@inject IWebHelper webHelper
+@inject IDateTimeHelper dateTimeHelper
+@inject IPermissionService permissionService
+@inject ICustomerService customerService
+@inject IEventPublisher eventPublisher
+@inject LocalizationSettings localizationSettings
+@inject StoreInformationSettings storeInformationSettings
+@inject Nop.Services.Localization.ILanguageService languageService
+@using System.Globalization
+@using Nop.Core.Domain
+@using Nop.Core.Domain.Localization
+@using Nop.Core.Events;
+@using Nop.Core;
+@using Nop.Services.Customers
+@using Nop.Services.Helpers
+@using Nop.Services.Security
+@using Nop.Web.Framework.UI
+@*==========layout root ====*@
+@using Nop.Core.Configuration
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Common
+@using Nop.Core.Domain.Seo
+
+
+
+@inject CatalogSettings catalogSettings
+@inject CommonSettings commonSettings
+@inject SeoSettings seoSettings
+@inject AppSettings appSettings
+@{
+    var returnUrl = webHelper.GetRawUrl(Context.Request);
+
+    //page title
+    string adminPageTitle = !string.IsNullOrWhiteSpace(ViewBag.PageTitle) ? ViewBag.PageTitle + " / " : "";
+    adminPageTitle += T("Admin.PageTitle").Text;
+
+    //has "Manage Maintenance" permission?
+    var canManageMaintenance = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageMaintenance);
+
+    //avatar
+    var currentCustomer = await workContext.GetCurrentCustomerAsync();
+
+    //event
+    await eventPublisher.PublishAsync(new PageRenderingEvent(NopHtml));
+
+   
+    //info: we specify "Admin" area for actions and widgets here for cases when we use this layout in a plugin that is running in a different area than "admin"
+}
+
+
+@{
+    if (catalogSettings.DisplayAllPicturesOnCatalogPages)
+    {
+        NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/swiper/swiper-bundle.min.js");
+    }
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.countryselect.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.ajaxcart.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.js");
+    //when jQuery migrate script logging is active you will see the log in the browser console
+    if (commonSettings.JqueryMigrateScriptLoggingActive)
+    {
+        NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-migrate/jquery-migrate.js");
+    }
+    else
+    {
+        NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-migrate/jquery-migrate.min.js");
+    }
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-ui-dist/jquery-ui.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery-validation/jquery.validate.min.js");
+    NopHtml.AppendScriptParts(ResourceLocation.Footer, "~/lib_npm/jquery/jquery.min.js");
+
+    //custom tag(s);
+    if (!string.IsNullOrEmpty(seoSettings.CustomHeadTags))
+    {
+        NopHtml.AppendHeadCustomParts(seoSettings.CustomHeadTags);
+    }
+
+    var displayMiniProfiler = appSettings.Get<CommonConfig>().MiniProfilerEnabled && await permissionService.AuthorizeAsync(StandardPermissionProvider.AccessProfiling);
+
+    //event
+    await eventPublisher.PublishAsync(new PageRenderingEvent(NopHtml));
+
+    var title = await NopHtml.GenerateTitleAsync();
+    var description = await @NopHtml.GenerateMetaDescriptionAsync();
+    var keywords = await NopHtml.GenerateMetaKeywordsAsync();
+}
+@*==========layout root ====*@
+
+@{
+    //current category ID
+    var currentCategoryId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.ActionContext.RouteData.Values["categoryId"].ToString());
+    }
+
+    //current manufacturer ID
+    var currentManufacturerId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.ActionContext.RouteData.Values["manufacturerId"].ToString());
+    }
+
+    //current product ID
+    var currentProductId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.ActionContext.RouteData.Values["productId"].ToString());
+    }
+}
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" dir="@Html.GetUIDirection(localizationSettings.IgnoreRtlPropertyForAdminArea)">
+<head>
+    <title>@adminPageTitle</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet" />
+          @*This is used so that themes can inject content into the header*@
+          @await Html.PartialAsync("HeadAdminView")
+      
+          @NopHtml.GenerateCssFiles()
+    @NopHtml.GenerateHeadCustom()
+    
+
+    @NopHtml.GenerateScripts(ResourceLocation.Head)
+    @NopHtml.GenerateInlineScripts(ResourceLocation.Head)
+    <!--Powered by nopCommerce - https://www.nopCommerce.com-->
+    
+    @Html.Raw(commonSettings.HeaderCustomHtml)
+
+    @* CSS & Script resources *@
+    @{
+        await Html.RenderPartialAsync("/Areas/Admin/Views/Shared/_AdminScripts.cshtml");
+    }
+
+    @*Insert favicon and app icons head code*@
+    @await Component.InvokeAsync(typeof(FaviconViewComponent))
+</head>
+<body class="hold-transition sidebar-mini layout-fixed control-sidebar-slide-open">
+    <div class="throbber">
+        <div class="curtain">
+        </div>
+        <div class="curtain-content">
+            <div>
+                <h1 class="throbber-header">@T("Common.Wait")</h1>
+                <p>
+                    <img src="@Url.Content("~/css/admin/images/throbber-synchronizing.gif")" alt="" />
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="ajaxBusy">
+        <span>&nbsp;</span>
+    </div>
+    <div class="wrapper">
+        @if (IsSectionDefined("header"))
+        {
+            @RenderSection("header")
+        }
+        else
+        {
+            @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderBefore })
+            <nav class="main-header navbar navbar-expand-md navbar-light bg-light">
+
+                <div class="container-fluid ">
+                    <div class="nav-item humberger-icon">
+                        <a class="nav-link" id="nopSideBarPusher" data-widget="pushmenu" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M17 10H3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M21 6H3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M21 14H3" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </div>
+                    <ul class="navbar-nav pl-2 pl-md-0 d-flex align-items-baseline">
+
+                        @if (await customerService.IsRegisteredAsync(currentCustomer))
+                        {
+                            <li class="">
+                                Good Morning  - <strong class="ml-2">
+                                @await customerService.GetCustomerFullNameAsync(currentCustomer)
+                                </strong>
+                            </li>
+                        }
+
+                        @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderToggleAfter })
+                    </ul>
+                    @*logo in small screens*@
+                    <a href="@Url.Content("~/Merchant")" class="brand-link navbar-light">
+                        <img src="~/css/admin/images/logo.png" alt="logo.png" class="brand-image logo d-block d-md-none d-sm-block d-sm-none">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+
+
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderNavbarBefore })
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav ml-auto mt-2 mb-lg-0 d-flex align-items-start">
+                            <li class="nav-item dropdown header-icons">
+                                <div id="search-box">
+                                    <input type="text" class="admin-search-box typeahead" placeholder="@T("Admin.Menu.Search")">
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown header-icons">
+                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <g clip-path="url(#clip0_373_21441)">
+                                            <path d="M20 1.99988H4C2.89543 1.99988 2 2.89531 2 3.99988V19.9999C2 21.1044 2.89543 21.9999 4 21.9999H20C21.1046 21.9999 22 21.1044 22 19.9999V3.99988C22 2.89531 21.1046 1.99988 20 1.99988Z" stroke="black" stroke-width="3.16667" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M15.501 12H8.50098" stroke="black" stroke-width="3.16667" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M12 15.5001V8.50012" stroke="black" stroke-width="3.16667" stroke-linecap="round" stroke-linejoin="round" />
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_373_21441">
+                                                <rect width="24" height="24" fill="white" />
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </a>
+                                <ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
+                                    <li class="dropdown-item">
+                                        notifcatio 2
+                                    </li>
+                                    <li class="dropdown-item">
+                                        notification 1
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown header-icons">
+                                <a class="nav-link" href="#" data-toggle="dropdown">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                        <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="#3D005E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                                <ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
+                                    <li class="dropdown-item">
+                                        notifcatio 2
+                                    </li>
+                                    <li class="dropdown-item">
+                                        notification 1
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown header-icons">
+                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" fill="none">
+                                        <path d="M12 27.4285C13.8921 27.4285 15.427 25.8937 15.427 23.9999H8.57305C8.57305 25.8937 10.1079 27.4285 12 27.4285ZM23.5387 19.4083C22.5037 18.2962 20.5671 16.6232 20.5671 11.1428C20.5671 6.98034 17.6486 3.6482 13.7132 2.83071V1.71428C13.7132 0.767676 12.9461 0 12 0C11.0539 0 10.2868 0.767676 10.2868 1.71428V2.83071C6.35145 3.6482 3.43288 6.98034 3.43288 11.1428C3.43288 16.6232 1.49628 18.2962 0.461286 19.4083C0.139858 19.7539 -0.00264152 20.1669 3.70385e-05 20.5714C0.00592988 21.4499 0.695392 22.2856 1.71967 22.2856H22.2803C23.3046 22.2856 23.9946 21.4499 24 20.5714C24.0026 20.1669 23.8601 19.7533 23.5387 19.4083Z" fill="#3D005E" />
+                                    </svg>
+                                </a>
+                                <ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
+                                    <li class="dropdown-item">
+                                        notifcatio 2
+                                    </li>
+                                    <li class="dropdown-item">
+                                        notification 1
+                                    </li>
+
+                                </ul>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderNavbarAfter })
+
+                    <div class="d-flex align-items-center mt-2 ">
+                        <div class="dropdown header-avatar">
+
+                            <a class="dropdown-toggle d-flex align-items-center"
+                               href="#"
+                               id="navbarDropdownMenuAvatar"
+                               role="button"
+                               data-toggle="dropdown"
+                               aria-expanded="false">
+                                <span class="avatar">
+                                    <img src="~/images/theme/profile.png"
+                                         class="rounded-circle"
+                                         height="25"
+                                         alt="Black and White Portrait of a Man"
+                                         loading="lazy" style="width:42px !important; height:auto;" />
+                                </span>
+                                <span class="header-arrow">
+                                    <img src="~/images/theme/arrow.png" />
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end"
+                                aria-labelledby="navbarDropdownMenuAvatar">
+                                <li class="dropdown-item">
+                                <a onclick="location.href='/merchant/profile'">@T("Admin.Configuration.Settings.CustomerUser.BlockTitle.Profile")</a> 
+                                    
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Settings</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a asp-controller="Home" asp-action="Index" asp-area="" class="nav-link">@T("Admin.Header.PublicStore")</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a asp-controller="Customer" asp-action="Logout" asp-area="" class="nav-link">@T("Admin.Header.Logout")</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </nav>
+            <nav class="main-header navbar navbar-expand-md navbar-light bg-light d-none ">
+                <ul class="navbar-nav pl-2 pl-md-0 d-flex align-items-baseline">
+                    <li class="nav-item">
+                        <a class="nav-link" id="nopSideBarPusher" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                    </li>
+                    @if (await customerService.IsRegisteredAsync(currentCustomer))
+                    {
+                        <li class="">
+                            Good Morning   @await customerService.GetCustomerFullNameAsync(currentCustomer)
+                        </li>
+                    }
+
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderToggleAfter })
+                </ul>
+                @*logo in small screens*@
+                <a href="@Url.Content("~/Admin")" class="brand-link navbar-light">
+                    <img src="~/css/admin/images/logo.png" alt="logo.png" class="brand-image logo d-block d-md-none d-sm-block d-sm-none">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderNavbarBefore })
+                <div class="collapse navbar-collapse" id="navbarText1">
+                    <ul class="navbar-nav ml-auto pl-2 d-flex align-items-baseline">
+                        @* <li class="nav-item">
+                    @await Component.InvokeAsync(typeof(AdminLanguageSelectorViewComponent))
+                    </li>
+                    <li class="nav-item">
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderMiddle })
+                    </li>*@
+
+                        @* @if (canManageMaintenance)
+                    {
+                    <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" data-toggle="dropdown">
+                    <i class="fas fa-cogs"></i>
+                    </a>
+                    <ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
+                    <li class="dropdown-item">
+                    <form asp-controller="Common" asp-action="ClearCache" asp-area="@AreaNames.Admin">
+                    <input name="returnurl" type="hidden" value="@returnUrl">
+                    <div class="input-group-append">
+                    <button type="submit" style="width:210px;background-color: Transparent;">
+                    <span>@T("Admin.Header.ClearCache")</span>
+                    </button>
+                    </div>
+                    </form>
+                    </li>
+                    <li class="dropdown-item">
+                    <form asp-controller="Common" asp-action="RestartApplication" asp-area="@AreaNames.Admin">
+                    <input name="returnurl" type="hidden" value="@returnUrl">
+                    <button id="restart-application" type="submit" style="width:210px;background-color: Transparent;">
+                    <span>@T("Admin.Header.RestartApplication")</span>
+                    </button>
+                    <script>
+                    $(document).ready(function () {
+                    $("#restart-application").click(function (e) {
+                    showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode(T("Admin.Header.RestartApplication.Progress").Text))');
+                    });
+                    });
+                    </script>
+                    </form>
+                    </li>
+                    </ul>
+                    </li>
+                    } *@
+                        @if (await customerService.IsRegisteredAsync(currentCustomer))
+                        {
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" data-toggle="dropdown">
+                                    <div class="user-profile pull-right">
+                                        <img class="avatar user-thumb" src="~/images/theme/profile.png" alt="avatar">
+                                        <span class="user-name dropdown-toggle d-flex align-items-center" data-toggle="dropdown">
+
+                                            <img src="~/images/theme/arrow.png" />
+                                        </span>
+                                        <ul class="maintenance-menu dropdown-menu dropdown-menu-right" role="menu">
+                                            <li class="dropdown-item">
+                                                                               <a onclick="location.href='/userprofile'">@T("Admin.Configuration.Settings.CustomerUser.BlockTitle.Profile")</a> 
+
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a asp-controller="Home" asp-action="Index" asp-area="" class="nav-link">@T("Admin.Header.PublicStore")</a>
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a asp-controller="Customer" asp-action="Logout" asp-area="" class="nav-link">@T("Admin.Header.Logout")</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </a>
+
+                            </li>
+
+                        }
+
+
+                    </ul>
+                </div>
+                <!-- @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderNavbarAfter }) -->
+            </nav>
+
+            <!-- @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.HeaderAfter }) -->
+        }
+        @if (IsSectionDefined("headermenu"))
+        {
+            @RenderSection("headermenu")
+        }
+        else
+        {
+            <aside class="main-sidebar custom sidebar-light-primary elevation-4">
+                <!-- Brand Logo -->
+                <a href="@Url.Content("~/Admin")" class="brand-link navbar-light border-0 logo-switch">
+                    <img src="~/css/admin/images/logo.png" alt="logo.png" class="brand-image-xl logo-xl">
+                    <img src="~/css/admin/images/logo-mini.png" alt="logo.png" class="brand-image-xs logo-xs">
+                </a>
+                <div class="sidebar">
+
+                    <nav class="mt-2">
+                        @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.SearchBoxBefore })
+                        <script>
+                            $(document).ready(function () {
+                                Admin.Search.init();
+                            });
+                        </script>
+                        @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.MenuBefore })
+                        @await Html.PartialAsync("Menu")
+
+                    </nav>
+                </div>
+            </aside>
+        }
+        <div class="content-wrapper">
+            @await Html.PartialAsync("_Notifications")
+            <nop-antiforgery-token />
+            <div class="side-2 d-none">
+                @if (IsSectionDefined("left"))
+                {
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+                    @await RenderSectionAsync("left")
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+                }
+                else
+                {
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+                    @await RenderSectionAsync("CatalogFilters", false);
+                    @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent), new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfterCategoryNavigation })
+                    @await Component.InvokeAsync(typeof(ManufacturerNavigationViewComponent), new { currentManufacturerId = currentManufacturerId })
+                    @await Component.InvokeAsync(typeof(VendorNavigationViewComponent))
+                    @await Component.InvokeAsync(typeof(RecentlyViewedProductsBlockViewComponent), new { productThumbPictureSize = 64 })
+                    @await Component.InvokeAsync(typeof(PopularProductTagsViewComponent))
+                    @await Component.InvokeAsync(typeof(PollBlockViewComponent), new { systemKeyword = "LeftColumnPoll" })
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+                }
+            </div>
+            <div class="">
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnBefore })
+                @RenderBody()
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnAfter })
+            </div>
+            
+            <!-- @RenderBody() -->
+        </div>
+        <div class="main-footer">
+            <div class="container-fluid">
+                <div class="col-md-12">
+                    <div class="row">
+                       <div class=" col-xs-12  text-left">
+                            <b>Suptomer version &copy;@DateTime.Today.Year</b>
+                            <br/>
+                            @((await dateTimeHelper.ConvertToUserTimeAsync(DateTime.Now)).ToString("D", CultureInfo.CurrentCulture)) 
+                            <span id="clock">00:00:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var AdminLTEOptions = {
+            boxWidgetOptions: {
+                boxWidgetIcons: {
+                    collapse: 'fa-minus',
+                    open: 'fa-plus'
+                }
+            }
+        };
+    </script>
+    @{
+        //scroll to a selected card (if specified)
+        var selectedCardName = Html.GetSelectedCardName();
+        if (!String.IsNullOrEmpty(selectedCardName))
+        {
+            <script>
+                location.hash = '#@(selectedCardName)';
+            </script>
+        }
+    }
+    <a id="backTop" class="btn btn-back-top bg-dark"></a>
+    <script>
+        $(document).ready(function () {
+            //enable "back top" arrow
+            $('#backTop').backTop();
+
+            //enable tooltips
+            $('[data-toggle="tooltip"]').tooltip({ placement: 'bottom' });
+        });
+    </script>
+
+    @NopHtml.GenerateScripts(ResourceLocation.Footer)
+    @NopHtml.GenerateInlineScripts(ResourceLocation.Footer)
+</body>
+</html>
+

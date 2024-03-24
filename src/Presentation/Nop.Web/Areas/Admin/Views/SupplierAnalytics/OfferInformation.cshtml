@@ -1,0 +1,342 @@
+@*
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+ViewData["Title"] = "SupplierContractsList";
+Layout = "_SupplierAdminLayout";
+}
+<style>
+    .cart-img {
+        border-radius: 4.139px;
+        background: #fff;
+        box-shadow: 0 0 5.47097px 0 rgba(0, 0, 0, .25);
+        width: 63px;
+        height: 63px;
+        flex-shrink: 0;
+        display: flex;
+        padding: 8px;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+    }
+
+    .cart-img img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+
+    }
+
+    .comments {
+        width: 584px !important;
+        height: 105px !important;
+        top: 24px;
+        border-radius: 12px;
+        border: 1px solid rgba(233, 233, 233, 1) !important;
+        padding: 8px 16px;
+        background-color: rgba(241, 241, 241, 1);
+    }
+
+    .card-header {
+        background-color: rgba(232, 232, 232, 1) !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header a {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        line-height: 10px;
+        font-size: 14px;
+        flex-grow: 1;
+    }
+
+        /* New CSS to style child table */
+        .child-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+    }
+    .child-table th, .child-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .child-table th {
+        background-color: #f2f2f2;
+    }
+    .accordion-content {
+        display: none;
+    }
+    table>thead>tr {
+    background-color: #f4f4f4;}
+</style>
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12" id="search-rslt">
+                <span> <a href="/Admin/SupplierAnalytics/SupplierContractsList"><i class="fas fa-arrow-left"></i>
+                        Back</a></span>
+            </div>
+        
+            <!-- ============================================================== -->
+            <div class=" col-12 col-md-6 col-lg-8  col-xl-9 p-0 mt-0">
+                <div class="accordion" id="faq">
+                    <div class="card">
+                        <div class="card-header" id="faqhead1">
+                            <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                                aria-expanded="true" aria-controls="faq1">
+                                <b class="bold">Mac</b>
+                                <br />
+                                <span>Contract no :177229</span>
+                            </a>
+                            <span>
+                                <i class="right fas fa-angle-down mr-2">
+                                </i></span>
+
+                            </a>
+                        </div>
+
+                        <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                            <div class="">
+                                <div class="table-wrapper m-2 mb-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="dataTables_scroll">
+                                                <div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;">
+                                                <table class="table table-bordered table-hover table-striped dataTable no-footer mb-4"
+                                                    style="width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>product</th>
+                                                            <th>quatity</th>
+                                                            <th>price</th>
+                                                            <th>total</th>
+                                                            <th>interval</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>  
+                                                                <div class="d-flex">
+                                                                    <div class="cart-img">
+                                                                        <img src="../../Themes/SuptomerTheme/Content/assets/img/product/product.png" alt="">
+                                                                    </div>
+                                                                    <div class="pro-name">
+                                                                        <span>cucumber</span>
+                                                                        <br />
+                                                                        <span>1 Kilo</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>10 KG</td>
+                                                            <td>10 SAR</td>
+                                                            <td><input type="number" name="" id="" disabled style="max-width: 50px;"></td>
+                                                            <td>Monthly</td>
+                                                            <td>
+                                                                <span class="accordion-link">Expand</span>
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="child-row" style="display: none;">
+                                                            <td colspan="6"  class="border-0 p-3 pb-5">
+                                                                <div class="accordion-content ">
+                                                                    <div class="font-weight-bold text-primary my-2">Alternatives</div>
+                                                                    <div class="d-flex">
+                                                                    <div class=" border-0 box-shadow-0  d-flex ">
+                                                                        <div class="d-flex mr-2">
+                                                                            <div class="cart-img">
+                                                                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(3).png" alt="">
+                                                                            </div>
+                                                                            <div class="pro-name">
+                                                                                <span>cucumber</span>
+                                                                                <br />
+                                                                                <span>1 Kilo</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex mr-2">
+                                                                            <div class="cart-img">
+                                                                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(11).png" alt="">
+                                                                            </div>
+                                                                            <div class="pro-name">
+                                                                                <span>cucumber</span>
+                                                                                <br />
+                                                                                <span>1 Kilo</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    </div>
+                                                                
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <!-- ==================================== -->
+                                                        <!-- Add more rows as needed -->
+                                                        <tr>
+                                                            <td>  
+                                                                <div class="d-flex">
+                                                                    <div class="cart-img">
+                                                                        <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(12).png" alt="">
+                                                                    </div>
+                                                                    <div class="pro-name">
+                                                                        <span>cucumber</span>
+                                                                        <br />
+                                                                        <span>1 Kilo</span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>10 KG</td>
+                                                            <td>10 SAR</td>
+                                                            <td><input type="number" name="" id="" disabled style="max-width: 50px;"></td>
+                                                            <td>Monthly</td>
+                                                            <td>
+                                                                <span class="accordion-link">Expand</span>
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="child-row" style="display: none;">
+                                                            <td colspan="6"  class="border-0 p-3 pb-5">
+                                                                <div class="accordion-content ">
+                                                                    <div class="font-weight-bold text-primary my-2">Alternatives</div>
+                                                                    <div class="d-flex">
+                                                                    <div class=" border-0 box-shadow-0  d-flex ">
+                                                                        <div class="d-flex mr-2">
+                                                                            <div class="cart-img">
+                                                                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(11).png" alt="">
+                                                                            </div>
+                                                                            <div class="pro-name">
+                                                                                <span>cucumber</span>
+                                                                                <br />
+                                                                                <span>1 Kilo</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="d-flex mr-2">
+                                                                            <div class="cart-img">
+                                                                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(10).png" alt="">
+                                                                            </div>
+                                                                            <div class="pro-name">
+                                                                                <span>cucumber</span>
+                                                                                <br />
+                                                                                <span>1 Kilo</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    </div>
+                                                                
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                    
+                                   
+                                </div>
+                    
+                            </div>
+                        </div>
+                    </div>
+         
+                
+                </div>
+
+            </div>
+               <!-- ============================================================== -->
+               <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                <!-- //todo checkout small shopping cart -->
+                <div class="shopping-card-small  ">
+                    <div class="d-flex product mt-2 ">
+                        <div class="d-flex">
+                            <div class="cart-img">
+                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/product.png" alt="">
+                            </div>
+                            <div class="pro-name">
+                                <span>cucumber</span>
+                                <br />
+                                <span>1 Kilo</span>
+                            </div>
+                        </div>
+                        <div class="mx-2 text-right bold font-weight-bold">
+                            10 KG
+                         </div>
+
+                    </div>
+                    <!-- ********** -->
+                    <div class="d-flex product mt-2">
+                        <div class="d-flex">
+                            <div class="cart-img">
+                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(11).png" alt="">
+                            </div>
+                            <div class="pro-name">
+                                <span>cucumber</span>
+                                <br />
+                                <span>1 Kilo</span>
+                            </div>
+                        </div>
+                        <div class="mx-2 text-right bold font-weight-bold">
+                           10 KG
+                        </div>
+
+                    </div>
+                    <!-- **************** -->
+                    <div class="d-flex product mt-2">
+                        <div class="d-flex">
+                            <div class="cart-img">
+                                <img src="../../Themes/SuptomerTheme/Content/assets/img/product/pro_01(7).png" alt="">
+                            </div>
+                            <div class="pro-name">
+                                <span>cucumber</span>
+                                <br />
+                                <span>1 Kilo</span>
+                            </div>
+                        </div>
+                        <div class="mx-2 text-right bold font-weight-bold">
+                            10 KG
+                         </div>
+
+                    </div>
+                    <!-- ///////////// -->
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <span>send to:</span> <span>Mac</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>subtotal</span> <span>20 RSA</span>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between">
+                        <span>subtotal</span> <span>20 RSA</span>
+                    </div>
+                    <button class="btn btn-block w-full my-4 suptomerbtn">
+                    Send Offer
+                    </button>
+                    <!-- flyout small cart -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script>
+    // Toggle accordion on link click
+    $(document).ready(function() {
+        $('.accordion-link').click(function() {
+            var childRow = $(this).closest('tr').next('.child-row');
+            childRow.toggle();
+            childRow.find('.accordion-content').slideToggle();
+        });
+    });
+</script>

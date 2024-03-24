@@ -1,0 +1,452 @@
+@{
+
+    Layout = "_MerchantAdminLayout";
+}
+
+<link rel="stylesheet" href="~/Plugins/Sup.Plugin.Merchant/Content/plugin-merchant.css" />
+<link href="~/Content/plugin-merchant.css" rel="stylesheet" /> 
+
+
+<style>
+    .page-title h1 {
+        flex-grow: 1;
+    }
+    /* Basic styling for the table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .accordion-link {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #0074D9;
+    }
+    /* New CSS to style child table */
+    .child-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 8px;
+    }
+
+        .child-table th, .child-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .child-table th {
+            background-color: #f2f2f2;
+        }
+
+    .accordion-content {
+        display: none;
+    }
+
+    table > thead > tr {
+        background-color: #f4f4f4;
+    }
+</style>
+<!-- 
+************************************************************************
+Contarcts Table 1  page
+************************************************************************
+-->
+
+<div class="page shipment-details-page">
+    <div class="page-title d-flex justify-content-between">
+        <h1>Contracts</h1>
+        <div class="actions-btns">
+            <a href="#" class="btn btn-light icon_but">
+                <i class="fas fa-search" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="btn btn-light icon_but border border-rounded icon_but filter_icon" id="showFilter">
+                <i class="fas fa-filter"></i>
+            </a>
+            <a href="/Contract/" class=" btn btn-light icon_but border border-rounded  icon_but">
+                <i class="fas fa-ellipsis-v" id="switchView"></i>
+            </a>
+
+            <button type="button" class="primary-btn">
+                <i class="fas fa-plus-square"></i>
+                Contract
+            </button>
+
+        </div>
+    </div>
+    <div class="page-body">
+        <div class="section products">
+            <div class="table-wrapper">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="dataTables_scroll">
+                            <div class="dataTables_scrollBody" style="position: relative; overflow: auto; width: 100%;">
+                                <table class="table table-bordered table-hover table-striped dataTable no-footer"
+                                       style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Contract</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Sample Contract</td>
+                                            <td>2024-03-13</td>
+                                            <td>Active</td>
+                                            <td>
+                                                <span class="accordion-link">Expand</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="child-row" style="display: none;">
+                                            <td colspan="5">
+                                                <div class="accordion-content">
+                                                    <table class="child-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Order#</th>
+                                                                <th>Order Status</th>
+                                                                <th>Payment Status</th>
+                                                                <th>Shipping Status</th>
+                                                                <th>Customer</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>12ss3</td>
+                                                                <td>Shipped</td>
+                                                                <td>Paid</td>
+                                                                <td>In Transit</td>
+                                                                <td>John Doe</td>
+                                                            </tr>
+                                                            <!-- Add more rows as needed -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- ==================================== -->
+                                        <!-- Add more rows as needed -->
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Sample Contract</td>
+                                            <td>2024-03-13</td>
+                                            <td>Active</td>
+                                            <td>
+                                                <span class="accordion-link">Expand</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr class="child-row" style="display: none;">
+                                            <td colspan="5">
+                                                <div class="accordion-content">
+                                                    <table class="child-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Order#</th>
+                                                                <th>Order Status</th>
+                                                                <th>Payment Status</th>
+                                                                <th>Shipping Status</th>
+                                                                <th>Customer</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>123</td>
+                                                                <td>Shipped</td>
+                                                                <td>Paid</td>
+                                                                <td>In Transit</td>
+                                                                <td>John Doe</td>
+                                                            </tr>
+                                                            <!-- Add more rows as needed -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* @await Html.PartialAsync("Table", new DataTablesModel
+                {
+                Name = "suppliers-grid",
+                UrlRead = new DataUrl("GetAllSuppliersForMerchants", "MerchantSuppliers", null),
+                Length = Model.PageSize,
+                LengthMenu = Model.AvailablePageSizes,
+                ColumnCollection = new List<ColumnProperty>
+                {
+                new ColumnProperty(nameof(SupplierListVM.Name))
+                {
+                Title = T("Admin.Configuration.Shipping.Warehouses.Fields.Name").Text
+                },
+                new ColumnProperty(nameof(SupplierListVM.Email))
+                {
+                Title = "Email"
+                },
+                new ColumnProperty(nameof(SupplierListVM.Company))
+                {
+                Title = "Company"
+                }
+                }
+                }) *@
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!--
+************************************************************************
+2- Contarcts - pre contract page
+************************************************************************
+-->
+<style>
+    .pre-contract{
+     
+/*         position: absolute;
+ */      
+        max-width: 1112px;
+        max-height: 506px;
+
+        left: 296px;
+        top: 243px;
+        border: 1px solid rgba(231, 231, 231, 1);
+        border-radius:4px;
+    }
+</style>
+<div class="page shipment-details-page">
+    <!---justify-content-center align-items-center---->
+    <div class="page-body">
+        <div class="pre-contract p-4">
+            <div class="row align-items-center ">
+                    <div class="col-md-4 how-img">
+                    @* <img src="@Url.Content("~/img/blog.png")" alt="" /> *@
+                    <img src="~/images/theme/blog.png"  style="max-width:100%;"/>
+                
+                    </div>
+                    <div class="col-md-8 pl-5">
+                        <h4>Create contract for long Term</h4>
+                        <p class="text-muted">
+
+                            create contract by suptomer with suppliers to gurantee products for your restaurants
+                        </p>
+                        <a type="button" class="btn primary-btn">
+                            <i class="fas fa-plus-square"></i>
+                            Contract
+                        </a>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--
+************************************************************************
+3- Contarcts - create new steps 
+************************************************************************
+-->
+
+<div class="">
+   
+    <div class="container-fluid mb-5">
+        <div class="row">
+            <div class="col-12">
+
+                <link rel="stylesheet" href="~/Plugins/Widgets.NivoSlider/Content/nivoslider/nivo-slider.css" />
+                <link rel="stylesheet" href="~/Plugins/Widgets.NivoSlider/Content/nivoslider/themes/custom/custom.css" />
+                <style>
+                    .col.mb-4 {
+                        max-width: 240px;
+                    }
+
+                    .card.p-3.bg-white {
+                        max-width: 205px;
+                    }
+
+                    img.nivo-main-image {
+                        margin: 0 auto !important;
+                    }
+                </style>
+                <!-- partial table to draw datatable -->
+                <section class="section-products">
+
+                    <div class="row">
+
+                        <!-- Product 1 -->
+                        <div class="col mb-4">
+
+                            <div class="card p-3 bg-white">
+                                <div class="card-header border-0 d-flex justify-content-end p-0">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="nivoSlider">
+                                    <img src="@Url.Content("~/images/product/pro_01(9).png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+                                </div>
+
+                                <div class="stats mt-1">
+                                    <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+                                </div>
+                                <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+                                <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+                            </div>
+
+                        </div>
+                        <!-- Product 1 -->
+                        <div class="col mb-4">
+
+                            <div class="card p-3 bg-white">
+                                <div class="card-header border-0 d-flex justify-content-end p-0">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="nivoSlider">
+                                    <img src="@Url.Content("~/images/product/pro_01(10).png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+                                </div>
+
+                                <div class="stats mt-1">
+                                    <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+                                </div>
+                                <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+                                <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+                            </div>
+
+                        </div>
+
+                        <!-- Product 1 -->
+                        <div class="col mb-4">
+
+                            <div class="card p-3 bg-white">
+                                <div class="card-header border-0 d-flex justify-content-end p-0">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="nivoSlider">
+                                    <img src="@Url.Content("~/images/product/pro_01(12).png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+                                </div>
+
+                                <div class="stats mt-1">
+                                    <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+                                </div>
+                                <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+                                <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+                            </div>
+
+                        </div>
+
+                        <!-- Product 1 -->
+                        <div class="col mb-4">
+
+                            <div class="card p-3 bg-white">
+                                <div class="card-header border-0 d-flex justify-content-end p-0">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="">
+                                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="nivoSlider">
+                                    <img src="@Url.Content("~/images/product/pro_01(11).png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01.png")" alt="" />
+                                    <img src="@Url.Content("~/images/product/pro_01(8).png")" alt="" />
+                                </div>
+
+                                <div class="stats mt-1">
+                                    <div class="d-flex justify-content-between bolder bold "><span>product name</span><span>$5.00</span></div>
+                                </div>
+                                <div class="d-flex justify-content-between total font-weight-bold mt-1"><span>1 Kilo</span></div>
+
+                                <button type="button" class="btn btn-outline-primary btn-block mt-2">Edit</button>
+                            </div>
+
+                        </div>
+
+                        <!-- Add more product cards here -->
+
+
+                    </div>
+
+
+                </section>
+                <!-- D:\2023\Squadio\Suptomer2\merged branch\Suptomer\src\Plugins\Nop.Plugin.Widgets.NivoSlider\Scripts\jquery.nivo.slider.js -->
+                <script src="~/Plugins/Widgets.NivoSlider/Scripts/jquery.nivo.slider.js" asp-location="Footer"></script>
+                <script asp-location="Footer">
+                    $(window).on('load', function () {
+                        $('.nivoSlider').nivoSlider({
+                            effect: 'sliceUpDown',
+                            manualAdvance: true,
+                            directionNav: true,
+                            prevText: '<i class="fas fa-chevron-left"></i>',
+                            nextText: '<i class="fas fa-chevron-right"></i>',
+                            controlNav: true
+                        });
+                    });
+                </script>
+            </div></div>
+
+</div>
+
+
+
+
+
+
+<!--scripts--->
+<script>
+    // Toggle accordion on link click
+    $(document).ready(function () {
+        $('.accordion-link').click(function () {
+            var childRow = $(this).closest('tr').next('.child-row');
+            childRow.toggle();
+            childRow.find('.accordion-content').slideToggle();
+        });
+    });
+</script>

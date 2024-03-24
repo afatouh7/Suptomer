@@ -1,0 +1,639 @@
+﻿@using Nop.Core
+@using Nop.Web.Areas.Admin.Models.Suppliers
+@model SuptomerSupplierProfileModel
+
+@inject Nop.Core.IWebHelper webHelper
+@{
+    Layout = "_RgistrationLayout";
+    NopHtml.AddTitleParts(T("PageTitle.Account").Text);
+    NopHtml.AppendPageCssClassParts("html-account-page");
+    NopHtml.AppendPageCssClassParts("html-customer-info-page");
+}
+
+<style>
+    .footer-container {
+        display: none !important;
+    }
+
+    .error-input{
+        border: solid 2px red !important;
+    }
+    .required {
+    margin: 0 -8px 0 3px;
+    vertical-align: top;
+    font-size: 20px;
+    font-weight: normal;
+    color: #e4434b;
+    left: -4px;
+    position: absolute;
+    top: 3px;
+}
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin-left: 14px;
+}
+
+</style>
+
+
+<!-- end of preloader -->
+<div class="container-fluid ">
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top d-flex bg-white">
+        <div class="container">
+            <div class="row w-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image ml-2   websiteBrand" href="/Home">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/logo_dark.png")" alt="suptomer" />
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+
+                    <a href="/admin/supplier" class="custom-control" style="font-size: 1rem;">
+                            <i class="fas fa-times"></i> 
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="card-header bg-tranperatnt border-0 profile-tabs-header">
+        <ul class="nav nav-tabs card-header-tabs d-flex justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info">
+                    @T("Suptomer.Profile.PersonalInfo")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-image-tab" data-toggle="tab" href="#shipment-info">
+                    @T("Suptomer.Profile.ShipmentInfo")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="location-tab" data-toggle="tab" href="#location">
+                    @T("Suptomer.Profile.Documents")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="confirm-tab" data-toggle="tab" href="#confirm">
+                    @T("Suptomer.Profile.Signature")
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mt-2 ">
+
+        <div class="row">
+            <div class="col-md-12 mt-5">
+
+                <div class="container py-4">
+                    <div class="card border-0">
+               
+                        <div class="card-body profile-tabs-body">
+                            <form asp-route="Profile" method="post" enctype="multipart/form-data"
+                                  autocomplete="off">
+                                <div asp-validation-summary="All" class="message-error"></div>
+                            <div class="tab-content">
+                                    @await Html.PartialAsync("Notifications")
+
+                                <div class="tab-pane fade show active" id="basic-info">
+                                    <h4>@T("Suptomer.Supplier.Profile")</h4>
+                                    
+                                    <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                    <div class="step-header d-flex  align-items-center justify-content-between">
+                                            <h5 class="step-title">@T("Suptomer.Profile.PersonalInfo")</h5>
+                                        @* <button type="button" class="btn btn-outline-primary btn-sm">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> @T("admin.common.edit")
+                                        </button> *@
+                                    </div>
+
+                                    <hr class="my-2 " />
+                                        <div class="form-group upload-img">
+                                            <label for="profile-image">
+                                                @T("Suptomer.Profile.ProfileImage"):
+                                            </label>
+                                            @{
+                                                var avatar = Model.AvatarUrl ?? @Url.Content("../Themes/SuptomerTheme/Content/assets/img/profile.png");
+                                            }
+                                            <div class="d-flex align-items-center w-100">
+                                                <img id="avatarImg" src="@avatar" alt="User Profile" class="profile-image rounded-circle">
+                                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        onclick="document.getElementById('avatarInput').click()">
+                                                    @T("Suptomer.Common.UploadImage")
+                                                </button>
+                                                <input type="file" id="avatarInput" style="display: none" asp-for="AvatarFile"
+                                                       accept="image/x-png,image/jpeg" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group">
+                                                    <label asp-for="FullName" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="FullName" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="FullName"></span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group">
+                                                    <label asp-for="Email" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="Email" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="Email"></span>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="Phone" asp-postfix=":"></label>
+                                                    <input maxlength="20" type="text" class="form-control" asp-for="Phone" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="Phone"></span>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <!-- do not delete for design pupose -->
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group profilepassword" id="profilepassword">
+                                                    <label asp-for="OldPassword" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="password" class="form-control password" asp-for="OldPassword" />
+                                                    <!-- <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span> -->
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group profilepassword">
+                                                    <label asp-for="NewPassword" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="password" class="form-control password" asp-for="NewPassword" />
+                                                    <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 d-flex justify-content-end">
+                                                <!-- Add more fields as needed -->
+                                                <button class="btn btn-primary" data-toggle="tab"
+                                                        onclick="document.getElementById('profile-image-tab').click()">
+                                                    @T("pager.next")
+                                                </button>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="tab-pane fade" id="shipment-info">
+
+                                    <h4>@T("Suptomer.Supplier.Profile")</h4>
+
+                                    <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                    <div class="step-header d-flex  align-items-center justify-content-between">
+                                        <h5 class="step-title">@T("Suptomer.Profile.ShipmentInfo")</h5>
+                                    </div>
+
+                                    <hr class="my-2 " />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="CompanyName" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="CompanyName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="MobileNumber" asp-postfix=":"></label>
+                                                    <input maxlength="20" type="text" class="form-control" asp-for="MobileNumber" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="ShipmentEmail" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="email" class="form-control" asp-for="ShipmentEmail" />
+                                                    <span asp-validation-for="ShipmentEmail"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6"></div>
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <lable>@T("Suptomer.Common.WorkingDays")</lable>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col-3">
+                                                            <select class="form-control p-0" asp-for="WorkDayFrom">
+                                                                <option value="">@T("Suptomer.Common.From")</option>
+                                                                @foreach (var item in Model.WeekDaysOptions)
+                                                                {
+                                                                    <option value="@item.Id">@item.Name</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <select class="form-control p-0 mr-3" asp-for="WorkDayTo">
+                                                                <option value="">@T("Suptomer.Common.To")</option>
+                                                                @foreach (var item in Model.WeekDaysOptions)
+                                                                {
+                                                                    <option value="@item.Id">@item.Name</option>
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <select class="form-control" id="day_off" asp-for="DayOff">
+                                                                <option value="">@T("Suptomer.Common.DayOff")</option>
+                                                                    @foreach (var item in Model.WeekDaysOptions)
+                                                                    {
+                                                                        <option value="@item.Id">@item.Name</option>
+                                                                    }
+                                                                </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <div class="row mt-3">
+                                                        <div class="col-3">
+                                                            <label for="name">@T("Suptomer.Common.TimeFrameFrom"):</label>
+                                                            <div class="my-2 d-flex">
+                                                                <input type="time"
+                                                                    class="form-control time mr-3" 
+                                                                    asp-for="TimeFrameFrom"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <label for="name">@T("Suptomer.Common.TimeFrameTo"):</label>
+                                                            <div class="my-2 d-flex">
+                                                                <input type="time" 
+                                                                    class="form-control time mr-3"
+                                                                       asp-for="TimeFrameTo"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="name">@T("account.fields.timezone"):</label>
+                                                            <div class="my-2 d-flex">
+                                                                <nop-select asp-for="TimeZone" class="form-control timezone"
+                                                                    asp-items="Model.TimeZones" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col">
+                                                <div class="step-header d-flex  align-items-center justify-content-between">
+                                                    <h5 class="step-title">@T("Suptomer.Common.CoverageZones")</h5>
+                                                </div>
+                                                <hr class="my-2 " />
+                                            </div>
+                                            <div class="col-12">
+                                                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d27292.551301976942!2d29.945516299999998!3d31.232670600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1692956720801!5m2!1sen!2seg"
+                                                        height="800" style="border:0; width: 100%" allowfullscreen="" loading="lazy"
+                                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                                <div class="card cavarge-zone">
+                                                    <div class="card-body">
+                                                        <h2>Address</h2>
+                                                        <p class="mb-4">for the purpose of industry regulation ,your details are required</p>
+                                                        @* <form action="" class="theme_form">
+                                                            <div class="form-group">
+                                                                <lable>Adress</lable>
+                                                                <input type="text" class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <lable>City</lable>
+                                                                <select class="form-control">
+                                                                    <option>city</option>
+                                                                    <option></option>
+                                                                    <option></option>
+                                                                </select>
+                                                            </div>
+                                                        </form> *@
+                                                        <div class="card zons d-flex align-items-start">
+                                                            <!-- <img src="" alt=""> -->
+                                                            <div class="address">
+                                                                <p>Riyadh</p>
+                                                                <p>ST-staen islan -56272</p>
+                                                                <p>56272g3773737</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 d-flex justify-content-end">
+                                                <!-- Add more fields as needed -->
+                                                <button class="btn btn-primary" data-toggle="tab"
+                                                        onclick="document.getElementById('location-tab').click()">
+                                                    @T("pager.next")
+                                                </button>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="tab-pane fade" id="location">
+
+                                    <h4>@T("Suptomer.Supplier.Profile")</h4>
+
+                                    <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                    <div class="step-header d-flex  align-items-center justify-content-between">
+                                        <h5 class="step-title">@T("Suptomer.Profile.Documents")</h5>
+                                    </div>
+
+                                    <hr class="my-2 " />
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <ul id="accordion" class="col-sm-6 col-md-12">
+                                                    <!-- Question one -->
+                                                    <li>
+
+                                                        <div class="card upload-doc  my-4">
+                                                            <div class="card-body">
+
+                                                                <div id="choose" data-toggle="collapse" data-target="#collapseOne"
+                                                                     aria-expanded="true" aria-controls="collapseOne" class=" d-flex align-items-center">
+
+                                                                    <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/doc.png")" class="rounded-circle" style="width: 50px; height: 50px;"
+                                                                         alt="Icon">
+                                                                    <div class="ml-3">
+                                                                        <h5 class="card-title">@T("Suptomer.Supplier.Profile.SupplierPapers")</h5>
+                                                                        <p class="card-text">@T("Suptomer.Supplier.Profile.SupplierPapersHint")</p>
+
+                                                                    </div>
+                                                                    <div class="ml-auto">
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="collapseOne" class="collapse uploadarea" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                            <p class="card-text">Upload/Browse</p>
+                                                                            <p>
+                                                                                <input type="file"
+                                                                                       asp-for="SupplierDocs"
+                                                                                       name="SupplierDocs"
+                                                                                       id="SupplierDocs"
+                                                                                       style="display: none"
+                                                                                       multiple="multiple"
+                                                                                       accept="image/x-png,image/jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" />
+
+                                                                                <img onclick="document.getElementById('SupplierDocs').click()"
+                                                                                style="cursor: pointer"
+                                                                                src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/upload.png")" alt="suptomer" />
+
+
+                                                                            </p>
+                                                                            
+                                                                            <div class="row" id="supplierFilesUploadPreview">
+                                                                            </div>
+                                                                            
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if (Model.SupplierDocFiles.Count > 0)
+                                                                    {
+                                                                        <div class="card-footer">
+                                                                            <ul>
+                                                                                @foreach (var file in Model.SupplierDocFiles)
+                                                                                {
+                                                                                    <li>
+
+                                                                                        <a href="@Url.RouteUrl("SupplierProfileFileDownload", new { id = file.FileId })">
+                                                                                            <i class="fas fa-arrow-down"></i>
+                                                                                            @file.FileName
+                                                                                        </a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    }
+                                                                    
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </li>
+                                                    <li>
+
+                                                        <div class="card upload-doc  my-4">
+                                                            <div class="card-body">
+
+                                                                <div id="choose" data-toggle="collapse" data-target="#collapseTow"
+                                                                     aria-expanded="false" aria-controls="collapseTow" class=" d-flex align-items-center">
+
+                                                                    <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/n-id.png")" class="rounded-circle" style="width: 50px; height: 50px;"
+                                                                         alt="Icon">
+                                                                    <div class="ml-3">
+                                                                        <h5 class="card-title">@T("Suptomer.Common.NationalID")</h5>
+                                                                        <p class="card-text">@T("Suptomer.Common.NationalIDHint")</p>
+                                                                    </div>
+                                                                    <div class="ml-auto">
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="collapseTow" class="collapse uploadarea" aria-labelledby="headingTow" data-parent="#accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                            <p class="card-text">Upload/Browse</p>
+                                                                            <p>
+                                                                                <input type="file"
+                                                                                       asp-for="SupplierNationalId"
+                                                                                       name="SupplierNationalId"
+                                                                                       id="SupplierNationalId"
+                                                                                       style="display: none"
+                                                                                       multiple="multiple" 
+                                                                                       accept="image/x-png,image/jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" />
+
+                                                                                <img onclick="document.getElementById('SupplierNationalId').click()" src=" @Url.Content("../Themes/SuptomerTheme/Content/assets/img/upload.png")" alt="suptomer" />
+                                                                            </p>
+                                                                            <div class="row" id="supplierNationalIdPreview">
+                                                                            </div>
+                                                                            
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if (Model.SupplierNationalIdFiles.Count > 0)
+                                                                    {
+                                                                        <div class="card-footer">
+                                                                            <ul>
+                                                                                @foreach (var file in Model.SupplierNationalIdFiles)
+                                                                                {
+                                                                                    <li>
+                                                                                        <a href="@Url.RouteUrl("SupplierProfileFileDownload", new { id = file.FileId })">
+                                                                                            <i class="fas fa-arrow-down"></i>
+                                                                                            @file.FileName
+                                                                                        </a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    }
+                                                                    
+                                                                    </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Add more fields as needed -->
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button class="btn btn-primary" data-toggle="tab"
+                                                    onclick="document.getElementById('confirm-tab').click()">
+                                                @T("pager.next")
+                                            </button>
+                                        </div>
+                                </div>
+                                <div class="tab-pane fade" id="confirm">
+
+                                    <h4>@T("Suptomer.Supplier.Profile")</h4>
+
+                                    <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                    <div class="step-header d-flex  align-items-center justify-content-between">
+                                        <h5 class="step-title">@T("Suptomer.Profile.Signature")</h5>
+                                    </div>
+
+                                    <hr class="my-2 " />
+                                        <!-- Add more fields as needed -->
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <div class="card upload-doc border-dashed d-flex  my-4">
+                                                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                                        <p class="card-text">Upload/Browse</p>
+                                                        <p>
+                                                            <i class="fas fa-arrow-up" aria-hidden="true"
+                                                               style="cursor: pointer"
+                                                               onclick="document.getElementById('Signature').click()"></i>
+                                                            <input type="file"
+                                                                   asp-for="Signature"
+                                                                   name="Signature"
+                                                                   id="Signature"
+                                                                   style="display: none" accept="image/x-png,image/jpeg" />
+                                                        </p>
+                                                        @{
+                                                            var dispalySignatureImg = @Model.SignatureUrl is null ? "none" : "block";
+                                                        }
+                                                        @if (Model.SignatureUrl is not null)
+                                                        {
+                                                            <img id="signatureImg" src="@Model.SignatureUrl" alt="Signature" width="200">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img id="signatureImg" alt="Signature" width="200"
+                                                                 style="display: @dispalySignatureImg" />
+                                                        }
+                                                    </div>
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary">@T("admin.common.save")</button>
+                                        </div>
+                                </div>
+                                
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Tabs content -->
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function readURL(input, containerId) {
+        if (input.files && input.files[0]) {
+            for (var i = 0; i < input.files.length; i++) {
+                var reader = new FileReader();
+                const name = input.files[i].name;
+                const lastDot = name.lastIndexOf('.');
+                const ext = name.substring(lastDot + 1);
+
+                reader.onload = function (e) {
+                    console.log(e.target);
+                    var elem = document.createElement("img");
+                    if (ext == "pdf") {
+                        elem.setAttribute("src", "/images/pdf-icon.png");
+                    }
+                    else if (ext == "doc" || ext == "docx") {
+                        elem.setAttribute("src", "/images/word-icon.png");
+                    }
+                    else {
+                        elem.setAttribute("src", e.target.result);
+                    }
+                    
+                    elem.setAttribute("width", "100");
+                    //elem.setAttribute("height", "100");
+                    elem.setAttribute("class", "col-2 mb-2");
+                    document.getElementById(containerId).appendChild(elem);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }  
+        }
+    }
+
+    $("#SupplierDocs").change(function () {
+        readURL(this, "supplierFilesUploadPreview");
+    });
+
+    $("#SupplierNationalId").change(function () {
+        readURL(this, "supplierNationalIdPreview");
+    });
+
+    $("#Signature").change(function () {
+        readSignatureURL(this);
+    });
+
+    $("#avatarInput").change(function () {
+        readAvatarURL(this);
+    });
+    
+    function readAvatarURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#avatarImg").attr("src", e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readSignatureURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#signatureImg").attr("src", e.target.result);
+                $("#signatureImg").css("display", "block");;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

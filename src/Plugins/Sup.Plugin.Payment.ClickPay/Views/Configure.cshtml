@@ -1,0 +1,63 @@
+﻿@model Sup.Plugin.Payment.ClickPay.Models.ClickPayConfiguration
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+@await Component.InvokeAsync(typeof(StoreScopeConfigurationViewComponent))
+
+<form asp-controller="Payment" asp-action="Configure" method="post">
+    <div class="cards-group">
+        <div class="card card-default">
+            <div class="card-body">
+                <p>@T("Plugins.Payment.ClickPay.Instructions")</p>
+                
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="ProfileId_OverrideForStore" asp-input="ProfileId" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="ProfileId" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ProfileId" />
+                        <span asp-validation-for="ProfileId"></span>
+                    </div>
+                </div> 
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="ProfileServerKey_OverrideForStore" asp-input="ProfileServerKey" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="ProfileServerKey" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ProfileServerKey" />
+                        <span asp-validation-for="ProfileServerKey"></span>
+                    </div>
+                </div>
+               
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="CallbackUrl_OverrideForStore" asp-input="CallbackUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="CallbackUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="CallbackUrl" />
+                        <span asp-validation-for="CallbackUrl"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="ReturnUrl_OverrideForStore" asp-input="ReturnUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="ReturnUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ReturnUrl" />
+                        <span asp-validation-for="ReturnUrl"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-9 offset-md-3">
+                        <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
+                    </div>
+                </div>
+            </>
+        </div>
+    </div>
+</form>

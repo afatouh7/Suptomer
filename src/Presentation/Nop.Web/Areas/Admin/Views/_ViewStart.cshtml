@@ -1,0 +1,15 @@
+﻿@{
+    var customer = await workContext.GetCurrentCustomerAsync();
+    if (customer.UserType == Nop.Core.Domain.Customers.UserType.SuptomerSupplier)
+    {
+        Layout = "_SupplierAdminLayout";
+    }
+    else if (customer.UserType == Nop.Core.Domain.Customers.UserType.SuptomerMerchant)
+    {
+        Layout = "_MerchantAdminLayout";
+    }
+    else
+    {
+        Layout = "_AdminLayout";
+    } 
+}

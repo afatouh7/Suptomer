@@ -1,0 +1,937 @@
+﻿@using Nop.Core
+@using Nop.Web.Models.Merchant
+@model SuptomerMerchantProfileModel
+
+@inject Nop.Core.IWebHelper webHelper
+@{
+    Layout = "_RgistrationLayout";
+    NopHtml.AddTitleParts(T("PageTitle.Account").Text);
+    NopHtml.AppendPageCssClassParts("html-account-page");
+    NopHtml.AppendPageCssClassParts("html-customer-info-page");
+}
+
+<style>
+    .footer-container {
+        display: none !important;
+    }
+
+    .error-input{
+        border: solid 2px red !important;
+    }
+    .required {
+    margin: 0 -8px 0 3px;
+    vertical-align: top;
+    font-size: 20px;
+    font-weight: normal;
+    color: #e4434b;
+    left: -4px;
+    position: absolute;
+    top: 3px;
+}
+label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    margin-left: 14px;
+}
+
+</style>
+
+
+<!-- end of preloader -->
+<div class="container-fluid ">
+
+    <!-- Navigation -->
+    <nav class="navbar fixed-top d-flex bg-white">
+        <div class="container">
+            <div class="row w-100 justify-content-center align-items-center">
+                <div class="col-6">
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image ml-2  websiteBrand" href="/Home">
+                        <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/logo_dark.png")" alt="suptomer" />
+                    </a>
+                </div>
+                <div class="col-6 text-right">
+
+                    <a href="/merchant" class="custom-control" style="font-size: 1rem;">
+                        <i class="fas fa-times"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="card-header bg-tranperatnt border-0 profile-tabs-header">
+        <ul class="nav nav-tabs card-header-tabs d-flex justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info">
+                    @T("Suptomer.Profile.PersonalInfo")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-image-tab" data-toggle="tab" href="#shipment-info">
+                    @T("Suptomer.Merchant.Profile.RestaurantInfo")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="location-tab" data-toggle="tab" href="#location">
+                    @T("Suptomer.Profile.Documents")
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="confirm-tab" data-toggle="tab" href="#confirm">
+                    @T("Suptomer.Profile.Signature")
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container mt-2 ">
+
+        <div class="row">
+            <div class="col-md-12 mt-5">
+
+                <div class="container py-4">
+                    <div class="card border-0">
+                      
+                        <div class="card-body profile-tabs-body">
+                            <form asp-route="Profile" method="post" enctype="multipart/form-data"
+                            autocomplete="off">
+                                <div asp-validation-summary="All" class="message-error"></div>
+                                <div class="tab-content">
+                                    @await Html.PartialAsync("Notifications")
+                                    <div class="tab-pane fade show active" id="basic-info">
+                                        <h4>@T("Suptomer.Merchant.Profile")</h4>
+
+                                        <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                        <div class="step-header d-flex  align-items-center justify-content-between">
+                                            <h5 class="step-title">@T("Suptomer.Profile.PersonalInfo")</h5>
+                                            @* <button type="button" class="btn btn-outline-primary btn-sm">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i> @T("admin.common.edit")
+                                            </button> *@
+                                        </div>
+
+                                        <hr class="my-2 " />
+                                        <div class="form-group upload-img">
+                                            <label for="profile-image">
+                                                @T("Suptomer.Profile.ProfileImage"):
+                                            </label>
+                                            @{
+                                                var avatar = Model.AvatarUrl ?? @Url.Content("../Themes/SuptomerTheme/Content/assets/img/profile.png");
+                                            }
+                                            <div class="d-flex align-items-center w-100">
+                                                <img id="avatarImg" src="@avatar" alt="User Profile" class="profile-image rounded-circle">
+                                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                                        onclick="document.getElementById('avatarInput').click()">
+                                                    @T("Suptomer.Common.UploadImage")
+                                                </button>
+                                                <input type="file" id="avatarInput" style="display: none" asp-for="AvatarFile"
+                                                       accept="image/x-png,image/jpeg"/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group">
+                                                    <label asp-for="FullName" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="FullName" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="FullName"></span>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group">
+                                                    <label asp-for="Email" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="Email" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="Email"></span>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="Phone" asp-postfix=":"></label>
+                                                    <input maxlength="20" type="text" class="form-control" asp-for="Phone" />
+                                                    <nop-required />
+                                                    <span asp-validation-for="Phone"></span>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <!-- do not delete for design pupose -->
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group profilepassword" id="profilepassword">
+                                                    <label asp-for="OldPassword" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="password" class="form-control password" asp-for="OldPassword" />
+                                                    <!-- <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span> -->
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+
+                                                <div class="form-group profilepassword">
+                                                    <label asp-for="NewPassword" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="password" class="form-control password" asp-for="NewPassword" />
+                                                    <span class="input-group-text eye"><i class="fas fa-eye-slash"></i></span>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-sm-12 d-flex justify-content-end">
+                                                <!-- Add more fields as needed -->
+                                                <button class="btn btn-primary" data-toggle="tab"
+                                                        onclick="document.getElementById('profile-image-tab').click()">
+                                                    @T("pager.next")
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="shipment-info">
+
+                                        <h4>@T("Suptomer.Merchant.Profile.RestaurantInfo")</h4>
+
+                                        <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                        <div class="step-header d-flex  align-items-center justify-content-between">
+                                            <h5 class="step-title">@T("Suptomer.Profile.ShipmentInfo")</h5>
+                                        </div>
+
+                                        <hr class="my-2 " />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="CompanyName" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="CompanyName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="ContactPersonName" asp-postfix=":"></label>
+                                                    <input maxlength="100" type="text" class="form-control" asp-for="ContactPersonName" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="BudgetValue" asp-postfix=":"></label>
+                                                    <input maxlength="100" min="0"  type="number" class="form-control" asp-for="BudgetValue" />
+                                                    <span asp-validation-for="BudgetValue"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="BudgetLimitInterval" asp-postfix=":"></label>
+                                                    <select class="form-control p-0" asp-for="BudgetLimitInterval">
+                                                        <option value="">@T("admin.catalog.products.fields.requiredproductids.choose")</option>
+                                                        @foreach (var item in Model.BudgetLimitIntervalsOptions)
+                                                        {
+                                                            <option value="@item.Id">@item.Name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <div class="row mt-3">
+                                                        <div class="col-3">
+                                                            <label for="name">@T("Suptomer.Common.TimeFrameFrom"):</label>
+                                                            <div class="my-2 ">
+                                                                <input type="time"
+                                                                       class="form-control time mr-3 startTime"
+                                                                       asp-for="TimeFrameFrom"/>
+                                                          <!-- first error or time diff -->
+                                                                       <div id="" class="errorDiv label text-danger mt-2 d-none" role="alert">Time From is greater than Time to</div>
+
+                                                            </div>
+                                                        </div>
+                                                      
+                                                        <div class="col-3">
+
+                                                            <label for="name">@T("Suptomer.Common.TimeFrameTo"):</label>
+                                                            <div class="my-2 d-flex">
+                                                                <input type="time"
+                                                                       class="form-control time mr-3 endTime"
+                                                                       asp-for="TimeFrameTo"/>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <label for="name">@T("account.fields.timezone"):</label>
+                                                            <div class="my-2 d-flex">
+                                                                <nop-select asp-for="TimeZone" class="form-control timezone"
+                                                                            asp-items="Model.TimeZones" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col">
+                                                <div class="step-header d-flex  align-items-center justify-content-between">
+                                                    <h5 class="step-title">@T("Suptomer.Merchant.Profile.BranchDetails")</h5>
+                                                </div>
+                                                <hr class="my-2 " />
+                                            </div>
+                                            <div class="col-12">
+
+                                                <ul class="nav nav-tabs insider-tabs" id="innerTabs">
+                                                    <li class="nav-item">
+                                                        <a id="branchDetailsTab" class="nav-link active" data-toggle="tab" href="#branch-basic-details">
+                                                            <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/branch-details.png")" class="px-2">
+                                                            @T("Suptomer.Merchant.Profile.BranchInfo")
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a id="branchListTab" class="nav-link" data-toggle="tab" href="#branch-address">
+                                                            <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/branch-addres.png")" class="px-2">
+                                                            Branches
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content">
+                                                    <h6 id="saveBranchResult" class="alert"></h6>
+                                                    <div id="branch-basic-details" class="tab-pane fade show active">
+                                                        
+                                                            <div class="row">
+                                                                <div class="col-sm-12 col-md-6">
+                                                                    <input type="hidden" id="BranchId" />
+                                                                    <div class="form-group">
+                                                                    <label>Branch name:</label>
+                                                                    <input maxlength="100" type="text" class="form-control" id="BranchName" placeholder="Enter your branch name" />
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label>Branch manager:</label>
+                                                                    <input maxlength="100" type="text" class="form-control" id="BranchManager"
+                                                                     placeholder="Enter your branch manger" />
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-6">
+
+                                                                    <div class="form-group">
+                                                                    <label>Mobile number:</label>
+                                                                    <input maxlength="20" type="text" class="form-control" id="BranchMobileNumber"
+                                                                           placeholder="Enter your branch mobile number" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>Address:</label>
+                                                                    <input maxlength="500" type="text" class="form-control" id="BranchAddress"
+                                                                    placeholder="Enter branch address" />
+                                                                </div>
+                                                                </div>
+                                                                <div class="col-sm-12 col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="row mt-3">
+                                                                        <div class="col-3">
+                                                                            <label for="name">@T("Suptomer.Common.TimeFrameFrom"):</label>
+                                                                            <div class="my-2 ">
+                                                                                <input type="time"
+                                                                                       class="form-control time mr-3 startTime"
+                                                                                       id="BranchTimeFrameFrom"/>
+                                                                                <!-- secound err for times diff -->
+                                                                                       <div id="" class="errorDiv label text-danger mt-2 d-none" role="alert">Time From is greater than Time to</div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <label for="name">@T("Suptomer.Common.TimeFrameTo"):</label>
+                                                                            <div class="my-2 d-flex">
+                                                                                <input type="time"
+                                                                                       class="form-control time mr-3 endTime"
+                                                                                       id="BranchTimeFrameTo"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            <label for="name">@T("account.fields.timezone"):</label>
+                                                                            <div class="my-2 d-flex">
+                                                                                <nop-select asp-for="BranchesTimeZone" id="BranchTimeZone" class="form-control timezone"
+                                                                                            asp-items="Model.TimeZones" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-2" style="margin-top: 26px">
+                                                                            <label></label>
+                                                                            <div class="my-2 d-flex" >
+                                                                                <button type="button" class="btn btn-sm btn-secondary" id="saveBranchBtn">Save</button>
+                                                                                &nbsp;
+                                                                                <button type="button" class="btn btn-sm btn-secondary" onclick="gotoBranchList()">Cancel</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                    <div id="branch-address" class="tab-pane fade mt-4">
+                                                        <div class="col-12 mt-5 " id="branchesGrid">
+                                                            <table class="data-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Branch name</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+                                                            @foreach(var branch in Model.Branches)
+                                                            {
+                                                                <tr>
+                                                                    <td style="padding: 8px">@branch.BranchName</td>
+                                                                        <td style="padding: 8px">
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary btn-sm"
+                                                                                    onclick="editBranch(@branch.Id)">
+                                                                                Edit
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                    class="btn btn-danger btn-sm"
+                                                                                    onclick="deleteBranch(@branch.Id)">
+                                                                                Delete
+                                                                            </button>
+                                                                        </td>
+                                                                </tr>
+                                                            }
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 d-flex justify-content-end" style="margin-top: 10px">
+                                                <!-- Add more fields as needed -->
+                                                <button class="btn btn-primary" data-toggle="tab" id="btnnext_branches"
+                                                        onclick="document.getElementById('location-tab').click()">
+                                                    @T("pager.next")
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="location">
+
+                                        <h4>@T("Suptomer.Merchant.Profile")</h4>
+
+                                        <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                        <div class="step-header d-flex  align-items-center justify-content-between">
+                                            <h5 class="step-title">@T("Suptomer.Profile.Documents")</h5>
+                                        </div>
+
+                                        <hr class="my-2 " />
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <ul id="accordion" class="col-sm-6 col-md-12">
+                                                    <!-- Question one -->
+                                                    <li>
+
+                                                        <div class="card upload-doc  my-4">
+                                                            <div class="card-body">
+
+                                                                <div id="choose" data-toggle="collapse" data-target="#collapseOne"
+                                                                     aria-expanded="true" aria-controls="collapseOne" class=" d-flex align-items-center">
+
+                                                                    <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/doc.png")" class="rounded-circle" style="width: 50px; height: 50px;"
+                                                                         alt="Icon">
+                                                                    <div class="ml-3">
+                                                                        <h5 class="card-title">@T("Suptomer.Merchant.RestaurantPapers")</h5>
+                                                                        <p class="card-text">@T("Suptomer.Supplier.Profile.SupplierPapersHint")</p>
+
+                                                                    </div>
+                                                                    <div class="ml-auto">
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="collapseOne" class="collapse uploadarea" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                            <p class="card-text">Upload/Browse</p>
+                                                                            <p>
+                                                                                <input type="file"
+                                                                                       asp-for="SupplierDocs"
+                                                                                       name="SupplierDocs"
+                                                                                       id="SupplierDocs"
+                                                                                       style="display: none"
+                                                                                       multiple="multiple"
+                                                                                       accept="image/x-png,image/jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" />
+
+                                                                                <img onclick="document.getElementById('SupplierDocs').click()"
+                                                                                     style="cursor: pointer"
+                                                                                     src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/upload.png")" alt="suptomer" />
+
+
+                                                                            </p>
+
+                                                                            <div class="row" id="supplierFilesUploadPreview">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if (Model.SupplierDocFiles.Count > 0)
+                                                                    {
+                                                                        <div class="card-footer">
+                                                                            <ul>
+                                                                                @foreach (var file in Model.SupplierDocFiles)
+                                                                                {
+                                                                                    <li>
+
+                                                                                        <a href="@Url.RouteUrl("MerchantProfileFileDownload", new { id = file.FileId })">
+                                                                                            <i class="fas fa-arrow-down"></i>
+                                                                                            @file.FileName
+                                                                                        </a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </li>
+                                                    <li>
+
+                                                        <div class="card upload-doc  my-4">
+                                                            <div class="card-body">
+
+                                                                <div id="choose" data-toggle="collapse" data-target="#collapseTow"
+                                                                     aria-expanded="false" aria-controls="collapseTow" class=" d-flex align-items-center">
+
+                                                                    <img src="@Url.Content("../Themes/SuptomerTheme/Content/assets/img/n-id.png")" class="rounded-circle" style="width: 50px; height: 50px;"
+                                                                         alt="Icon">
+                                                                    <div class="ml-3">
+                                                                        <h5 class="card-title">@T("Suptomer.Common.NationalID")</h5>
+                                                                        <p class="card-text">@T("Suptomer.Common.NationalIDHint")</p>
+                                                                    </div>
+                                                                    <div class="ml-auto">
+                                                                        <i class="fas fa-arrow-right"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="collapseTow" class="collapse uploadarea" aria-labelledby="headingTow" data-parent="#accordion">
+                                                                    <div class="card-body">
+                                                                        <div class="d-flex flex-column align-items-center justify-content-center">
+                                                                            <p class="card-text">Upload/Browse</p>
+                                                                            <p>
+                                                                                <input type="file"
+                                                                                       asp-for="SupplierNationalId"
+                                                                                       name="SupplierNationalId"
+                                                                                       id="SupplierNationalId"
+                                                                                       style="display: none"
+                                                                                       multiple="multiple"
+                                                                                       accept="image/x-png,image/jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword" />
+
+                                                                                <img onclick="document.getElementById('SupplierNationalId').click()" src=" @Url.Content("../Themes/SuptomerTheme/Content/assets/img/upload.png")" alt="suptomer" />
+                                                                            </p>
+                                                                            <div class="row" id="supplierNationalIdPreview">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    @if (Model.SupplierNationalIdFiles.Count > 0)
+                                                                    {
+                                                                        <div class="card-footer">
+                                                                            <ul>
+                                                                                @foreach (var file in Model.SupplierNationalIdFiles)
+                                                                                {
+                                                                                    <li>
+                                                                                        <a href="@Url.RouteUrl("SupplierProfileFileDownload", new { id = file.FileId })">
+                                                                                            <i class="fas fa-arrow-down"></i>
+                                                                                            @file.FileName
+                                                                                        </a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        </div>
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- Add more fields as needed -->
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button class="btn btn-primary" data-toggle="tab"
+                                                    onclick="document.getElementById('confirm-tab').click()">
+                                                @T("pager.next")
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="confirm">
+
+                                        <h4>@T("Suptomer.Merchant.Profile")</h4>
+
+                                        <p class="mb-4">@T("Suptomer.PageSubTitle.Register")</p>
+                                        <div class="step-header d-flex  align-items-center justify-content-between">
+                                            <h5 class="step-title">@T("Suptomer.Profile.Signature")</h5>
+                                        </div>
+
+                                        <hr class="my-2 " />
+                                        <!-- Add more fields as needed -->
+                                        <div class="row">
+                                            <div class="col-12">
+
+                                                <div class="card upload-doc border-dashed d-flex  my-4">
+                                                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                                                        <p class="card-text">Upload/Browse</p>
+                                                        <p>
+                                                            <i class="fas fa-arrow-up" aria-hidden="true"
+                                                               style="cursor: pointer"
+                                                               onclick="document.getElementById('Signature').click()"></i>
+                                                            <input type="file"
+                                                                   asp-for="Signature"
+                                                                   name="Signature"
+                                                                   id="Signature"
+                                                                   style="display: none" accept="image/x-png,image/jpeg" />
+                                                        </p>
+                                                        @{
+                                                            var dispalySignatureImg = @Model.SignatureUrl is null ? "none" : "block";
+                                                        }
+                                                        @if (Model.SignatureUrl is not null)
+                                                        {
+                                                            <img id="signatureImg" src="@Model.SignatureUrl" alt="Signature" width="200">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img id="signatureImg" alt="Signature" width="200"
+                                                                 style="display: @dispalySignatureImg" />
+                                                        }
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary">@T("admin.common.save")</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Tabs content -->
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function readURL(input, containerId) {
+        if (input.files && input.files[0]) {
+            for (var i = 0; i < input.files.length; i++) {
+                var reader = new FileReader();
+                const name = input.files[i].name;
+                const lastDot = name.lastIndexOf('.');
+                const ext = name.substring(lastDot + 1);
+
+                reader.onload = function (e) {
+                    console.log(e.target);
+                    var elem = document.createElement("img");
+                    if (ext == "pdf") {
+                        elem.setAttribute("src", "/images/pdf-icon.png");
+                    }
+                    else if (ext == "doc" || ext == "docx") {
+                        elem.setAttribute("src", "/images/word-icon.png");
+                    }
+                    else {
+                        elem.setAttribute("src", e.target.result);
+                    }
+
+                    elem.setAttribute("width", "100");
+                    //elem.setAttribute("height", "100");
+                    elem.setAttribute("class", "col-2 mb-2");
+                    document.getElementById(containerId).appendChild(elem);
+                }
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+    }
+
+    $("#SupplierDocs").change(function () {
+        readURL(this, "supplierFilesUploadPreview");
+    });
+
+    $("#SupplierNationalId").change(function () {
+        readURL(this, "supplierNationalIdPreview");
+    });
+
+    $("#Signature").change(function () {
+        readSignatureURL(this);
+    });
+
+    $("#avatarInput").change(function () {
+        readAvatarURL(this);
+    });
+
+    function readAvatarURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#avatarImg").attr("src", e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function readSignatureURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $("#signatureImg").attr("src", e.target.result);
+                $("#signatureImg").css("display", "block");;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    document.getElementById("saveBranchBtn").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        var branchId = $("#BranchId").val();
+        if (branchId) {
+            branchId = Number(branchId);
+        }
+        else { branchId = 0; }
+        var branchName = $("#BranchName").val();
+        var branchManager = $("#BranchManager").val();
+        var branchMobileNumber = $("#BranchMobileNumber").val();
+        var branchAddress = $("#BranchAddress").val();
+        var branchTimeFrameFrom = $("#BranchTimeFrameFrom").val();
+        var branchTimeFrameTo = $("#BranchTimeFrameTo").val();
+        var branchTimeZone = $("#BranchTimeZone").val();
+
+        var data = {
+            Id: branchId,
+            BranchName: branchName,
+            BranchManager: branchManager,
+            BranchMobileNumber: branchMobileNumber,
+            BranchTimeframeFrom: branchTimeFrameFrom,
+            BranchTimeframeTo: branchTimeFrameTo,
+            BranchTimeZoneId: branchTimeZone,
+            BranchLocation: branchAddress,
+        };
+
+        
+
+        if (branchName) {
+            addAntiForgeryToken(data);
+            $.ajax({
+                cache: false,
+                data: data,
+                traditional: true,
+                complete: function (data) {
+                    if (data.responseJSON.IsSuccess) {
+                        loadBranches(data.responseJSON.Message);
+                    }
+                    else {
+                        $("#saveBranchResult").html(data.responseJSON.Message);
+                        $("#saveBranchResult").removeClass("alert-success");
+                        $("#saveBranchResult").addClass("alert-danger");
+                        $("#saveBranchResult").show();
+                        setTimeout(function () {
+                            $("#saveBranchResult").hide();
+                        }, 5000);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                },
+                type: "POST",
+                url: "/MerchantProfile/SaveBranch"
+            });
+        }
+        else
+        {
+            $("#saveBranchResult").html("Add branch name");
+            $("#saveBranchResult").removeClass("alert-success");
+            $("#saveBranchResult").addClass("alert-danger");
+            $("#saveBranchResult").show();
+            setTimeout(function () {
+                $("#saveBranchResult").hide();
+            }, 4000);
+        }
+    });
+
+    $(document).ready(function() {
+        $("#saveBranchResult").hide();
+    })
+
+    function loadBranches(message){
+        $.ajax({
+            cache: false,
+            traditional: true,
+            complete: function (branchesData) {
+                var branches = branchesData.responseJSON;
+                console.log(branches);
+                $("#branchesGrid").empty();
+                $(`<table class='data-table'>
+                                          <thead>
+                                              <tr>
+                                                 <th>Branch name</th>
+                                                 <th></th>
+                                              </tr>
+                                          </thead>
+                                          ${branches.map(branch => {
+                    return "<tr><td style = 'padding: 8px'>" + branch.BranchName + "</td>" +
+                        "<td style = 'padding: 8px'>" +
+                        "<button type='button' class='btn btn-secondary btn-sm' onclick = 'editBranch(" + branch.Id + ")' >" +
+                        "Edit" +
+                        "</button>&nbsp;" +
+                        "<button type='button' class='btn btn-danger btn-sm' onclick ='deleteBranch(" + branch.Id + ")' >" +
+                        "Delete" +
+                        "</button>" +
+                        "</td>" +
+                        "</tr>"
+                }).join("")
+                    }
+                                       </table>`).appendTo("#branchesGrid");
+
+
+                $("#saveBranchResult").html(message);
+                $("#saveBranchResult").addClass("alert-success");
+                $("#saveBranchResult").removeClass("alert-danger");
+                $("#saveBranchResult").show();
+                setTimeout(function () {
+                    $("#saveBranchResult").hide();
+                }, 5000);
+
+                $("#BranchId").val("");
+                $("#BranchName").val("");
+                $("#BranchManager").val("");
+                $("#BranchMobileNumber").val("");
+                $("#BranchAddress").val("");
+                $("#BranchTimeFrameFrom").val("");
+                $("#BranchTimeFrameTo").val("");
+                $("#BranchTimeZone").val("Arab Standard Time");
+
+                $("#branchDetailsTab").removeClass("active");
+                $("#branch-basic-details").removeClass("active");
+                $("#branch-basic-details").removeClass("show");
+
+                $("#branchListTab").addClass("active");
+                $("#branch-address").addClass("active");
+                $("#branch-address").addClass("show");
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            },
+            type: "GET",
+            url: "/MerchantProfile/GetAllBranches"
+        });
+    }
+
+    function gotoBranchList() {
+        $("#BranchId").val("");
+        $("#BranchName").val("");
+        $("#BranchManager").val("");
+        $("#BranchMobileNumber").val("");
+        $("#BranchAddress").val("");
+        $("#BranchTimeFrameFrom").val("");
+        $("#BranchTimeFrameTo").val("");
+        $("#BranchTimeZone").val("Arab Standard Time");
+
+        $("#branchDetailsTab").removeClass("active");
+        $("#branch-basic-details").removeClass("active");
+        $("#branch-basic-details").removeClass("show");
+
+        $("#branchListTab").addClass("active");
+        $("#branch-address").addClass("active");
+        $("#branch-address").addClass("show");
+    }
+
+    function editBranch(id){
+        $.ajax({
+        cache: false,
+        traditional: true,
+        complete: function (data) {
+            var branch = data.responseJSON;
+
+            $("#BranchId").val(branch.Id);
+            $("#BranchName").val(branch.BranchName);
+            $("#BranchManager").val(branch.BranchManager);
+                $("#BranchMobileNumber").val(branch.BranchMobileNumber);
+            $("#BranchAddress").val(branch.BranchLocation);
+            $("#BranchTimeFrameFrom").val(branch.BranchTimeframeFrom);
+                $("#BranchTimeFrameTo").val(branch.BranchTimeframeTo);
+                $("#BranchTimeZone").val(branch.BranchTimeZoneId || "Arab Standard Time");
+
+            $("#branchDetailsTab").addClass("active");
+            $("#branch-basic-details").addClass("active");
+            $("#branch-basic-details").addClass("show");
+
+            $("#branchListTab").removeClass("active");
+            $("#branch-address").removeClass("active");
+            $("#branch-address").removeClass("show");
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        },
+        type: "GET",
+        url: `/MerchantProfile/GetBranch/${id}`
+    });
+
+        
+    }
+
+    function deleteBranch(id) {
+        if (confirm("Are you sure you want to perform this action?") == true) {
+            $.ajax({
+                cache: false,
+                traditional: true,
+                complete: function (data) { 
+                    var result = data.responseJSON;
+
+                    $("#saveBranchResult").html(result.Message);
+
+                    if (result.IsSuccess) {
+                        loadBranches();
+
+                        $("#saveBranchResult").addClass("alert-success");
+                        $("#saveBranchResult").removeClass("alert-danger"); 
+                    }
+                    else {
+                        $("#saveBranchResult").removeClass("alert-success");
+                        $("#saveBranchResult").addClass("alert-danger");
+                    }
+
+                    $("#saveBranchResult").show();
+                    setTimeout(function () {
+                        $("#saveBranchResult").hide();
+                    }, 5000);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                },
+                type: "GET",
+                url: `/MerchantProfile/DeleteBranch/${id}`
+            });
+        }
+    }
+
+</script>
+

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-assets/js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-assets/js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-assets/js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-assets/js"> <!--<![endif]-->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- <link
+      rel="stylesheet"
+      href="https://cdn.usebootstrap.com/bootstrap/4.6.0/assets/css/bootstrap.min.css"
+    /> -->
+  <!-- Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+    rel="stylesheet" />
+
+  <link href="./dist/bootstrap.css" rel="stylesheet" />
+  <link href="./dist/fontawesome-all.css" rel="stylesheet" />
+  <link href="./dist/swiper.css" rel="stylesheet" />
+  <link href="./dist/magnific-popup.css" rel="stylesheet" />
+  <link href="./dist/styles.css" rel="stylesheet" />
+  <!-- theme style -->
+  <link href="./dist/style.css" rel="stylesheet" />
+  <!-- Favicon  -->
+  <link rel="icon" href="images/favicon.png" />
+
+</head>
+
+<body data-spy="scroll" data-target=".fixed-top">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="nav flex-column nav-tabs" id="myTab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#step1" role="tab" aria-controls="tab1" aria-selected="true">Tab 1</a>
+        <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#step2" role="tab" aria-controls="tab2" aria-selected="false">Tab 2</a>
+        <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#step3" role="tab" aria-controls="tab3" aria-selected="false">Tab 3</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="tab1-tab">
+          <!-- Content for Tab 1 -->
+          <h4>Tab 1 Content</h4>
+          <p>This is the content for Tab 1.</p>
+        </div>
+        <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="tab2-tab">
+          <!-- Content for Tab 2 -->
+          <h4>Tab 2 Content</h4>
+          <p>This is the content for Tab 2.</p>
+        </div>
+        <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="tab3-tab">
+          <!-- Content for Tab 3 -->
+          <h4>Tab 3 Content</h4>
+          <p>This is the content for Tab 3.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+       <div class="content-header ">
+              <h1 class="float-left">
+               @T("Admin.Catalog.Products")
+              </h1>
+              <div class="float-right">
+              
+                  <a href="#" class="btn btn-light icon_but">
+                           <i class="fas fa-search" aria-hidden="true"></i>
+                  </a>
+                   <a href="#" class="btn btn-light icon_but filter_icon"  id="showFilter">
+                      <i class="fas fa-filter"></i>
+                  </a> 
+                   <a href="#" class="btn btn-light icon_but">
+                      <i class="fas fa-th-list" id="switchView"></i>
+                  </a>
+                  <a asp-action="Create" class="btn btn-primary">
+                      <i class="fas fa-plus-square"></i>
+                      <!-- @T("Admin.Common.AddNew") -->
+                      New Product
+                  </a>
+                  <!-- <button asp-action="DownloadCatalogPDF" type="submit" name="download-catalog-pdf" class="btn bg-purple">
+                      <i class="far fa-file-pdf"></i>
+                      @T("Admin.Catalog.Products.List.DownloadPDF")
+                  </button> -->
+                  <!-- <div class="btn-group">
+                      <button type="button" class="btn btn-success">
+                          <i class="fas fa-download"></i>
+                          @T("Admin.Common.Export")
+                      </button>
+                      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <span class="caret"></span>
+                          <span class="sr-only">&nbsp;</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                          <li class="dropdown-item">
+                                  <button asp-action="ExportToXml" type="submit" name="exportxml-all">
+                                      <i class="far fa-file-code"></i>
+                                      @T("Admin.Common.ExportToXml.All")
+                                  </button>                            
+                          </li>
+                          <li class="dropdown-item">
+                             
+                                  <button type="button" id="exportxml-selected">
+                                      <i class="far fa-file-code"></i>
+                                      @T("Admin.Common.ExportToXml.Selected")
+                                  </button>                            
+                          </li>
+                          <li class="dropdown-divider"></li>
+                          <li class="dropdown-item">                            
+                                  <button asp-action="ExportToExcel" type="submit" name="exportexcel-all">
+                                      <i class="far fa-file-excel"></i>
+                                      @T("Admin.Common.ExportToExcel.All")
+                                  </button>                            
+                          </li>
+                          <li class="dropdown-item">                            
+                                  <button type="button" id="exportexcel-selected">
+                                      <i class="far fa-file-excel"></i>
+                                      @T("Admin.Common.ExportToExcel.Selected")
+                                  </button>                            
+                          </li>
+                      </ul>
+                  </div> -->
+                  <!-- @if (!Model.IsLoggedInAsVendor || Model.AllowVendorsToImportProducts)
+                  {
+                      //a vendor cannot import products
+                      <button type="button" name="importexcel" class="btn bg-olive" data-toggle="modal" data-target="#importexcel-window">
+                          <i class="fas fa-upload"></i>
+                          @T("Admin.Common.Import")
+                      </button>
+                  } -->
+                  <!-- <button type="button" id="delete-selected" class="btn btn-danger">
+                      <i class="far fa-trash-alt"></i>
+                      @T("Admin.Common.Delete.Selected")
+                  </button> -->
+                  <nop-action-confirmation asp-button-id="delete-selected" />
+                  @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.ProductListButtons, additionalData = Model })
+              </div>
+          </div>
+      <form asp-controller="Product" asp-action="List" method="post">
+        <section class="content">
+          <div class="container-fluid">
+          <div class="row">
+              <div class="d-none" id="search-col">
+                  <div class="card-default card-search">
+                      <div class="card-body">
+                          <div class="row search-row @(hideSearchBlock ? " d-none opened" : "d-none")" data-hideAttribute="@hideSearchBlockAttributeName">
+                              <!-- <div class="search-text">@T("Admin.Common.Search")</div> -->
+                              <div class="icon-search"><i class="fas fa-search" aria-hidden="true"></i></div>
+                              <div class="icon-collapse"><i class="far fa-angle-@(!hideSearchBlock ? "up" : "down")" aria-hidden="true"></i></div>
+                          </div>
+  
+                          <div class="search-body @(hideSearchBlock ? "closed " : "")">
+                             
+                              <div class="row">
+                                  <div class="text-center col-12">
+                                      <button type="button" id="search-products" class="btn btn-primary btn-search">
+                                          <i class="fas fa-search"></i>
+                                          @T("Admin.Common.Search")
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-12" id="search-rslt">
+                  <div class="form-horizontal">
+                      <div class="cards-group">                     
+              
+                     <!-- List View =========================================== -->
+                            
+                      </div>
+                  </div>
+              </div>
+          </div>   
+           
+          </div>
+        </section>
+  
+  </form>
+
+  
+
+  <script>
+    // $(document).ready(function () {
+    //   // Update confirm section with entered data before submitting
+    //   $('#name').keyup(function () {
+    //     $('#confirm-name').text($(this).val());
+    //   });
+
+    //   $('#email').keyup(function () {
+    //     $('#confirm-email').text($(this).val());
+    //   });
+
+    //   $('#location').keyup(function () {
+    //     $('#confirm-location').text($(this).val());
+    //   });
+    // });
+  </script>
+  <!-- Scripts -->
+  <script src="./assets/js/jquery.min.js"></script>
+  <!-- jQuery for Bootstrap's JavaScript plugins -->
+  <script src="./assets/js/popper.min.js"></script>
+  <!-- Popper tooltip library for Bootstrap -->
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <!-- Bootstrap framework -->
+  <script src="./assets/js/jquery.easing.min.js"></script>
+  <!-- jQuery Easing for smooth scrolling between anchors -->
+  <script src="./assets/js/swiper.min.js"></script>
+  <!-- Swiper for image and text sliders -->
+  <script src="./assets/js/jquery.magnific-popup.js"></script>
+  <!-- Magnific Popup for lightboxes -->
+  <script src="./assets/js/validator.min.js"></script>
+  <!-- Validator../assets/js - Bootstrap plugin that validates forms -->
+  <script src="./assets/js/scripts.js"></script>
+  <!-- Custom scripts -->
+</body>
+
+</html>

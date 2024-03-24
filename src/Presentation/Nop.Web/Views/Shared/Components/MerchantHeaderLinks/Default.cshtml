@@ -1,0 +1,133 @@
+﻿@model HeaderLinksModel
+@using Nop.Core.Domain.Customers
+@inject Nop.Core.IWebHelper webHelper
+<style>
+     .nav-link span {
+        line-height: 45px!important;
+    text-transform: none!important;
+    width: 21px!important;
+    height: 21px!important;
+    font-size: 10px!important;
+    font-weight: 600!important;
+    background: #fff!important;
+    border-radius: 50%!important;
+    display: flex;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.25)!important;
+    position: absolute;
+    right: 0px;
+    top: -3px;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+<span class="nav-item">
+    @* switch lang *@
+    @* @await Component.InvokeAsync(typeof(LanguageSelectorViewComponent)) *@
+
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderLinksBefore, additionalData = Model })
+        @if (Model.IsAuthenticated)
+        {
+           <!-- <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="/supplier")">Dashboard</a> -->
+
+           <!-- <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")@*@Model.CustomerName*@</a> -->
+      @*      <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="@Url.RouteUrl("Merchant")"> Dashboard</a>
+           <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
+ *@        }
+        else
+        {
+            var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+            ? url.ToString()
+            : webHelper.GetRawUrl(Context.Request);
+
+            @if (Model.RegistrationType != UserRegistrationType.Disabled)
+            {
+                @* <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="@Url.RouteUrl("Register", new { returnUrl })" >@T("Account.Register")</a> *@
+            }
+           <a class="btn bg-white text-dark px-4 py-1 ml-5 no_underline" href="@Url.RouteUrl("Login", new { returnUrl })">@T("Account.Login")</a>
+        }
+      
+  @*   
+    <button class="btn bg-white text-dark px-4 py-1 ml-5 no_underline">
+        login
+    </button> *@
+
+</span>
+
+<div class="header-links">
+    <ul>
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderLinksBefore, additionalData = Model })
+        @if (Model.IsAuthenticated)
+        {
+            @* <li><a href="@Url.RouteUrl("CustomerInfo")" class="ico-account no_underline">@T("Account.MyAccount")</a></li>
+            <li><a href="@Url.RouteUrl("Logout")" class="ico-logout no_underline">@T("Account.Logout")</a></li> *@
+        }
+        else
+        {
+            var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+                ? url.ToString()
+                : webHelper.GetRawUrl(Context.Request);
+
+            @if (Model.RegistrationType != UserRegistrationType.Disabled)
+            {
+                <li><a href="@Url.RouteUrl("Register", new { returnUrl })" class="ico-register">@T("Account.Register")</a></li>
+            }
+            <li><a href="@Url.RouteUrl("Login", new { returnUrl })" class="ico-login">@T("Account.Login")</a></li>
+        }
+        @if (Model.AllowPrivateMessages)
+        {
+            <li>
+                <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">
+                    <span class="inbox-label">@T("PrivateMessages.Inbox")</span>
+                    <span class="inbox-unread">@Model.UnreadPrivateMessages</span>
+                </a>
+            </li>
+        }
+        @if (Model.WishlistEnabled)
+        {
+            <li class="nav-item dropdown header-icons">
+                <a class="nav-link ico-wishlis"  href="@Url.RouteUrl("Wishlist")">
+                    <img src="@Url.Content("~/Themes/SuptomerTheme/Content/images/heart.svg")" alt="" />
+                    <span class="wishlist-qty">@Model.WishlistItems</span>
+                </a>
+            </li>
+        }
+        @if (Model.ShoppingCartEnabled)
+        {
+            <li class="nav-item dropdown header-icons">
+                <a class="nav-link ico-wishlis" href="@Url.RouteUrl("ShoppingCart")" >
+                    <img src="@Url.Content("~/Themes/SuptomerTheme/Content/images/shopping-bag.png")" alt="" />
+                    <span class="cart-qty">@Model.ShoppingCartItems</span>
+                </a>
+            </li>
+        }
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.HeaderLinksAfter, additionalData = Model })
+    </ul>
+    @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
+    {
+        //new private message notification
+        <script asp-location="Footer">
+            $(document).ready(function () {
+                displayPopupNotification('@Html.Raw(JavaScriptEncoder.Default.Encode(Model.AlertMessage))', 'success', false);
+            });
+        </script>
+    }
+    @if (Model.ShoppingCartEnabled)
+    {
+        <script asp-location="Footer">
+            $(document).ready(function () {
+                $('.header').on('mouseenter', '#topcartlink', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '#topcartlink', function () {
+                    $('#flyout-cart').removeClass('active');
+                });
+                $('.header').on('mouseenter', '#flyout-cart', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.header').on('mouseleave', '#flyout-cart', function () {
+                    $('#flyout-cart').removeClass('active');
+                });
+            });
+        </script>
+    }
+</div>

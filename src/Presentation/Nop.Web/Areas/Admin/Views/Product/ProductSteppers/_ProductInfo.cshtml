@@ -1,0 +1,248 @@
+﻿ @using System.Net;
+@model ProductModel
+
+@inject IStoreService storeService
+
+@using Nop.Core.Domain.Catalog;
+@using Nop.Services
+@using Nop.Services.Stores
+
+@{
+var stores = await storeService.GetAllStoresAsync();
+} 
+<!-- partial table to draw datatable -->
+<section class="section-products">
+  @* start :: suptomer theme design - product*@
+  <div class="row pr-4">
+  
+ 
+    <!------------------------------------  -->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="Name">SKU:</label>
+
+        <input class="form-control" autofocus="" placeholder="Enter SKU" type="text" data-val="true"
+          data-val-Name="Wrong " data-val-required="Please enter your " id="sku" name="sku" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="categories">Categories</label>
+        <select id="categories" class="form-control">
+          <option value="0">Select</option>
+          <option value="1">category #</option>
+          <option value="2">category #</option>
+          <option value="3">category #</option>
+        </select>
+      </div>
+    </div>
+    <!-------------------------------------------->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+
+        <label for="manufacture">Manufacture:</label>
+
+        <input class="form-control" autofocus="" placeholder="Enter Name" type="text" data-val="true"
+          data-val-Name="Wrong Name" data-val-required="Please enter" id="manufacture" name="manufacture" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+
+        <label for="manufacture">Manufacture part number:</label>
+
+        <input class="form-control" autofocus="" placeholder="Enter Name" type="text" data-val="true"
+          data-val-Name="Wrong Name" data-val-required="Please enter" id="manufactureParts" name="manufactureParts" />
+      </div>
+    </div>
+    <!-- --------------------------------------------- -->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+
+        <label for="tags">Product tags:</label>
+
+        <input class="form-control" autofocus="" placeholder="click to select or add tags" type="text" data-val="true"
+          data-val-Name="Wrong " data-val-required="add tags" id="tags" name="tags" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="pro-type">product type:</label>
+        <select id="pro-type" class="form-control">
+          <option value="0">Select</option>
+          <option value="1">type #</option>
+          <option value="2">type #</option>
+          <option value="3">type #</option>
+        </select>
+      </div>
+    </div>
+    <!-------------------------------------------->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="gtin">GTIN(Global Trade item number):</label>
+        <input class="form-control" autofocus="" placeholder="Enter GTIN" type="text" data-val="true" id="gtin"
+          name="gtin" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="limited"> limited instore:</label>
+
+        <input class="form-control" autofocus="" placeholder="Enter limited" type="text" data-val="true" id="limited"
+          name="limited" />
+      </div>
+    </div>
+    <!-------------------------------------------->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="enddate">EndDate:</label>
+
+        <input class="form-control" autofocus="" placeholder="select date" type="date" data-val="true"
+          data-val-Name="Wrong " data-val-required="Please enter your select" id="enddate" name="enddate" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="startdate">startdate:</label>
+
+        <input class="form-control" autofocus="" placeholder="select date" type="date" data-val="true"
+          data-val-Name="Wrong " data-val-required="Please enter your select" id="startdate" name="enddate" />
+      </div>
+    </div>
+    <!-------------------------------------------->
+  </div>
+  <hr />
+  <div class="row">
+
+    <div class="col-6 my-2 mb-4">
+      <label class="d-block mb-2">Avalibilty in Store</label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Avaliable</div>
+      </div>
+
+    </div>
+
+    <div class="col-6 my-2 mb-4">
+      <label class="d-block mb-2">Display in Home Page</label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Yes</div>
+      </div>
+
+    </div>
+
+    <div class="col-6 my-2 mb-4">
+      <label class="d-block mb-2">Product display indivaly in store </label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Avaliable</div>
+      </div>
+
+    </div>
+
+    <div class="col-6 my-2 mb-4">
+      <label class="d-block mb-2">Customer Reviews</label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Yes</div>
+      </div>
+
+    </div>
+
+    <div class="col-12 my-2 my-4">
+      <label class="d-block mb-2">Mark as new product</label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Enable</div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row my-4">
+    <!-------------------------------------------->
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="enddate">EndDate:</label>
+        <input class="form-control" autofocus="" placeholder="select date" type="date" data-val="true"
+          data-val-Name="Wrong " data-val-required="Please enter your select" id="enddate" name="enddate" />
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+      <div class="form-group">
+        <label for="startdate">startdate:</label>
+        <input class="form-control" autofocus="" placeholder="select date" type="date" data-val="true"
+          data-val-Name="Wrong " data-val-required="Please enter your select" id="startdate" name="enddate" />
+      </div>
+    </div>
+    <!-------------------------------------------->
+  </div>
+  <!-- Requierd Product -->
+  <div class="row">
+    <div class="col-12 mb-4" >
+      <label class="d-block mb-2">Mark as new product</label>
+      <div class="switcher-group d-flex align-items-center">
+        <label class="switch">
+          <input type="checkbox">
+          <div class="slider"></div>
+          <div class="slider-card">
+            <div class="slider-card-face slider-card-front"></div>
+            <div class="slider-card-face slider-card-back"></div>
+          </div>
+        </label>
+        <div class="ml-2">Enable</div>
+      </div>
+
+    </div>
+    <div class="col-12">
+      <input type="text" class="form-control" name="" id="" placeholder="search">
+    </div>
+    <div class="col-12">
+      <input type="checkbox" id="ck" class="form-checkbox" />
+      <label for="ck">Automaticlly add this products to cart</label>
+    </div>
+    <div class="col-sm-12 col-md-12 mt-4">
+      <div class="form-group">
+        <label for="shortDescription">Admin Comments:</label>
+        <textarea class="form-control" autofocus="" placeholder="Enter Your Comment" type="text" data-val="true"
+          id="comments" name="comments"></textarea>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,647 @@
+﻿@model DashboardModel
+@inject IPermissionService permissionService
+@using Nop.Services.Security
+@{
+    //page title
+    ViewBag.PageTitle = T("Admin.Dashboard").Text;
+
+    var canManageOrders = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageOrders);
+    var canManageCustomers = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageCustomers);
+    var canManageProducts = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageProducts);
+    var canManageReturnRequests = await permissionService.AuthorizeAsync(StandardPermissionProvider.ManageReturnRequests);
+
+    //close configuration steps value
+    const string closeCardAttributeName = "CloseConfigurationSteps";
+    var closeConfigurationStepsCard = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), closeCardAttributeName);
+
+    //active menu item (system name)
+    NopHtml.SetActiveMenuItemSystemName("Dashboard");
+}
+
+<link rel="stylesheet" href="~/lib_npm/ionicons/css/ionicons.min.css" />
+<script src="~/lib_npm/chart.js/Chart.min.js" asp-location="Head"></script>
+<!-- progress bar -->
+<link rel="stylesheet" href="~/lib/progress/cssprogress.css" />
+<script src="~/lib/progress/functions.js" asp-location="Head"></script>
+<div class="content-header">
+    <h1>
+        @T("Admin.Dashboard")
+    </h1>
+</div>
+<section class="content  ">
+    <div class="container-fluid">
+
+        <div class="row">
+            <!-- ------------order statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-3">
+
+                <div class="card widget">
+                    <div class="card-body">
+                        <h5 class="card-title w-100 d-flex ">
+                            500
+                            <div class="ml-auto">
+                                <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/order-1_svgrepo.com.png")" alt="" />
+
+                            </div>
+
+                        </h5>
+                        <p class="card-text">Orders</p>
+                        <p>
+                            <img src="@Url.Content("~/images/theme/arrow-down.png")" alt="" />
+                            <span class="text-warning persentage">-2%</span>
+                            <span class="text-grey lbl-info">vs last month</span>
+                        </p>
+
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="myChart" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------order statitsc------------------------------>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="card widget">
+                    <div class="card-body">
+                        <h5 class="card-title w-100 d-flex ">
+                            50K SAR
+                            <div class="ml-auto">
+                                <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/stock.png")" alt="" />
+
+                            </div>
+
+                        </h5>
+                        <p class="card-text">Income</p>
+                        <p>
+                            <img src="@Url.Content("~/images/theme/arrow-up.png")" alt="" />
+                            <span class="text-success persentage">+4%</span>
+                            <span class="text-grey lbl-info">vs last month</span>
+                        </p>
+
+                    </div><div class="chart-area">
+                        <canvas id="myChart2" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+            <!-- ------------order statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="card widget">
+                    <div class="card-body">
+                        <h5 class="card-title w-100 d-flex ">
+                            10K
+                            <div class="ml-auto">
+                                <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/return.png")" alt="" />
+
+                            </div>
+
+                        </h5>
+                        <p class="card-text">Sales Return</p>
+                        <p>
+                            <img src="@Url.Content("~/images/theme/arrow-down.png")" alt="" />
+                            <span class="text-warning persentage">-4%</span>
+                            <span class="text-grey lbl-info">vs last month</span>
+                        </p>
+
+                    </div> <div class="chart-area">
+                        <canvas id="myChart3" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+            <!-- ------------order statitsc---------------------------- -->
+
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="card widget">
+                    <div class="card-body">
+                        <h5 class="card-title w-100 d-flex ">
+                            600
+                            <div class="ml-auto">
+                                <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/admin/business-finance-invoice_svgrepo.com.png")" alt="" />
+
+                            </div>
+
+                        </h5>
+                        <p class="card-text">Invoices</p>
+                        <p>
+                            <img src="@Url.Content("~/images/theme/arrow-down.png")" alt="" />
+                            <span class="text-success persentage">+4%</span>
+                            <span class="text-grey lbl-info">vs last month</span>
+                        </p>
+
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="myChart4" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+        </div>
+        <!-- section 2 - sales reports -->
+        <div class="row mt-3 align-items-stretch ">
+            <!-- ------------order statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-8">
+                <div class="card widget-flex mb-0">
+                    <div class="card-body d-flex justify-content-between align-items-center ">
+                        <div class="card-title tiny  ">
+                            <small>
+                                Total Sales
+                            </small>
+                            <h4 class="card-text text-primary text-bold h4 ">500K SAR</h4>
+                        </div>
+                        <div class="filteration ml-auto">
+                            <select name="" id="" class="chart_ddl ml-2"><option> Product</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> Month</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> Year</option></select>
+                        </div>
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="sales_chart" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+            <!-- ------------Area  statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <!-- ------------Product Progress report---------------------------- -->
+
+                <div class="card widget-flex mb-3">
+                    <div class="card-body p-2">
+                        <p class="card-text left-card-title">Product’s about to be expired</p>
+                    </div>
+                    <div class="chart-area progress-area">
+
+                        <div class="cssProgress">
+                            <h5 class="progress-titles">Frozen chicken</h5>
+                            <div class="progress4">
+                                <div class="cssProgress-bar" data-percent="75" style="width: 75%;">
+                                    <span class="progressvalue">75/100</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cssProgress">
+                            <h5 class="progress-titles">Meat</h5>
+                            <div class="progress4">
+                                <div class="cssProgress-bar" data-percent="20" style="width: 20%;">
+                                    <span class="progressvalue">20/100</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="cssProgress">
+                            <h5 class="progress-titles">vegetables</h5>
+                            <div class="progress4">
+                                <div class="cssProgress-bar" data-percent="50" style="width: 50%;">
+                                    <span class="progressvalue">50/100</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-light-theme">Add Sale</button>
+                    </div>
+                </div>
+
+                <!-- ---------------------------------------- -->
+                <div class="card widget-flex">
+                    <div class="card-body p-2">
+                        <p class="card-text left-card-title">Most active orders in cities</p>
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="area_chart" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+
+
+        </div>
+        <!-- section 3 - location and shipments reports -->
+        <div class="row mt-3">
+            <!-- ------------order statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-8">
+                <div class="card widget-flex">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <p class="card-text">  Shipments over time</p>
+                        <div class="filteration ml-auto">
+                            <select name="" id="" class="chart_ddl ml-2"><option> Month</option></select>
+                            <select name="" id="" class="chart_ddl ml-2"><option> year</option></select>
+                        </div>
+                    </div>
+                    <div class="chart-area">
+                        <canvas id="shippment_chart" style="width:100%; "></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ---------------------------------------- -->
+            <!-- ------------order statitsc---------------------------- -->
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="row align-items-center p-3">
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <h2 class="text-white mb-25">Subscribe Our Newsletter</h2>
+                        <p class="text-white pr-5">
+                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                            diam nonumy eirmod tempor
+                        </p>
+                        </div>
+                        <button class="btn btn-outline-sm rounded" href="">learn more</button>
+                    </div>
+                    <div class="col-6">
+                        <img src="@Url.Content("~/Themes/SuptomerTheme/Content/assets/img/dash-card.svg")" alt="" style="width: 100%; height: auto;" />
+                    </div>
+                </div>
+            </div>
+            <!-- ---------------------------------------- -->
+        </div>
+    </div>
+</section>
+
+<!--?  Original Dashbord of nopcommerce -->
+<section class="content  d-none ">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+
+                    @*    @if (!closeConfigurationStepsCard)
+                    {
+                    <div class="row">
+                    <div class="col-md-12">
+                    @await Html.PartialAsync("_ConfigurationSteps")
+                    </div>
+                    </div>
+                    }
+                    *@
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardTop, additionalData = Model })
+                    @* @if (!Model.IsLoggedInAsVendor)
+                    {
+                    <div class="row">
+                    <div class="col-md-12">
+                    @await Component.InvokeAsync(typeof(NopCommerceNewsViewComponent))
+                    </div>
+                    </div>
+                    }*@
+
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardNewsAfter, additionalData = Model })
+                    @if (!Model.IsLoggedInAsVendor && canManageOrders && canManageCustomers && canManageProducts && canManageReturnRequests)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                @await Component.InvokeAsync(typeof(CommonStatisticsViewComponent))
+                            </div>
+                        </div>
+                    }
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardCommonstatisticsAfter, additionalData = Model })
+                    @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageCustomers))
+                    {
+                        <div class="row">
+                            @if (!Model.IsLoggedInAsVendor && canManageOrders)
+                            {
+
+                                <div class="col-md-6">
+                                    @await Html.PartialAsync("_OrderStatistics")
+                                    @*todo : seperate each part in partial view *@
+                                    @*@await Html.PartialAsync("_AdminDashbordStatistics")*@
+                                </div>
+                            }
+                            @if (!Model.IsLoggedInAsVendor && canManageCustomers)
+                            {
+                                <div class="col-md-6">
+                                    @await Html.PartialAsync("_CustomerStatistics")
+                                </div>
+                            }
+                        </div>
+                    }
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardCustomerorderchartsAfter, additionalData = Model })
+                    @if (!Model.IsLoggedInAsVendor && canManageOrders)
+                    {
+                        <div class="row">
+                            <div class="col-md-8">
+                                @await Html.PartialAsync("_OrderAverageReport")
+                            </div>
+                            <div class="col-md-4">
+                                @await Html.PartialAsync("_OrderIncompleteReport")
+                            </div>
+                        </div>
+                    }
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardOrderreportsAfter, additionalData = Model })
+                    @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageProducts))
+                    {
+                        <div class="row">
+                            @if (canManageOrders)
+                            {
+                                <div class="col-md-8">
+                                    @await Html.PartialAsync("_LatestOrders")
+                                </div>
+                            }
+                            <div class="col-md-4">
+                                @if (canManageProducts)
+                                {
+                                    @await Html.PartialAsync("_PopularSearchTermsReport", Model.PopularSearchTerms)
+                                }
+                            </div>
+                        </div>
+                    }
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardLatestordersSearchtermsAfter, additionalData = Model })
+                    @if (canManageOrders)
+                    {
+                        <div class="row">
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("_BestsellersBriefReportByQuantity", Model.BestsellersByQuantity)
+                            </div>
+                            <div class="col-md-6">
+                                @await Html.PartialAsync("_BestsellersBriefReportByAmount", Model.BestsellersByAmount)
+                            </div>
+                        </div>
+                    }
+                    @await Component.InvokeAsync(typeof(AdminWidgetViewComponent), new { widgetZone = AdminWidgetZones.DashboardBottom, additionalData = Model })
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- todo: search why i coan not seperate code in diff js file -->
+<!-- <script src="~/js/charts.js" asp-location="Head"  ></script> -->
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var ctx3 = document.getElementById('myChart3').getContext('2d');
+    var ctx4 = document.getElementById('myChart4').getContext('2d');
+
+
+    const xValues = [50, 60, 70, 80, 90, 100];
+    const yValues = [7, 8, 20, 12, 10, 9, 6];
+    var gradient = ctx.createLinearGradient(0, 200, 0, 0);
+    gradient.addColorStop(0, 'rgba(61, 0, 94, 0.05');
+    gradient.addColorStop(0.1, 'rgba(61, 0, 94,0.1');
+    gradient.addColorStop(0.2, 'rgba(61, 0, 94, 0.2');
+    gradient.addColorStop(0.3, 'rgba(61, 0, 94, 0.3');
+    gradient.addColorStop(0.4, 'rgba(61, 0, 94, 0.4');
+    gradient.addColorStop(0.5, 'rgba(61, 0, 94, 0.5');
+    gradient.addColorStop(1, 'rgba(61, 0, 94, 0.7');
+
+    var gradient = ctx2.createLinearGradient(0, 200, 0, 0);
+    gradient.addColorStop(0, 'rgba(61, 0, 94, 0.05');
+    gradient.addColorStop(0.1, 'rgba(61, 0, 94,0.1');
+    gradient.addColorStop(0.2, 'rgba(61, 0, 94, 0.2');
+    gradient.addColorStop(0.3, 'rgba(61, 0, 94, 0.3');
+    gradient.addColorStop(0.4, 'rgba(61, 0, 94, 0.4');
+    gradient.addColorStop(0.5, 'rgba(61, 0, 94, 0.5');
+    gradient.addColorStop(1, 'rgba(61, 0, 94, 0.7');
+
+    var gradient = ctx3.createLinearGradient(0, 200, 0, 0);
+    gradient.addColorStop(0, 'rgba(61, 0, 94, 0.05');
+    gradient.addColorStop(0.1, 'rgba(61, 0, 94,0.1');
+    gradient.addColorStop(0.2, 'rgba(61, 0, 94, 0.2');
+    gradient.addColorStop(0.3, 'rgba(61, 0, 94, 0.3');
+    gradient.addColorStop(0.4, 'rgba(61, 0, 94, 0.4');
+    gradient.addColorStop(0.5, 'rgba(61, 0, 94, 0.5');
+    gradient.addColorStop(1, 'rgba(61, 0, 94, 0.7');
+
+    var gradient = ctx4.createLinearGradient(0, 200, 0, 0);
+    gradient.addColorStop(0, 'rgba(61, 0, 94, 0.05');
+    gradient.addColorStop(0.1, 'rgba(61, 0, 94,0.1');
+    gradient.addColorStop(0.2, 'rgba(61, 0, 94, 0.2');
+    gradient.addColorStop(0.3, 'rgba(61, 0, 94, 0.3');
+    gradient.addColorStop(0.4, 'rgba(61, 0, 94, 0.4');
+    gradient.addColorStop(0.5, 'rgba(61, 0, 94, 0.5');
+    gradient.addColorStop(1, 'rgba(61, 0, 94, 0.7');
+    // hoverLine plugin block -work with v 0.4
+    // const hoverLine = {
+    //     id: 'hoverLine',
+    //     afterDatasetsDraw(chart, args, plugins) {
+    //         const { ctx, tooltip, chartArea: { top, bottom, left, right,
+    //             width, heigth }, scales: { x, y } } = chart;
+    //         if (tooltip._active.length > 0) {
+    //             const xCoor = x.getPixelForValue(tooltip.dataPoints[0].
+    //                 dataIndex);
+    //             const yCoor = y.getPixelForValue(tooltip.dataPoints[0].
+    //                 parsed.y);
+    //             ctx.save();
+    //             ctx.beginPath();
+    //             ctx.lineWidth =3;
+    //             ctx.strokeStyle = 'rgba(0, 0, 0, 1)';
+    //             ctx.setLineDash([6, 6])
+    //             ctx.moveTo(xCoor, yCoor);
+    //             ctx.lineTo(xCoor, bottom);
+    //             ctx.stroke();
+    //             ctx.closePath();
+    //         }
+    //     }
+    //     }
+
+    var chartOptions = {
+        responsive: true,
+        datasetStroke: true,
+        datasetFill: true,
+        legend: {
+            display: false
+        },
+        scales: {
+
+            y: {
+                beginAtZero: true
+            },
+
+            yAxes: [{
+                display: false
+            }],
+            xAxes: [{
+                display: false
+            }],
+        },
+
+    };
+    const yValues2 = [8, 8, 50, 2, 100, 9, 6];
+
+    var myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [
+                {
+                    backgroundColor: gradient,
+                    borderColor: "#3D005E",
+                    borderWidth: 2,
+                    pointBorderColor: "#b27aff",
+                    pointBorderWidth: 5,
+                    pointColor: "#b27aff",
+                    data: yValues2
+                },
+            ]
+        },
+        options: chartOptions,
+        // plugins: [hoverLine]
+    });
+
+    var myChart2 = new Chart(ctx2, {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: gradient,
+                borderColor: "#3D005E",
+                borderWidth: 2,
+                pointBorderColor: "#b27aff",
+                pointBorderWidth: 5,
+                pointColor: "#b27aff",
+                data: yValues
+            }]
+        },
+        options: chartOptions,
+    });
+    var myChart3 = new Chart(ctx3, {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: gradient,
+                borderColor: "#3D005E",
+                borderWidth: 2,
+                pointBorderColor: "#b27aff",
+                pointBorderWidth: 5,
+                pointColor: "#b27aff",
+                data: yValues
+            }]
+        },
+        options: chartOptions,
+    });
+    var myChart4 = new Chart(ctx4, {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: gradient,
+                borderColor: "#3D005E",
+                borderWidth: 2,
+                pointBorderColor: "#b27aff",
+                pointBorderWidth: 5,
+                pointColor: "#b27aff",
+                data: yValues
+            }]
+        },
+        options: chartOptions,
+    });
+
+    // ==================sales bar chart==================
+
+    var ctx4 = $('#sales_chart');
+    var xdata = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+    var ydata = [55, 49, 44, 24, 15, 20, 15, 20, 60];
+
+    new Chart(ctx4, {
+        type: "bar",
+        data: {
+            labels: xdata,
+            datasets: [{
+                backgroundColor: "rgba(61, 0, 94, 1)",
+                data: ydata, barPercentage: 0.2,
+                borderWidth: 2,
+                borderRadius: 50,
+                borderSkipped: false,
+            }]
+        },
+
+    });
+    //============Area Scatter Chart=====================
+    var mostarea = [
+        { x: 10, y: 3, area: "Ryiad 1" },
+        { x: 2, y: 5, area: "jedah 2" },
+        { x: 3, y: 2, area: "mecca 3" },
+        { x: 4, y: 6, area: "madina" },
+        { x: 5, y: 8, area: "Area 1" },
+        { x: 8, y: 5, area: "Ryiad 2" },
+        { x: 3, y: 2, area: "Area 3" },
+        { x: 4, y: 6, area: "Area 4" },
+        { x: 5, y: 2, area: "Area 1" },
+        { x: 2, y: 5, area: "Area 2" },
+        { x: 8, y: 7, area: "Area 3" },
+        { x: 2, y: 6, area: "Area 4" },
+    ];
+    const data = {
+        datasets: [{
+            label: '',
+            data: mostarea,
+            backgroundColor: 'rgba(61, 0, 94, 0.5)'
+        }],
+    };
+    var ctx6 = $('#area_chart');
+
+    new Chart(ctx6, {
+        type: 'scatter',
+        data: data,
+        options: {
+            scales: {
+
+                y: {
+                    beginAtZero: true
+                },
+
+                yAxes: [{
+                    display: false
+                }],
+                xAxes: [{
+                    display: false
+                }],
+            },
+
+            tooltips: {
+                callbacks: {
+                    title: function (tooltipItems, data) {
+                        // Modify tooltip title based on your requirements
+                        var dataIndex = tooltipItems[0].index;
+                        return data.datasets[0].data[dataIndex].area;
+                    }
+                }
+            }
+        }
+    });
+
+    // ==================shipment  chart==================
+
+    var ctx4 = $('#shippment_chart');
+
+
+    // Data for the line charts
+    var shipment_data = {
+        labels: ["January", "February", "March", "April", "May", "June"],
+        datasets: [
+            {
+                label: "Returns",
+                data: [10, 20, 30, 25, 15, 35],
+                borderColor: "#FFD680",
+                fill: false
+            },
+            {
+                label: "Delivered",
+                data: [5, 15, 10, 20, 30, 25],
+                borderColor: "#B27AFF",
+                fill: false
+            },
+            {
+                label: "In Transit",
+                data: [20, 10, 25, 30, 5, 15],
+                borderColor: "#3D005E",
+                fill: false
+            }
+        ]
+    };
+
+    // Chart options
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Create the chart
+    new Chart(ctx4, {
+        type: "line",
+        data: shipment_data,
+        options: options
+    });
+
+</script>
+<nop-alert asp-alert-id="loadOrderStatisticsAlert" asp-alert-message="@T("Admin.SalesReport.OrderStatistics.Alert.FailedLoad")" />
+<nop-alert asp-alert-id="loadCustomerStatisticsAlert" asp-alert-message="@T("Admin.Reports.Customers.CustomerStatistics.Alert.FailedLoad")" />
