@@ -15,6 +15,8 @@ namespace Sup.Plugin.Supplier.Areas.Admin.Controllers
 {
     public class AdminSuplierContractController : BaseSupplierController
     {
+
+
         public AdminSuplierContractController()
         {
 
